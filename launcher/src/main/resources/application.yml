@@ -10,7 +10,7 @@ spring:
     name: Integration Platform
   boot:
     admin:
-      url: http://localhost:8080
+      url: http://localhost:8081
       username: admin
       password: admin
   cloud:
@@ -31,3 +31,6 @@ security:
 management:
   security:
     role: ADMIN
+server:
+  servlet-path: /*
+  port: 7777
