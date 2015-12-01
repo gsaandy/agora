@@ -20,3 +20,5 @@ out/**
 target/
 target/**/*
 target/*
+launcher/application.pid
+launcher/application.port
