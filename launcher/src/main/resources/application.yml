@@ -1,0 +1,33 @@
+info:
+  version: @pom.version@
+  stage: test
+
+logging:
+  file: target/nip.log
+
+spring:
+  application:
+    name: Integration Platform
+  boot:
+    admin:
+      url: http://localhost:8080
+      username: admin
+      password: admin
+  cloud:
+    config:
+      enabled: false
+  jackson:
+    serialization:
+     indent-output: true
+
+endpoints:
+  health:
+    sensitive: false
+security:
+  user:
+    name: admin
+    password: admin
+
+management:
+  security:
+    role: ADMIN
