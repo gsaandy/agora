@@ -1,6 +1,10 @@
 spring:
   application:
     name: Integration Platform Admin Console
+  boot:
+    admin:
+      username: admin
+      password: admin
 
 server:
   port: 8081
