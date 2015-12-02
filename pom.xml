@@ -51,6 +51,7 @@
         <module>launcher</module>
     <module>configuration</module>
     <module>admin-console</module>
+    <module>dist</module>
   </modules>
 
 </project>
