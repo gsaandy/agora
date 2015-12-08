@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: Integration Platform Admin Console
-
-server:
-  port: 8081
