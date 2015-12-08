@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Integration Platform Admin Console
+    name: Integration Platform Monitoring Console
   boot:
     admin:
       username: admin
