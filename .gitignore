@@ -22,3 +22,4 @@ target/**/*
 target/*
 launcher/application.pid
 launcher/application.port
+**/dependency-reduced-pom.xml
