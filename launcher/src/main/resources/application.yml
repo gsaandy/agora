@@ -19,6 +19,13 @@ spring:
   jackson:
     serialization:
      indent-output: true
+  aop:
+    proxy-target-class: true
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
 
 endpoints:
   health:
