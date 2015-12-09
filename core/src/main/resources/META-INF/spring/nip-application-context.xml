@@ -5,8 +5,7 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.nibodha.ip"/>
+    <context:component-scan base-package="com.nibodha.ip.camel"/>
     <camelContext id="com.nibodha.ip"/>
-
 
 </beans:beans>
