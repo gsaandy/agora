@@ -11,6 +11,5 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @ImportResource("classpath*:META-INF/spring/nip-application-context.xml")
 @EnableAutoConfiguration
-@Import({ActuatorConfiguration.class, WebAppConfiguration.class})
 public class PlatformConfiguration {
 }
