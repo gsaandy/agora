@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) Nibodha Technologies Pvt. Ltd. 2015. All rights reserved.  http://www.nibodha.com-->
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
@@ -7,5 +8,8 @@
 
     <context:component-scan base-package="com.nibodha.ip.camel"/>
     <camelContext id="com.nibodha.ip"/>
-
+    <beans:bean id="mongoBean" class="com.mongodb.Mongo">
+        <beans:constructor-arg name="host" value="${spring.data.mongodb.host}" />
+        <beans:constructor-arg name="port" value="${spring.data.mongodb.port}" />
+    </beans:bean>
 </beans:beans>

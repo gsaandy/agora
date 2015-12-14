@@ -41,3 +41,7 @@ management:
 server:
   servlet-path: /*
   port: 7777
+camel:
+  route:
+    id:
+      patterns: com.nibodha.ip
