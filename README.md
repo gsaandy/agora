@@ -21,7 +21,9 @@ An integration platform which supports both data integration and application int
 1. How to set up development environment?
 
 	a. Fork the integration-platform project to the developers gitlab account.
+	
 	b. Clone the integration platform projects to developer's machine.
+	
 	c. copy the settings.xml from configuration/etc folder to the maven local repository folder usually <user.home>/.m2
 	
 	For windows C:\users\<username>\.m2
