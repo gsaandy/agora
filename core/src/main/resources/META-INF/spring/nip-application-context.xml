@@ -8,6 +8,7 @@
 
     <context:component-scan base-package="com.nibodha.ip.camel"/>
     <camelContext id="com.nibodha.ip"/>
+    <beans:import resource="classpath*:*-route-context.xml"/>
     <beans:bean id="mongoBean" class="com.mongodb.Mongo">
         <beans:constructor-arg name="host" value="${spring.data.mongodb.host}" />
         <beans:constructor-arg name="port" value="${spring.data.mongodb.port}" />

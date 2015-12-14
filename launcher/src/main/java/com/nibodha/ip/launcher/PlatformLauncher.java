@@ -29,7 +29,6 @@ public class PlatformLauncher extends SpringBootServletInitializer {
     }
 
     public void run(final String[] args) {
-        //Thread.currentThread().setContextClassLoader(new PlatformClassLoader(Thread.currentThread().getContextClassLoader()));
         final SpringApplication application = new SpringApplication(PlatformLauncher.class);
         application.setRegisterShutdownHook(true);
         application.setWebEnvironment(true);
@@ -37,7 +36,6 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         final ConfigurableApplicationContext configurableApplicationContext = application.run(args);
         final RouteDefinitionsInjector routeDefinitionsInjector = configurableApplicationContext.getBean(RouteDefinitionsInjector.class);
         routeDefinitionsInjector.inject();
-
     }
 
 
