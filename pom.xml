@@ -48,6 +48,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
+                <artifactId>camel-core</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
                 <artifactId>camel-spring</artifactId>
                 <version>${camel.version}</version>
             </dependency>
@@ -72,6 +77,21 @@
                 <version>${spring-data-mongodb.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-ftp</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-quartz</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.1</version>
+            </dependency>
+            <dependency>
                 <groupId>javassist</groupId>
                 <artifactId>javassist</artifactId>
                 <version>3.12.1.GA</version>
@@ -88,10 +108,15 @@
     </modules>
     <distributionManagement>
         <repository>
-            <id>ntpl-appsvr1.nibodha.local</id>
-            <name>ntpl-appsvr1.nibodha.local-releases</name>
+            <id>release.ntpl-appsvr1.nibodha.local</id>
+            <name>release.ntpl-appsvr1.nibodha.local-releases</name>
             <url>http://ntpl-appsvr1:8081/artifactory/ext-release-local</url>
         </repository>
+        <snapshotRepository>
+            <id>snapshots.ntpl-appsvr1.nibodha.local</id>
+            <name>snapshots.ntpl-appsvr1.nibodha.local-releases</name>
+            <url>http://ntpl-appsvr1:8081/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>

@@ -8,6 +8,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.CamelContextAware;
 import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.spring.CamelRouteContextFactoryBean;
+import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -54,6 +55,13 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
             LOGGER.info("Getting route contexts from spring application contexts");
         }
         final Map<String, CamelRouteContextFactoryBean> routeContexts = applicationContext.getBeansOfType(CamelRouteContextFactoryBean.class);
+        if(MapUtils.isEmpty(routeContexts)) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("No route contexts found");
+                return;
+            }
+        }
+
         final Set<String> routeContextNames = routeContexts.keySet();
         for (final String routeContextName : routeContextNames) {
             if (StringUtils.isEmpty(routeContextName)) {
