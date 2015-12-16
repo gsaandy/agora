@@ -28,7 +28,18 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <camel.version>2.16.1</camel.version>
         <spring-data-mongodb.version>1.8.1.RELEASE</spring-data-mongodb.version>
+        <javassist.version>3.12.1.GA</javassist.version>
+        <xstream.version>1.4.8</xstream.version>
+        <commons-collections.version>4.1</commons-collections.version>
+        <plexus-archiver.version>3.0.1</plexus-archiver.version>
+        <pentaho-kettle.version>6.1.0.0-91</pentaho-kettle.version>
     </properties>
+    <developers>
+        <developer>
+            <id>gibu.george</id>
+            <name>Gibu George</name>
+        </developer>
+    </developers>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -83,18 +94,34 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
-                <artifactId>camel-quartz</artifactId>
+                <artifactId>camel-quartz2</artifactId>
                 <version>${camel.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>4.1</version>
+                <version>${commons-collections.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-archiver</artifactId>
+                <version>${plexus-archiver.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>javassist</groupId>
                 <artifactId>javassist</artifactId>
-                <version>3.12.1.GA</version>
+                <version>${javassist.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>${xstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pentaho-kettle</groupId>
+                <artifactId>kettle-core</artifactId>
+                <version>${pentaho-kettle.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
