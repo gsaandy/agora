@@ -28,11 +28,16 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <camel.version>2.16.1</camel.version>
         <spring-data-mongodb.version>1.8.1.RELEASE</spring-data-mongodb.version>
-        <javassist.version>3.12.1.GA</javassist.version>
+        <javassist.version>3.20.0-GA</javassist.version>
         <xstream.version>1.4.8</xstream.version>
         <commons-collections.version>4.1</commons-collections.version>
-        <plexus-archiver.version>3.0.1</plexus-archiver.version>
+        <commons-compress.version>1.10</commons-compress.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
         <pentaho-kettle.version>6.1.0.0-91</pentaho-kettle.version>
+        <hibernate.version>4.1.7.Final</hibernate.version>
+        <hibernate-maven-plugin.version>2.2</hibernate-maven-plugin.version>
+        <mysql-connector.version>5.0.8</mysql-connector.version>
+        <cglib.version>2.1_3</cglib.version>
     </properties>
     <developers>
         <developer>
@@ -103,13 +108,17 @@
                 <version>${commons-collections.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.plexus</groupId>
-                <artifactId>plexus-archiver</artifactId>
-                <version>${plexus-archiver.version}</version>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>javassist</groupId>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javassist</groupId>
                 <artifactId>javassist</artifactId>
                 <version>${javassist.version}</version>
             </dependency>
@@ -123,6 +132,17 @@
                 <artifactId>kettle-core</artifactId>
                 <version>${pentaho-kettle.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
