@@ -9,9 +9,13 @@
     <context:component-scan base-package="com.nibodha.ip.camel"/>
     <context:component-scan base-package="com.nibodha.ip.processors"/>
     <camelContext id="com.nibodha.ip"/>
-    <beans:import resource="classpath*:*-route-context.xml"/>
-    <beans:bean id="mongoBean" class="com.mongodb.Mongo">
-        <beans:constructor-arg name="host" value="${spring.data.mongodb.host}" />
-        <beans:constructor-arg name="port" value="${spring.data.mongodb.port}" />
+
+    <beans:bean id="bridgePropertyPlaceholder" class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
+        <beans:property name="configFileLocation" value="file:///${config.location}"/>
+        <beans:property name="fileNames" value="*-is.yaml,*-di-adapter.yaml,*-is.properties,*-di-adapter.properties"/>
     </beans:bean>
+
+
+    <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
+
 </beans:beans>
