@@ -6,7 +6,11 @@ package com.nibodha.ip.camel;
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelContextAware;
+import org.apache.camel.PropertyInject;
+import org.apache.camel.Route;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.RouteDefinition;
+import org.apache.camel.model.RoutesDefinition;
 import org.apache.camel.spring.CamelRouteContextFactoryBean;
 import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
@@ -30,6 +34,9 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
 
     private final Logger LOGGER = LoggerFactory.getLogger(RouteDefinitionsInjector.class);
 
+    @PropertyInject("camel.route.id.patterns")
+    private String routeIdPatternsToInject;
+
     @Override
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
@@ -46,16 +53,17 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
     }
 
     public void inject() {
-        addRoutes();
+        addSpringDslRoutes();
+        addJavaDslRoutes();
     }
 
-    private void addRoutes() {
+    private void addSpringDslRoutes() {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Getting route contexts from spring application contexts");
         }
         final Map<String, CamelRouteContextFactoryBean> routeContexts = applicationContext.getBeansOfType(CamelRouteContextFactoryBean.class);
-        if(MapUtils.isEmpty(routeContexts)) {
+        if (MapUtils.isEmpty(routeContexts)) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("No route contexts found");
                 return;
@@ -73,27 +81,60 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
                 LOGGER.info("Getting routes from route context:: " + routeContextId);
             }
             final List<RouteDefinition> routeDefinitions = routeContexts.get(routeContextName).getRoutes();
-            for (final RouteDefinition routeDefinition : routeDefinitions) {
-                final String routeDefinitionId = routeDefinition.getId();
-                if (isAlreadyDefined(routeDefinition)) {
-                    if (LOGGER.isInfoEnabled()) {
-                        LOGGER.info("Route " + routeDefinitionId + " is already added to the camel context");
-                    }
-                    continue;
-                }
-                if (StringUtils.isEmpty(routeDefinitionId)) {
-                    throw new PlatformRuntimeException("The route id cannot be null");
-                }
+            addRoutesToCamelContext(routeContextId, routeDefinitions);
+        }
+
+    }
+
+    private void addRoutesToCamelContext(String routeContextId, List<RouteDefinition> routeDefinitions) {
+        for (final RouteDefinition routeDefinition : routeDefinitions) {
+            final String routeDefinitionId = routeDefinition.getId();
+            if(!routeDefinitionId.startsWith(routeIdPatternsToInject)) {
                 if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info("Adding route definition with id " + routeDefinitionId + " from route context with id " + routeContextId + " to camel context");
+                    LOGGER.info("Rejecting route " + routeDefinitionId + "doesn't match the pattern "+ routeIdPatternsToInject);
                 }
-                routeDefinition.setGroup(routeContextId);
-                try {
-                    this.camelContext.addRouteDefinition(routeDefinition);
-                } catch (Exception e) {
-                    LOGGER.error("Exception occured while adding route definition with id " + routeDefinition + " to camel context", e);
-                }
+                continue;
             }
+            if (isAlreadyDefined(routeDefinition)) {
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Route " + routeDefinitionId + " is already added to the camel context");
+                }
+                continue;
+            }
+            if (StringUtils.isEmpty(routeDefinitionId)) {
+                throw new PlatformRuntimeException("The route id cannot be null");
+            }
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("Adding route definition with id " + routeDefinitionId + " from route context with id " + routeContextId + " to camel context");
+            }
+            routeDefinition.setGroup(routeContextId);
+            try {
+                this.camelContext.addRouteDefinition(routeDefinition);
+            } catch (Exception e) {
+                LOGGER.error("Exception occured while adding route definition with id " + routeDefinition + " to camel context", e);
+            }
+        }
+    }
+
+    private void addJavaDslRoutes() {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Getting route builders from spring application contexts");
+        }
+        final Map<String, RouteBuilder> routeBuilders = applicationContext.getBeansOfType(RouteBuilder.class);
+        if (MapUtils.isEmpty(routeBuilders)) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("No route builders found");
+                return;
+            }
+        }
+
+        final Set<String> routeBuilderNames = routeBuilders.keySet();
+        for (final String routeBuilderName : routeBuilderNames) {
+            final RouteBuilder routeBuilder = routeBuilders.get(routeBuilderName);
+            final RoutesDefinition routesDefinition = routeBuilder.getRouteCollection();
+            final List<RouteDefinition> routeDefinitions = routesDefinition.getRoutes();
+            addRoutesToCamelContext(routeBuilderName, routeDefinitions);
+
         }
 
     }
