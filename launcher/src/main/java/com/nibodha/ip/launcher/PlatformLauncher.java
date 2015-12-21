@@ -5,6 +5,8 @@ package com.nibodha.ip.launcher;
 
 import com.nibodha.ip.camel.RouteDefinitionsInjector;
 import com.nibodha.ip.config.PlatformConfiguration;
+import com.nibodha.ip.logging.PlatformLoggingManager;
+import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.NetworkTrafficServerConnector;
 import org.eclipse.jetty.server.Server;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +23,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.lang.management.ManagementFactory;
 import java.util.List;
 
 /**
@@ -35,7 +38,6 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         new PlatformLauncher().run(args);
 
     }
-åå
     public void run(final String[] args) {
         final SpringApplication application = new SpringApplication(PlatformLauncher.class);
         application.setRegisterShutdownHook(true);
@@ -49,11 +51,16 @@ public class PlatformLauncher extends SpringBootServletInitializer {
     @Bean
     public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory(
             @Value("${server.port:8080}") final String mainPort) {
-
         final JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory(Integer.valueOf(mainPort));
-
+        factory.addServerCustomizers(new JettyServerCustomizer() {
+            @Override
+            public void customize(final Server server) {
+                // Expose Jetty managed beans to the JMX platform server provided by Spring
+                final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
+                server.addBean(mbContainer);
+            }
+        });
         return factory;
     }
-
 
 }
