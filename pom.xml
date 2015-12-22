@@ -33,11 +33,13 @@
         <commons-collections.version>4.1</commons-collections.version>
         <commons-compress.version>1.10</commons-compress.version>
         <commons-lang3.version>3.4</commons-lang3.version>
+        <commons-io.version>2.4</commons-io.version>
         <pentaho-kettle.version>6.1.0.0-91</pentaho-kettle.version>
         <hibernate.version>5.0.5.Final</hibernate.version>
         <hibernate-maven-plugin.version>2.2</hibernate-maven-plugin.version>
         <mysql-connector.version>5.0.8</mysql-connector.version>
         <cglib.version>2.1_3</cglib.version>
+        <jetty.version>9.3.6.v20151106</jetty.version>
     </properties>
     <developers>
         <developer>
@@ -100,6 +102,11 @@
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-quartz2</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-jsonpath</artifactId>
                 <version>${camel.version}</version>
             </dependency>
             <dependency>
