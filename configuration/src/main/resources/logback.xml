@@ -25,7 +25,7 @@
         </triggeringPolicy>
     </appender>
 
-    <root level="${log.level}">
+    <root level=“@log.level@“>
         <appender-ref ref="FILE"/>
     </root>
 
