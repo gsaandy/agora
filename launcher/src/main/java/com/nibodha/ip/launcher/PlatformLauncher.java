@@ -5,13 +5,12 @@ package com.nibodha.ip.launcher;
 
 import com.nibodha.ip.camel.RouteDefinitionsInjector;
 import com.nibodha.ip.config.PlatformConfiguration;
-import com.nibodha.ip.logging.PlatformLoggingManager;
 import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.NetworkTrafficServerConnector;
 import org.eclipse.jetty.server.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
@@ -19,12 +18,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.lang.management.ManagementFactory;
-import java.util.List;
+import java.util.Enumeration;
+import java.util.Properties;
 
 /**
  * Created by gibugeorge on 28/11/15.
@@ -34,10 +31,26 @@ import java.util.List;
 public class PlatformLauncher extends SpringBootServletInitializer {
 
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLauncher.class);
+
     public static void main(final String[] args) {
+        printSystemProperties();
         new PlatformLauncher().run(args);
 
     }
+
+    private static void printSystemProperties() {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Java System Properties");
+            final Properties properties = System.getProperties();
+            final Enumeration<String> names = (Enumeration<String>) properties.propertyNames();
+            while (names.hasMoreElements()) {
+                final String name = names.nextElement();
+                LOGGER.info(name + " = " + properties.getProperty(name));
+            }
+        }
+    }
+
     public void run(final String[] args) {
         final SpringApplication application = new SpringApplication(PlatformLauncher.class);
         application.setRegisterShutdownHook(true);
