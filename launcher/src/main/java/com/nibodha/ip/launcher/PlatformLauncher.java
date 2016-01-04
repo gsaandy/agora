@@ -7,6 +7,7 @@ import com.nibodha.ip.camel.RouteDefinitionsInjector;
 import com.nibodha.ip.config.PlatformConfiguration;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.xml.XmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.xml.sax.SAXException;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -63,12 +67,24 @@ public class PlatformLauncher extends SpringBootServletInitializer {
 
     @Bean
     public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory(
-            @Value("${server.port:8080}") final String mainPort) {
+            @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path}") final String jettyConfigXmlPath) {
         final JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory(Integer.valueOf(mainPort));
         factory.addServerCustomizers(new JettyServerCustomizer() {
             @Override
             public void customize(final Server server) {
                 // Expose Jetty managed beans to the JMX platform server provided by Spring
+                if (jettyConfigXmlPath != null) {
+                    try {
+                        final XmlConfiguration xmlConfiguration = new XmlConfiguration(new FileInputStream(jettyConfigXmlPath));
+                        xmlConfiguration.configure(server);
+                    } catch (SAXException e) {
+                        LOGGER.error("Exception reading the xml configuration", e);
+                    } catch (IOException e) {
+                        LOGGER.error("Exception reading the xml configuration", e);
+                    } catch (Exception e) {
+                        LOGGER.error("Exception configuring the server", e);
+                    }
+                }
                 final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
                 server.addBean(mbContainer);
             }
@@ -77,3 +93,4 @@ public class PlatformLauncher extends SpringBootServletInitializer {
     }
 
 }
+figuration
