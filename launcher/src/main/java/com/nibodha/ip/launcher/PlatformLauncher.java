@@ -82,7 +82,7 @@ public class PlatformLauncher extends SpringBootServletInitializer {
                     } catch (IOException e) {
                         LOGGER.error("Exception reading the xml configuration", e);
                     } catch (Exception e) {
-                        LOGGER.error("Exception configuring the server", e);
+                        LOGGER.error("Exception configuring the server configuration", e);
                     }
                 }
                 final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
@@ -93,4 +93,3 @@ public class PlatformLauncher extends SpringBootServletInitializer {
     }
 
 }
-figuration
