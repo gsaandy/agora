@@ -223,7 +223,7 @@
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <developerConnection>scm:git:git://gitlab.nibodha.local:nibodha</developerConnection>
+        <developerConnection>scm:git:git://gitlab.nibodha.local/nibodha</developerConnection>
     </scm>
     <build>
         <plugins>
