@@ -37,9 +37,9 @@
         <pentaho-kettle.version>6.1.0.0-99</pentaho-kettle.version>
         <hibernate.version>5.0.5.Final</hibernate.version>
         <hibernate-maven-plugin.version>2.2</hibernate-maven-plugin.version>
-        <mysql-connector.version>5.0.8</mysql-connector.version>
         <cglib.version>2.1_3</cglib.version>
         <jetty.version>9.3.6.v20151106</jetty.version>
+        <oracle-ojdbc.version>11.2.0.3</oracle-ojdbc.version>
     </properties>
     <developers>
         <developer>
