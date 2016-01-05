@@ -9,7 +9,6 @@
   </parent>
   <groupId>com.nibodha.ip</groupId>
   <artifactId>dist</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <name>Integration Platform::Distribution</name>
 
   <properties>
