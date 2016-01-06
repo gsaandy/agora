@@ -32,6 +32,7 @@ The NIP kernel layer is based on Spring Boot that provides an embedded Jetty Ser
 * JMX Server
 * Configuration
 * Security
+
 ### Services Layer ###
 
 The NIP services layer consists of embedded services which interact with the application layer to communicate with the applications built on top of the NIP. The services layer provides:
@@ -49,16 +50,24 @@ The messaging service is based on Apache Active MQ which allows the developer to
 The routing/integration engine based on Apache Camel allows the developer to define routes and implement enterprise integration patterns(EIP) and deploy the routes into the camel context.
             
 #### Transformation Engine ####
+
 TODO: Add Info
+
 #### Auditing ####
+
 TODO: Add Info
+
 #### ETL Engine ####
+
 TODO: Add Info
 
 ### Application Layer ###
+
 TODO: Add Info
 
 ## Road Map ##
+
+TODO: Add Info
 
 ##Project Structure##
 
@@ -115,4 +124,3 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	
 	Once the monitoring console is up and running, open bowser and got to 
 	http://localhost:8081, enter admin/admin to login.
-	   
