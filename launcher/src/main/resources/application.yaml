@@ -1,0 +1,7 @@
+activemq:
+  data: target/data/activemq
+  tcp:
+    port: 61616
+jetty:
+    config:
+      path:

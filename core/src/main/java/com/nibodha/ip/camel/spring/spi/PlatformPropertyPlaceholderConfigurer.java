@@ -61,8 +61,15 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
         final String[] fileNamesArray = fileNames.split(",");
         final List<Resource> locations = new ArrayList<Resource>();
         for (final String fileName : fileNamesArray) {
-            final String absoluteFilePathPattern = configFileLocation.getURL().toString() + File.separator + fileName;
-            final Resource[] resources = resourcePatternResolver.getResources(absoluteFilePathPattern);
+
+            final String pattern;
+            if (fileName.startsWith("classpath:")) {
+                pattern = fileName;
+            } else {
+                pattern = configFileLocation.getURL().toString() + File.separator + fileName;
+
+            }
+            final Resource[] resources = resourcePatternResolver.getResources(pattern);
             locations.addAll(Arrays.asList(resources));
         }
         final Resource[] resources = new Resource[locations.size()];

@@ -35,5 +35,6 @@ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
 
     <beans:import resource="classpath*:META-INF/spring/batch/config/*.xml"/>
     <beans:import resource="classpath*:META-INF/spring/batch/jobs/*.xml"/>
+    <beans:import resource="classpath*:META-INF/spring/activemq-context.xml"/>
 
 </beans:beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <beans:bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
+        <beans:property name="config" value="classpath:META-INF/spring/activemq-configuration-context.xml"/>
+        <beans:property name="start" value="true"/>
+    </beans:bean>
+    <beans:bean id="vm"
+                class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <beans:property name="connectionFactory" ref="pooledConnectionFactory"/>
+        <beans:property name="transacted" value="true"/>
+        <beans:property name="transactionManager" ref="jmsTransactionManager"/>
+    </beans:bean>
+    <beans:bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <beans:property name="connectionFactory" ref="pooledConnectionFactory"/>
+    </beans:bean>
+    <beans:bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+        <beans:property name="maxConnections" value="10"/>
+        <beans:property name="maximumActiveSessionPerConnection" value="5"/>
+        <beans:property name="connectionFactory" ref="connectionFactory"/>
+        <beans:property name="createConnectionOnStartup" value="true"/>
+    </beans:bean>
+    <beans:bean id="redeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <beans:property name="initialRedeliveryDelay" value="0"/>
+        <beans:property name="maximumRedeliveries" value="-1"/>
+    </beans:bean>
+    <beans:bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <beans:property name="brokerURL"
+                        value="vm://activemqbroker:61616?broker.persistent=true&amp;broker.useJmx=false"/>
+        <beans:property name="redeliveryPolicy" ref="redeliveryPolicy"/>
+        <beans:property name="transactedIndividualAck" value="true"/>
+    </beans:bean>
+
+</beans:beans>

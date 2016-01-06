@@ -41,22 +41,7 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>1.3.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jmx</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jndi</artifactId>
-        </dependency>
+
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
