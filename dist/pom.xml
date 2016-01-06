@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.nibodha.ip</groupId>
     <artifactId>integration-platform</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
   <groupId>com.nibodha.ip</groupId>
   <artifactId>dist</artifactId>
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>com.nibodha.ip</groupId>
       <artifactId>launcher</artifactId>
-      <version>1.0</version>
+      <version>1.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

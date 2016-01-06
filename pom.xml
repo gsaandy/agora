@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.nibodha.ip</groupId>
     <artifactId>integration-platform</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Integration Platform</name>
@@ -16,6 +16,12 @@
         <name>Nibodha Technologies Pvt. Ltd.</name>
         <url>http://www.nibodha.com/</url>
     </organization>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -222,9 +228,8 @@
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <developerConnection>scm:git:git://gitlab.nibodha.local/nibodha</developerConnection>
-      <tag>nip-1.0</tag>
-  </scm>
+      <developerConnection>scm:git:git://gitlab.nibodha.local/nibodha</developerConnection>
+    </scm>
     <build>
         <plugins>
             <plugin>
