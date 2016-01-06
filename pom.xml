@@ -222,6 +222,9 @@
             <url>http://ntpl-appsvr1:8081/artifactory/libs-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
+    <scm>
+        <developerConnection>scm:git:git://gitlab.nibodha.local:nibodha</developerConnection>
+    </scm>
     <build>
         <plugins>
             <plugin>
@@ -239,6 +242,11 @@
                         <version>2.5</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
             </plugin>
         </plugins>
     </build>
