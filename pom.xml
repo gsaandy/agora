@@ -45,6 +45,7 @@
         <cglib.version>2.1_3</cglib.version>
         <jetty.version>9.3.6.v20151106</jetty.version>
         <oracle-ojdbc.version>11.2.0.3</oracle-ojdbc.version>
+        <activemq.version>5.13.0</activemq.version>
     </properties>
     <developers>
         <developer>
@@ -202,9 +203,39 @@
                 <artifactId>jetty-jndi</artifactId>
                 <version>${jetty.version}</version>
             </dependency>
+            <!-- the ActiveMQ client with connection pooling -->
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-camel</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-pool</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
 
-
-
+            <!-- the ActiveMQ broker is optional and can be removed if connecting to a remote broker only -->
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-broker</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-spring</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-kahadb-store</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
