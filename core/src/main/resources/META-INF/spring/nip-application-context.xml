@@ -23,11 +23,10 @@ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
 
     <context:component-scan base-package="com.nibodha.ip.camel"/>
     <context:component-scan base-package="com.nibodha.ip.processors"/>
-    <camelContext id="com.nibodha.ip"/>
 
     <beans:bean id="bridgePropertyPlaceholder" class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
-        <beans:property name="fileNames" value="*-is.yaml,*-di-adapter.yaml,*-is.properties,*-di-adapter.properties"/>
+        <beans:property name="fileNames" value="classpath:application.properties, *-is.yaml,*-di-adapter.yaml,*-is.properties,*-di-adapter.properties"/>
     </beans:bean>
 
 
@@ -35,6 +34,5 @@ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
 
     <beans:import resource="classpath*:META-INF/spring/batch/config/*.xml"/>
     <beans:import resource="classpath*:META-INF/spring/batch/jobs/*.xml"/>
-    <beans:import resource="classpath*:META-INF/spring/activemq-context.xml"/>
 
 </beans:beans>

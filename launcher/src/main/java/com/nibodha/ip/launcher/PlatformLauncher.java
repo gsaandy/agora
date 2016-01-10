@@ -16,7 +16,7 @@
 package com.nibodha.ip.launcher;
 
 import com.nibodha.ip.camel.RouteDefinitionsInjector;
-import com.nibodha.ip.config.PlatformConfiguration;
+import com.nibodha.ip.services.config.PlatformConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
