@@ -31,6 +31,9 @@ public class PlatformLoggingManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLoggingManager.class);
 
+    private PlatformLoggingManager() {
+        
+    }
 
     public static void configure() {
         final String configPath = System.getProperty("logback.config");
