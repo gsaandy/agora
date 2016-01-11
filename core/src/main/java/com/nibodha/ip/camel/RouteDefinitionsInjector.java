@@ -19,7 +19,6 @@ import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelContextAware;
 import org.apache.camel.PropertyInject;
-import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.model.RoutesDefinition;
@@ -44,13 +43,13 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
 
     private CamelContext camelContext;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(RouteDefinitionsInjector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteDefinitionsInjector.class);
 
     @PropertyInject("camel.route.id.patterns")
     private String routeIdPatternsToInject;
 
     @Override
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext){
         this.applicationContext = applicationContext;
     }
 
