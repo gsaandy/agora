@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nibodha.ip.config;
+
+package com.nibodha.ip.services.config;
 
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Server;
@@ -33,6 +34,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.util.StringUtils;
 import org.xml.sax.SAXException;
 
 import java.io.FileInputStream;
@@ -40,21 +42,23 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
 @Configuration
+@Import({CamelConfiguration.class,ActiveMqConfiguration.class})
 @ImportResource("classpath*:META-INF/spring/nip-application-context.xml")
 @EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class,
         DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class})
 public class PlatformConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformConfiguration.class);
+
     @Bean
     public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory(
-            @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path}") final String jettyConfigXmlPath) {
+            @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path:\"\"}") final String jettyConfigXmlPath) {
         final JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory(Integer.valueOf(mainPort));
         factory.addServerCustomizers(new JettyServerCustomizer() {
             @Override
             public void customize(final Server server) {
                 // Expose Jetty managed beans to the JMX platform server provided by Spring
-                if (jettyConfigXmlPath != null) {
+                if (StringUtils.isEmpty(jettyConfigXmlPath)) {
                     try {
                         final XmlConfiguration xmlConfiguration = new XmlConfiguration(new FileInputStream(jettyConfigXmlPath));
                         xmlConfiguration.configure(server);

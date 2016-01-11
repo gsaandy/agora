@@ -24,7 +24,7 @@
     <beans:bean id="bridgePropertyPlaceholder"
                 class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
-        <beans:property name="fileNames" value="classpath:application.yaml,*-is.properties"/>
+        <beans:property name="fileNames" value="classpath:application.properties,*-is.properties"/>
     </beans:bean>
 
     <amq:broker useJmx="true" brokerName="activemqbroker" useShutdownHook="false"
@@ -32,8 +32,7 @@
 
 
         <persistenceAdapter>
-            <kahaDB directory="${activemq.data}" brokerName="activemqbroker"/>
-
+            <kahaDB directory="${spring.activemq.data}" brokerName="activemqbroker"/>
         </persistenceAdapter>
         <destinations>
 
@@ -41,7 +40,7 @@
 
         <transportConnectors>
             <transportConnector name="activemq"
-                                uri="tcp://localhost:${activemq.tcp.port}?wireFormat.maxInactivityDurationInitalDelay=30000"/>
+                                uri="${spring.activemq.broker-url}:${spring.activemq.port}?wireFormat.maxInactivityDurationInitalDelay=30000"/>
         </transportConnectors>
         <destinationPolicy>
             <policyMap>
@@ -62,9 +61,9 @@
             </policyMap>
         </destinationPolicy>
 
-        <!--managementContext>
-            <managementContext connectorPort="${activemq.jmx.port}"/>
-        </managementContext-->
+        <managementContext>
+            <managementContext useMBeanServer="true"/>
+        </managementContext>
 
 
     </amq:broker>
