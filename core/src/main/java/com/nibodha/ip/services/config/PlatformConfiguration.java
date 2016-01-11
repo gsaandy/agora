@@ -42,7 +42,7 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
 @Configuration
-@Import({CamelConfiguration.class,ActiveMqConfiguration.class})
+@Import({ActiveMqConfiguration.class})
 @ImportResource("classpath*:META-INF/spring/nip-application-context.xml")
 @EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class,
         DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class})
@@ -58,7 +58,7 @@ public class PlatformConfiguration {
             @Override
             public void customize(final Server server) {
                 // Expose Jetty managed beans to the JMX platform server provided by Spring
-                if (StringUtils.isEmpty(jettyConfigXmlPath)) {
+                if (!StringUtils.isEmpty(jettyConfigXmlPath)) {
                     try {
                         final XmlConfiguration xmlConfiguration = new XmlConfiguration(new FileInputStream(jettyConfigXmlPath));
                         xmlConfiguration.configure(server);

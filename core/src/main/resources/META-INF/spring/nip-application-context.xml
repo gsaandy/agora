@@ -29,6 +29,7 @@ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
         <beans:property name="fileNames" value="classpath:application.properties, *-is.yaml,*-di-adapter.yaml,*-is.properties,*-di-adapter.properties"/>
     </beans:bean>
 
+    <camelContext id="com.nibodha.ip"/>
 
     <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
 
