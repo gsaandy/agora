@@ -134,8 +134,8 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         if (MapUtils.isEmpty(routeBuilders)) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("No route builders found");
-                return;
             }
+            return;
         }
 
         final Set<String> routeBuilderNames = routeBuilders.keySet();
