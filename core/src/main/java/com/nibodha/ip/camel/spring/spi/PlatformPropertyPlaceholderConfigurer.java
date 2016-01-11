@@ -23,8 +23,6 @@ import org.springframework.core.io.support.EncodedResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.util.DefaultPropertiesPersister;
-import org.springframework.util.PropertiesPersister;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +57,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
 
     public void setFileNames(final String fileNames) throws IOException {
         final String[] fileNamesArray = fileNames.split(",");
-        final List<Resource> locations = new ArrayList<Resource>();
+        final List<Resource> locationsList = new ArrayList<Resource>();
         for (final String fileName : fileNamesArray) {
 
             final String pattern;
@@ -70,13 +68,14 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
 
             }
             final Resource[] resources = resourcePatternResolver.getResources(pattern);
-            locations.addAll(Arrays.asList(resources));
+            locationsList.addAll(Arrays.asList(resources));
         }
-        final Resource[] resources = new Resource[locations.size()];
-        this.locations = locations.toArray(resources);
+        final Resource[] resources = new Resource[locationsList.size()];
+        this.locations = locationsList.toArray(resources);
         super.setLocations(this.locations);
     }
 
+    @Override
     protected void loadProperties(Properties props) throws IOException {
         if (this.locations != null) {
             for (final Resource location : this.locations) {
@@ -104,11 +103,13 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
         }
     }
 
+    @Override
     public void setFileEncoding(String encoding) {
         super.setFileEncoding(encoding);
         this.fileEncoding = encoding;
     }
 
+    @Override
     public void setIgnoreResourceNotFound(boolean ignoreResourceNotFound) {
         super.setIgnoreResourceNotFound(ignoreResourceNotFound);
         this.ignoreResourceNotFound = ignoreResourceNotFound;

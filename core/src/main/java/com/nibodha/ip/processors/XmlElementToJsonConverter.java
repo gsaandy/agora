@@ -36,7 +36,6 @@ import java.io.StringWriter;
  */
 @Component
 public class XmlElementToJsonConverter implements Processor {
-    private static final Logger LOGGER= LoggerFactory.getLogger(XmlElementToJsonConverter.class);
     @Override
     public void process(final Exchange exchange) throws Exception {
         final Element element = exchange.getIn().getBody(Element.class);

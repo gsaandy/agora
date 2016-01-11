@@ -33,7 +33,7 @@ import java.util.EventObject;
  */
 @Component
 public class AuditEventNotifier extends EventNotifierSupport {
-    private static Logger LOGGER = LoggerFactory.getLogger(AuditEventNotifier.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuditEventNotifier.class);
 
     @Override
     public void notify(final EventObject event) throws Exception {
@@ -59,6 +59,7 @@ public class AuditEventNotifier extends EventNotifierSupport {
         return false;
     }
 
+    @Override
     protected void doStart() throws Exception {
         // filter out unwanted events
         setIgnoreCamelContextEvents(false);

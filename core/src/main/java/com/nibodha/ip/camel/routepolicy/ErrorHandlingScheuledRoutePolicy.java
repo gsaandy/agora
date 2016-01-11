@@ -29,11 +29,20 @@ public class ErrorHandlingScheuledRoutePolicy extends CronScheduledRoutePolicy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandlingScheuledRoutePolicy.class);
 
-    protected void onJobExecute(Action action, Route route) throws Exception {
+    @Override
+    protected void doOnInit(final Route route) throws Exception {
+        if(getRouteStartTime()!=null && !("OFF").equals(getRouteStartTime())) {
+            super.doOnInit(route);
+        }
+
+    }
+
+    @Override
+    protected void onJobExecute(final Action action, final Route route) throws Exception {
         try {
             super.onJobExecute(action, route);
         } catch (Exception e) {
-            LOGGER.error("Exception while running route " + route.getId());
+            LOGGER.error("Exception while running route " + route.getId(), e);
             route.getRouteContext().getCamelContext().stopRoute(route.getId());
         }
     }

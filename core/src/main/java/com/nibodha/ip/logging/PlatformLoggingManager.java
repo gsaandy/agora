@@ -21,6 +21,7 @@ import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 /**
  * @author gibugeorge on 21/12/15.
@@ -28,23 +29,20 @@ import org.slf4j.LoggerFactory;
  */
 public class PlatformLoggingManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(PlatformLoggingManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLoggingManager.class);
 
-    private final String configPath;
 
-    public PlatformLoggingManager(String configPath) {
-        this.configPath = configPath;
-    }
-
-    public void configure() {
-        final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        final JoranConfigurator configurator = new JoranConfigurator();
-        try {
-            configurator.setContext(context);
-            configurator.doConfigure(configPath);
-
-        } catch (JoranException e) {
-            logger.error("Exception configuring logback using the provided config file " + configPath, e);
+    public static void configure() {
+        final String configPath = System.getProperty("logback.config");
+        if (!StringUtils.isEmpty(configPath)) {
+            final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+            final JoranConfigurator configurator = new JoranConfigurator();
+            try {
+                configurator.setContext(context);
+                configurator.doConfigure(configPath);
+            } catch (JoranException e) {
+                LOGGER.error("Exception configuring logback using the provided config file " + configPath, e);
+            }
         }
     }
 }
