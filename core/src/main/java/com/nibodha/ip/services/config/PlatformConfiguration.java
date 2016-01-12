@@ -16,6 +16,9 @@
 
 package com.nibodha.ip.services.config;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.xml.XmlConfiguration;
@@ -28,6 +31,7 @@ import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -37,14 +41,10 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.util.StringUtils;
 import org.xml.sax.SAXException;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-
 @Configuration
 @Import({ActiveMqConfiguration.class})
 @ImportResource("classpath*:META-INF/spring/nip-application-context.xml")
-@EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class,
+@EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
         DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class})
 public class PlatformConfiguration {
 
