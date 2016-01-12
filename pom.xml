@@ -48,6 +48,7 @@
         <jetty.version>9.3.6.v20151106</jetty.version>
         <oracle-ojdbc.version>11.2.0.3</oracle-ojdbc.version>
         <activemq.version>5.13.0</activemq.version>
+        <joda-time.version>2.9.1</joda-time.version>
     </properties>
     <developers>
         <developer>
