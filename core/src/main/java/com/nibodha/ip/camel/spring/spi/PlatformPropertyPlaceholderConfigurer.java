@@ -57,7 +57,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
 
     public void setFileNames(final String fileNames) throws IOException {
         final String[] fileNamesArray = fileNames.split(",");
-        final List<Resource> locationsList = new ArrayList<Resource>();
+        final List<Resource> locationsList = new ArrayList<>();
         for (final String fileName : fileNamesArray) {
 
             final String pattern;
