@@ -16,6 +16,7 @@
 package com.nibodha.ip.launcher;
 
 import com.nibodha.ip.camel.RouteDefinitionsInjector;
+import com.nibodha.ip.logging.PlatformLoggingManager;
 import com.nibodha.ip.services.config.PlatformConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,12 @@ public class PlatformLauncher extends SpringBootServletInitializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLauncher.class);
 
+    static {
+        PlatformLoggingManager.configure();
+    }
+
     public static void main(final String[] args) {
+
         printSystemProperties();
         new PlatformLauncher().run(args);
 
@@ -65,7 +71,6 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         final RouteDefinitionsInjector routeDefinitionsInjector = configurableApplicationContext.getBean(RouteDefinitionsInjector.class);
         routeDefinitionsInjector.inject();
     }
-
 
 
 }

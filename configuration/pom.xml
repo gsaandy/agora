@@ -15,6 +15,7 @@
     <work.dir>${project.build.directory}/${project.build.finalName}</work.dir>
   </properties>
   <build>
+    <finalName>${project.artifactId}</finalName>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
