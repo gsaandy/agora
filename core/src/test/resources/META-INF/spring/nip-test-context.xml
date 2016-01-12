@@ -9,7 +9,15 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <beans:import resource="classpath*:META-INF/spring/nip-application-context.xml"/>
+    <beans:bean id="bridgePropertyPlaceholder" class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
+        <beans:property name="configFileLocation" value="${config.location}"/>
+        <beans:property name="fileNames" value="classpath:test-is.properties"/>
+    </beans:bean>
+
+    <context:component-scan base-package="com.nibodha.ip.camel"/>
+    <context:component-scan base-package="com.nibodha.ip.processors"/>
+
+    <camelContext id="com.nibodha.ip.test"/>
 
     <routeContext id="com.nibodha.ip.test.context">
         <route id="com.nibodha.ip.test.context.route">
