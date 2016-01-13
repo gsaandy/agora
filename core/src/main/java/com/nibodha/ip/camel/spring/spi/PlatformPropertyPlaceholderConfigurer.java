@@ -48,6 +48,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
     public PlatformPropertyPlaceholderConfigurer() {
         resourcePatternResolver = new PathMatchingResourcePatternResolver();
         yamlPropertiesLoader = new YamlPropertiesLoader();
+        this.setFileEncoding("UTF-8");
     }
 
     public void setConfigFileLocation(final Resource configFileLocation) throws IOException {
