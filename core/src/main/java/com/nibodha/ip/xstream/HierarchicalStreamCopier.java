@@ -18,6 +18,7 @@ package com.nibodha.ip.xstream;
 
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author gibugeorge on 14/01/16.
@@ -31,10 +32,10 @@ public class HierarchicalStreamCopier {
             destination.addAttribute(source.getAttributeName(i), source.getAttribute(i));
         }
         String value = source.getValue();
-        if(value!=null ) {
-            value =value.replaceAll("\\n","").replaceAll("\\r","").trim();
+        if (StringUtils.isNotEmpty(value)) {
+            value = value.replaceAll("\\n", "").replaceAll("\\r", "").trim();
         }
-        if (value != null && value.length() > 0) {
+        if (StringUtils.isNotEmpty(value)) {
             destination.setValue(value);
         }
         while (source.hasMoreChildren()) {
