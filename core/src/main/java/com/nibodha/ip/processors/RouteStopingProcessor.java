@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
  * @author gibugeorge on 17/12/15.
  * @version 1.0
  */
-@Component
 public class RouteStopingProcessor implements Processor{
 
     private Thread stop;
