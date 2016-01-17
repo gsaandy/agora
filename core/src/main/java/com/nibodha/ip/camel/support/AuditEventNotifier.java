@@ -56,7 +56,7 @@ public class AuditEventNotifier extends EventNotifierSupport {
 
     @Override
     public boolean isEnabled(EventObject event) {
-        return true;
+        return event instanceof ExchangeSentEvent || event instanceof ExchangeCompletedEvent;
     }
 
     @Override
