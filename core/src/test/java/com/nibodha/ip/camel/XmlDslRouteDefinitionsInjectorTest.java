@@ -5,7 +5,6 @@
 package com.nibodha.ip.camel;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:META-INF/spring/nip-test-context.xml"})
-public class RouteDefinitionsInjectorTest {
+@ContextConfiguration(locations = {"classpath:META-INF/spring/nip-xml-dsl-test-context.xml"})
+public class XmlDslRouteDefinitionsInjectorTest {
 
     static {
         System.setProperty("config.location","classpath:.");
@@ -28,7 +27,7 @@ public class RouteDefinitionsInjectorTest {
     private RouteDefinitionsInjector routeDefinitionsInjector;
 
     @Test
-    public void whenRouteContextIsAvailableRoutesAreInjectedToCamelContext() {
+    public void whenRouteContextIsAvailableRoutesAreInjectedToCamelContext() throws Exception{
         routeDefinitionsInjector.inject();
         Assert.assertTrue(routeDefinitionsInjector.getCamelContext().getRoutes().size()>0);
     }

@@ -13,11 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nibodha.ip.deployer;
+
+package com.nibodha.ip.services.components.rs.test;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 /**
- * @author Gibu George (gibu.george@nibodha.com)
+ * @author gibugeorge on 17/01/16.
  * @version 1.0
  */
-public class DeploymentDirectoryWatcher {
+@Path("/testService/")
+public class TestService {
+
+    @GET
+    @Path("/stringvalue/{id}/")
+    public String convertToString(@PathParam("id") int id) {
+        return String.valueOf(id);
+    }
 }

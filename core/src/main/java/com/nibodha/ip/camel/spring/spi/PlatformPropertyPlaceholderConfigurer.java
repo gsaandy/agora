@@ -84,13 +84,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
                     logger.info("Loading properties file from " + location);
                 }
                 try {
-                    if (location.getFilename().endsWith(".yaml")) {
-                        yamlPropertiesLoader.setResources(location);
-                        props.putAll(yamlPropertiesLoader.createProperties());
-                    } else {
-                        PropertiesLoaderUtils.fillProperties(
-                                props, new EncodedResource(location, this.fileEncoding));
-                    }
+                    doLoadProperties(props, location);
                 } catch (IOException ex) {
                     if (this.ignoreResourceNotFound) {
                         if (logger.isWarnEnabled()) {
@@ -101,6 +95,16 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
                     }
                 }
             }
+        }
+    }
+
+    private void doLoadProperties(Properties props, Resource location) throws IOException {
+        if (location.getFilename().endsWith(".yaml")) {
+            yamlPropertiesLoader.setResources(location);
+            props.putAll(yamlPropertiesLoader.createProperties());
+        } else {
+            PropertiesLoaderUtils.fillProperties(
+                    props, new EncodedResource(location, this.fileEncoding));
         }
     }
 

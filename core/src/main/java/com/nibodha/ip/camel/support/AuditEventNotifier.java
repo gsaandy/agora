@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.camel.management;
+package com.nibodha.ip.camel.support;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.management.event.ExchangeCompletedEvent;
@@ -56,7 +56,7 @@ public class AuditEventNotifier extends EventNotifierSupport {
 
     @Override
     public boolean isEnabled(EventObject event) {
-        return false;
+        return event instanceof ExchangeSentEvent || event instanceof ExchangeCompletedEvent;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class AuditEventNotifier extends EventNotifierSupport {
         // filter out unwanted events
         setIgnoreCamelContextEvents(false);
         setIgnoreServiceEvents(false);
-        setIgnoreRouteEvents(true);
+        setIgnoreRouteEvents(false);
         setIgnoreExchangeCreatedEvent(false);
         setIgnoreExchangeCompletedEvent(false);
         setIgnoreExchangeFailedEvents(false);

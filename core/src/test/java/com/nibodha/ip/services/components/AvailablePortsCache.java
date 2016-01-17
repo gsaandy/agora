@@ -13,19 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nibodha.ip.deployer;
 
-import org.springframework.boot.loader.archive.ExplodedArchive;
+package com.nibodha.ip.services.components;
 
-import java.io.File;
+import org.apache.camel.test.AvailablePortFinder;
 
 /**
- * @author Gibu George (gibu.george@nibodha.com)
+ * @author gibugeorge on 17/01/16.
  * @version 1.0
  */
-public class Artifact extends ExplodedArchive{
+public class AvailablePortsCache {
+    static final int PORT1 = AvailablePortFinder.getNextAvailable();
 
-    public Artifact(File root, boolean recursive) {
-        super(root, recursive);
+    static {
+        System.setProperty("AvailablePortsCache.port1", Integer.toString(PORT1));
     }
+
+    private AvailablePortsCache() {
+    }
+
+    public static int getPort(String name) {
+        int port = AvailablePortFinder.getNextAvailable();
+        System.setProperty(name, Integer.toString(port));
+        return port;
+    }
+
+    public static int getPort1() {
+        return PORT1;
+    }
+
 }

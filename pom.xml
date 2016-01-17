@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -49,6 +50,7 @@
         <oracle-ojdbc.version>11.2.0.3</oracle-ojdbc.version>
         <activemq.version>5.13.0</activemq.version>
         <joda-time.version>2.9.1</joda-time.version>
+        <cxf.version>3.1.4</cxf.version>
     </properties>
     <developers>
         <developer>
@@ -195,17 +197,13 @@
                 <artifactId>hibernate-entitymanager</artifactId>
                 <version>${hibernate.version}</version>
             </dependency>
+            <!-- CXF dependencies-->
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http-jetty</artifactId>
+                <version>${cxf.version}</version>
             </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-jndi</artifactId>
@@ -244,9 +242,28 @@
                 <artifactId>activemq-kahadb-store</artifactId>
                 <version>${activemq.version}</version>
             </dependency>
+            <!-- Unit test dependencies-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-test</artifactId>
+                <version>${camel.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-test-spring</artifactId>
                 <version>${camel.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -273,7 +290,7 @@
         </snapshotRepository>
     </distributionManagement>
     <scm>
-      <developerConnection>scm:git:git://gitlab.nibodha.local/nibodha</developerConnection>
+        <developerConnection>scm:git:git://gitlab.nibodha.local/nibodha</developerConnection>
     </scm>
     <build>
         <plugins>
@@ -330,5 +347,33 @@
 
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>mutationcoverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>1.1.8</version>
+                        <configuration>
+                            <outputFormats>
+                                <outputFormat>XML</outputFormat>
+                                <outputFormat>HTML</outputFormat>
+                            </outputFormats>
+                            <timestampedReports>false</timestampedReports>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

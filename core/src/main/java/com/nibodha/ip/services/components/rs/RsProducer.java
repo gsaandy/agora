@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nibodha.ip.deployer;
+
+package com.nibodha.ip.services.components.rs;
+
+import org.apache.camel.component.cxf.jaxrs.CxfRsProducer;
 
 /**
- * @author Gibu George (gibu.george@nibodha.com)
+ * @author gibugeorge on 16/01/16.
  * @version 1.0
  */
-public interface ArifactDeployer {
+public class RsProducer extends CxfRsProducer {
+    public RsProducer(final RsEndpoint endpoint) {
+        super(endpoint);
+    }
 }

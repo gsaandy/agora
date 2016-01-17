@@ -17,18 +17,21 @@
 
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:cxf="http://camel.apache.org/schema/cxf"
              xmlns="http://camel.apache.org/schema/spring"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-    <beans:bean id="bridgePropertyPlaceholder"
-                class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
-        <beans:property name="configFileLocation" value="${config.location}"/>
-        <beans:property name="fileNames" value="classpath:test-is.properties"/>
-    </beans:bean>
-    <context:component-scan base-package="com.nibodha.ip.camel"/>
-    <context:component-scan base-package="com.nibodha.ip.processors"/>
-    <camelContext id="com.nibodha.ip.test"/>
 
+    <cxf:rsServer id="rsServer" address="http://localhost:9000/rsTest"
+                  serviceClass="com.nibodha.ip.services.components.rs.test.TestService"
+                  loggingFeatureEnabled="true" loggingSizeLimit="200">
+
+    </cxf:rsServer>
+
+    <cxf:rsClient id="rsClient" address="http://localhost:9002/test"
+                  serviceClass="com.nibodha.ip.services.components.rs.test.TestService">
+
+    </cxf:rsClient>
+    <camelContext id="com.nibodha.ip.test.rs.spring"/>
 </beans:beans>

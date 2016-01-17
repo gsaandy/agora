@@ -43,7 +43,7 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         PlatformLoggingManager.configure();
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args){
 
         printSystemProperties();
         new PlatformLauncher().run(args);
@@ -62,7 +62,7 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         }
     }
 
-    public void run(final String[] args) {
+    public void run(final String[] args){
         final SpringApplication application = new SpringApplication(PlatformLauncher.class);
         application.setRegisterShutdownHook(true);
         application.setWebEnvironment(true);

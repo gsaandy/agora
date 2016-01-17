@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nibodha.ip.exceptions;
+
+package com.nibodha.ip.services.components.rs;
+
+import org.apache.camel.Processor;
+import org.apache.camel.component.cxf.jaxrs.CxfRsConsumer;
+import org.apache.camel.component.cxf.jaxrs.CxfRsEndpoint;
 
 /**
- * @author Gibu George (gibu.george@nibodha.com)
+ * @author gibugeorge on 16/01/16.
  * @version 1.0
  */
-
-public class PlatformRuntimeException extends RuntimeException {
-
-    public PlatformRuntimeException(final String message) {
-        super(message);
-    }
-    public PlatformRuntimeException(final String message, final Exception e) {
-        super(message, e);
+public class RsConsumer extends CxfRsConsumer {
+    public RsConsumer(final CxfRsEndpoint endpoint, final Processor processor) {
+        super(endpoint, processor);
     }
 }

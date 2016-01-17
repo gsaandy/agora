@@ -21,7 +21,6 @@ import org.apache.camel.CamelContextAware;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.RouteDefinition;
-import org.apache.camel.model.RoutesDefinition;
 import org.apache.camel.spring.CamelRouteContextFactoryBean;
 import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
@@ -62,7 +61,7 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         return this.camelContext;
     }
 
-    public void inject() {
+    public void inject(){
         addSpringDslRoutes();
         addJavaDslRoutes();
     }
@@ -99,6 +98,12 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
     private void addRoutesToCamelContext(String routeContextId, List<RouteDefinition> routeDefinitions) {
         for (final RouteDefinition routeDefinition : routeDefinitions) {
             final String routeDefinitionId = routeDefinition.getId();
+            if (StringUtils.isEmpty(routeDefinitionId)) {
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Rejecting route as routedefinition id is null");
+                }
+                continue;
+            }
             if(!routeDefinitionId.startsWith(routeIdPatternsToInject)) {
                 if (LOGGER.isInfoEnabled()) {
                     LOGGER.info("Rejecting route " + routeDefinitionId + "doesn't match the pattern "+ routeIdPatternsToInject);
@@ -111,9 +116,7 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
                 }
                 continue;
             }
-            if (StringUtils.isEmpty(routeDefinitionId)) {
-                throw new PlatformRuntimeException("The route id cannot be null");
-            }
+
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("Adding route definition with id " + routeDefinitionId + " from route context with id " + routeContextId + " to camel context");
             }
@@ -141,9 +144,12 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         final Set<String> routeBuilderNames = routeBuilders.keySet();
         for (final String routeBuilderName : routeBuilderNames) {
             final RouteBuilder routeBuilder = routeBuilders.get(routeBuilderName);
-            final RoutesDefinition routesDefinition = routeBuilder.getRouteCollection();
-            final List<RouteDefinition> routeDefinitions = routesDefinition.getRoutes();
-            addRoutesToCamelContext(routeBuilderName, routeDefinitions);
+            try {
+                camelContext.addRoutes(routeBuilder);
+            } catch (Exception e) {
+                LOGGER.error("Exception while adding route builder "+routeBuilderName+" to context",e);
+            }
+
 
         }
 
