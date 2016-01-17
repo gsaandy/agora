@@ -14,22 +14,32 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.components.rs.test;
+package com.nibodha.ip.services.components;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import org.apache.camel.test.AvailablePortFinder;
 
 /**
  * @author gibugeorge on 17/01/16.
  * @version 1.0
  */
-@Path("/testService/")
-public class TestService {
+public class AvailablePortsCache {
+    static final int PORT1 = AvailablePortFinder.getNextAvailable();
 
-    @GET
-    @Path("/stringvalue/{id}/")
-    public String convertToString(@PathParam("id") int id) {
-        return String.valueOf(id);
+    static {
+        System.setProperty("AvailablePortsCache.port1", Integer.toString(PORT1));
     }
+
+    private AvailablePortsCache() {
+    }
+
+    public static int getPort(String name) {
+        int port = AvailablePortFinder.getNextAvailable();
+        System.setProperty(name, Integer.toString(port));
+        return port;
+    }
+
+    public static int getPort1() {
+        return PORT1;
+    }
+
 }
