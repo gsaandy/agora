@@ -54,9 +54,7 @@ public class EmbeddedContainerConfiguration {
                     try {
                         final XmlConfiguration xmlConfiguration = new XmlConfiguration(new FileInputStream(jettyConfigXmlPath));
                         xmlConfiguration.configure(server);
-                    } catch (SAXException e) {
-                        LOGGER.error("Exception reading the xml configuration", e);
-                    } catch (IOException e) {
+                    } catch (SAXException | IOException e) {
                         LOGGER.error("Exception reading the xml configuration", e);
                     } catch (Exception e) {
                         LOGGER.error("Exception configuring the server configuration", e);
