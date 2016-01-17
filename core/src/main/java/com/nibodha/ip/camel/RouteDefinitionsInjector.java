@@ -62,7 +62,7 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         return this.camelContext;
     }
 
-    public void inject() {
+    public void inject() throws Exception{
         addSpringDslRoutes();
         addJavaDslRoutes();
     }
@@ -126,7 +126,7 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         }
     }
 
-    private void addJavaDslRoutes() {
+    private void addJavaDslRoutes() throws Exception {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Getting route builders from spring application contexts");
         }
@@ -141,9 +141,8 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         final Set<String> routeBuilderNames = routeBuilders.keySet();
         for (final String routeBuilderName : routeBuilderNames) {
             final RouteBuilder routeBuilder = routeBuilders.get(routeBuilderName);
-            final RoutesDefinition routesDefinition = routeBuilder.getRouteCollection();
-            final List<RouteDefinition> routeDefinitions = routesDefinition.getRoutes();
-            addRoutesToCamelContext(routeBuilderName, routeDefinitions);
+            camelContext.addRoutes(routeBuilder);
+
 
         }
 
