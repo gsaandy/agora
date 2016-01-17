@@ -16,6 +16,7 @@
 
 package com.nibodha.ip.services.components.rs;
 
+import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import org.apache.camel.Component;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
@@ -28,22 +29,27 @@ import org.apache.camel.spi.UriEndpoint;
  * @version 1.0
  */
 @UriEndpoint(scheme = "rs", title = "RS", syntax = "rs:beanId:address", consumerClass = RsConsumer.class, label = "rest")
-public class RsEndpoint extends CxfRsEndpoint{
+public class RsEndpoint extends CxfRsEndpoint {
 
 
     public RsEndpoint(String endpointUri, Component component) {
         super(endpointUri, component);
         setAddress(endpointUri);
     }
+
     @Override
-    public Consumer createConsumer(final Processor processor) throws Exception {
+    public Consumer createConsumer(final Processor processor) {
         final RsConsumer answer = new RsConsumer(this, processor);
-        configureConsumer(answer);
+        try {
+            configureConsumer(answer);
+        } catch (Exception e) {
+            throw new PlatformRuntimeException("Exception configuring RsConsumer", e);
+        }
         return answer;
     }
 
     @Override
-    public Producer createProducer() throws Exception {
+    public Producer createProducer() {
         if (getBindingStyle() == BindingStyle.SimpleConsumer) {
             throw new IllegalArgumentException("The SimpleConsumer Binding Style cannot be used in a camel-cxfrs producer");
         }

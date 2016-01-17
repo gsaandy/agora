@@ -31,7 +31,7 @@ public class RsSpringEndpoint extends RsEndpoint implements BeanIdAware {
     private String beanId;
 
 
-    public RsSpringEndpoint(final Component component, final String uri, final AbstractJAXRSFactoryBean bean) throws Exception {
+    public RsSpringEndpoint(final Component component, final String uri, final AbstractJAXRSFactoryBean bean) {
         super(uri, component);
         setAddress(bean.getAddress());
         // Update the sfb address by resolving the properties
@@ -58,10 +58,12 @@ public class RsSpringEndpoint extends RsEndpoint implements BeanIdAware {
         return (JAXRSClientFactoryBean) bean;
     }
 
+    @Override
     public String getBeanId() {
         return beanId;
     }
 
+    @Override
     public void setBeanId(final String id) {
         this.beanId = id;
     }

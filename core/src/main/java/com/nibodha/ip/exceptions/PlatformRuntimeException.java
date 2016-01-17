@@ -25,4 +25,7 @@ public class PlatformRuntimeException extends RuntimeException {
     public PlatformRuntimeException(final String message) {
         super(message);
     }
+    public PlatformRuntimeException(final String message, final Exception e) {
+        super(message, e);
+    }
 }
