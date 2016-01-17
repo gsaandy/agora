@@ -17,5 +17,20 @@
             <from uri="direct://test1"/>
             <to uri="direct://mock:result1"/>
         </route>
+        <!-- Null route id -->
+        <route>
+            <from uri="direct://test2"/>
+            <to uri="direct://mock:result2"/>
+        </route>
+        <!-- Route id doesn't match pattern -->
+        <route id="test">
+            <from uri="direct://test3"/>
+            <to uri="direct://mock:result3"/>
+        </route>
+        <!-- Duplicate route id-->
+        <route id="com.nibodha.ip.test.context.route">
+            <from uri="direct://test4"/>
+            <to uri="direct://mock:result4"/>
+        </route>
     </routeContext>
 </beans:beans>
