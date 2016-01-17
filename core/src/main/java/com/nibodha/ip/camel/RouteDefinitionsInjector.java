@@ -61,7 +61,7 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         return this.camelContext;
     }
 
-    public void inject() throws Exception{
+    public void inject(){
         addSpringDslRoutes();
         addJavaDslRoutes();
     }
