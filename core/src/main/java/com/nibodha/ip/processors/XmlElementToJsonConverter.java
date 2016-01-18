@@ -34,22 +34,19 @@ import java.io.StringWriter;
  */
 @Component
 public class XmlElementToJsonConverter implements Processor {
+
+    private final HierarchicalStreamCopier copier = new HierarchicalStreamCopier();
+    private final JettisonMappedXmlDriver jettisonDriver = new JettisonMappedXmlDriver();
+
     @Override
     public void process(final Exchange exchange) throws Exception {
         final Element element = exchange.getIn().getBody(Element.class);
         if (element != null) {
             final HierarchicalStreamReader sourceReader = new DomReader(element);
-
             final StringWriter buffer = new StringWriter();
-            final JettisonMappedXmlDriver jettisonDriver = new JettisonMappedXmlDriver();
-            jettisonDriver.createWriter(buffer);
             final HierarchicalStreamWriter destinationWriter = jettisonDriver.createWriter(buffer);
-
-            final HierarchicalStreamCopier copier = new HierarchicalStreamCopier();
             copier.copy(sourceReader, destinationWriter);
             exchange.getIn().setBody(buffer.toString());
         }
-
     }
-
 }
