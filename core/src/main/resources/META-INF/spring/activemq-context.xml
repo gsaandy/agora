@@ -22,7 +22,7 @@
         <beans:property name="config" value="classpath:META-INF/spring/activemq-configuration-context.xml"/>
         <beans:property name="start" value="true"/>
     </beans:bean>
-    <beans:bean id="vm"
+    <beans:bean id="activemq"
                 class="org.apache.activemq.camel.component.ActiveMQComponent">
         <beans:property name="connectionFactory" ref="pooledConnectionFactory"/>
         <beans:property name="transacted" value="true"/>
@@ -43,7 +43,7 @@
     </beans:bean>
     <beans:bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <beans:property name="brokerURL"
-                        value="vm://activemqbroker:61616?broker.persistent=true&amp;broker.useJmx=false"/>
+                        value="activemq://activemqbroker:61616?broker.persistent=true&amp;broker.useJmx=false"/>
         <beans:property name="redeliveryPolicy" ref="redeliveryPolicy"/>
         <beans:property name="transactedIndividualAck" value="true"/>
     </beans:bean>
