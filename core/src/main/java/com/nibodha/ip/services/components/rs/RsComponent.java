@@ -54,7 +54,7 @@ public class RsComponent extends CxfRsComponent {
                     AbstractJAXRSFactoryBean.class);
             answer = new RsSpringEndpoint(this, remaining, bean);
             if (bean.getProperties() != null) {
-                Map<String, Object> copy = new HashMap<String, Object>();
+                Map<String, Object> copy = new HashMap<>();
                 copy.putAll(bean.getProperties());
                 setProperties(answer, copy);
             }
