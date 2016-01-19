@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.nibodha.ip</groupId>
         <artifactId>integration-platform</artifactId>
-        <version>1.1</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <groupId>com.nibodha.ip</groupId>
     <artifactId>configuration</artifactId>
