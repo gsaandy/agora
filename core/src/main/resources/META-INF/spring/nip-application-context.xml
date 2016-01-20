@@ -24,11 +24,6 @@ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
     <context:component-scan base-package="com.nibodha.ip.camel"/>
     <context:component-scan base-package="com.nibodha.ip.processors"/>
 
-    <beans:bean id="bridgePropertyPlaceholder" class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
-        <beans:property name="configFileLocation" value="${config.location}"/>
-        <beans:property name="fileNames" value="classpath:application.properties, *.yaml, *.properties"/>
-    </beans:bean>
-
     <camelContext id="com.nibodha.ip"/>
 
     <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>

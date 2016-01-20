@@ -16,6 +16,7 @@
 
 package com.nibodha.ip.camel.spring.spi;
 
+import com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,7 @@ import static org.junit.Assert.*;
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:META-INF/spring/placeholder-configurer-test-context.xml"})
+@ContextConfiguration(classes = {PlatformPlaceHolderConfiguration.class})
 public class PlatformPropertyPlaceholderConfigurerTest {
 
     static {
