@@ -16,7 +16,6 @@
 
 package com.nibodha.ip.processors;
 
-import com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
 import org.apache.camel.Produce;
@@ -26,13 +25,6 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.StringReader;
 
 /**
  * @author gibugeorge on 14/01/16.
@@ -48,17 +40,15 @@ public class XmlElementToJsonConverterTest extends CamelTestSupport {
 
     protected Exchange exchange;
 
-
+    @Override
     protected void doPostSetup() throws Exception {
         exchange = new DefaultExchange(this.context());
     }
 
     @Test
     public void whenInputElementIsNullNullIsReturned() throws InterruptedException {
-
         template.send(exchange);
         assertNull(exchange.getIn().getBody());
-
     }
 
     @Test
@@ -66,15 +56,9 @@ public class XmlElementToJsonConverterTest extends CamelTestSupport {
         final String xmlString = "<tests>\n\r  " +
                 "   <test>1234</test>\n\r   " +
                 "</tests>  ";
-        final InputSource inputSource = new InputSource(new StringReader(xmlString));
-        final Document document = DocumentBuilderFactoryImpl.newInstance().newDocumentBuilder().parse(inputSource);
-        document.getDocumentElement().normalize();
-        final Element element = document.getDocumentElement();
-        exchange.getIn().setBody(element);
+        exchange.getIn().setBody(xmlString);
         template.send(exchange);
-        assertEquals("{\"tests\":{\"test\":1234}}",exchange.getIn().getBody());
-
-
+        assertEquals("{\"tests\":{\"test\":1234}}", exchange.getIn().getBody());
     }
 
     @Override

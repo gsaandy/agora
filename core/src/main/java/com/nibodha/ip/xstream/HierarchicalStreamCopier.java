@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
  * @version 1.0
  */
 public class HierarchicalStreamCopier {
+
     public void copy(final HierarchicalStreamReader source, final HierarchicalStreamWriter destination) {
         destination.startNode(source.getNodeName());
         int attributeCount = source.getAttributeCount();
@@ -45,4 +46,5 @@ public class HierarchicalStreamCopier {
         }
         destination.endNode();
     }
+
 }
