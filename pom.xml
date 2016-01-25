@@ -51,6 +51,7 @@
         <activemq.version>5.13.0</activemq.version>
         <joda-time.version>2.9.1</joda-time.version>
         <cxf.version>3.1.4</cxf.version>
+        <hibernate.ogm-version>4.2.0.Final</hibernate.ogm-version>
     </properties>
     <developers>
         <developer>
@@ -256,6 +257,16 @@
                 <artifactId>camel-test-spring</artifactId>
                 <version>${camel.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.ogm</groupId>
+                <artifactId>hibernate-ogm-infinispan</artifactId>
+                <version>${hibernate.ogm-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-core</artifactId>
+                <version>${infinispan.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

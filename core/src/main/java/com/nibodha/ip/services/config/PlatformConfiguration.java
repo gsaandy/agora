@@ -19,6 +19,7 @@ package com.nibodha.ip.services.config;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
 import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
@@ -29,10 +30,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-@Import({PlatformPlaceHolderConfiguration.class, EmbeddedContainerConfiguration.class, ActiveMqConfiguration.class})
+@Import({PlatformPlaceHolderConfiguration.class, EmbeddedContainerConfiguration.class, ActiveMqConfiguration.class, CacheConfiguration.class})
 @ImportResource("classpath*:META-INF/spring/nip-application-context.xml")
 @EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
-        DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class, MongoDataAutoConfiguration.class})
+        DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class,
+        MongoDataAutoConfiguration.class, CacheAutoConfiguration.class
+})
 public class PlatformConfiguration {
 
 
