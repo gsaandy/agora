@@ -33,6 +33,7 @@ public class CachePropertiesConfiguration {
         final CacheProperties cacheProperties = new CacheProperties();
         cacheProperties.setEnabled(true);
         cacheProperties.setConfig(new ClassPathResource("infinispan.xml"));
+        cacheProperties.setCacheNames("platformCache");
         return cacheProperties;
     }
 }

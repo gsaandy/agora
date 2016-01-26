@@ -17,6 +17,7 @@
 package com.nibodha.ip.services.config;
 
 import com.nibodha.ip.services.cache.CacheProperties;
+import com.nibodha.ip.services.cache.InifinispanLoggingListener;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;
@@ -45,8 +46,18 @@ public class CacheConfiguration {
 
     @Bean
     public EmbeddedCacheManager infinispanCacheManager() throws IOException {
-        EmbeddedCacheManager cacheManager = createEmbeddedCacheManager();
-
+        final EmbeddedCacheManager cacheManager = createEmbeddedCacheManager();
+        if (this.cacheProperties.getConfig() == null) {
+            if (cacheProperties.getCacheNames() == null) {
+                cacheManager.startCaches(CacheProperties.DEFAULT_PLATFORM_CACHE_NAME);
+                cacheManager.getCache(CacheProperties.DEFAULT_PLATFORM_CACHE_NAME, true).addListener(new InifinispanLoggingListener());
+            } else {
+                cacheManager.startCaches(cacheProperties.getCacheNames());
+                for (String cacheName : cacheProperties.getCacheNames()) {
+                    cacheManager.getCache(cacheName, true).addListener(new InifinispanLoggingListener());
+                }
+            }
+        }
         return cacheManager;
     }
 
@@ -68,7 +79,7 @@ public class CacheConfiguration {
                 .defaultClusteredBuilder()
                 .nonClusteredDefault()
                 .globalJmxStatistics()
-                .cacheManagerName("Platform Cache")
+                .cacheManagerName("Platform Cache Manager")
                 .enable()
                 .build();
 
