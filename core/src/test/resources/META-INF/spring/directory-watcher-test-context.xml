@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016 Nibodha Technologies Pvt. Ltd.
+  ~ Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,15 +17,18 @@
 
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
              xmlns="http://camel.apache.org/schema/spring"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-    <beans:bean id="platformPropertyPlaceholderConfigurer"
+    <beans:bean id="watcherTestPropertyPlaceHolder"
                 class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
-        <beans:property name="fileNames" value="test1-application.properties,test-application.yaml"/>
-        <beans:property name="ignoreResourceNotFound" value="true"/>
+        <beans:property name="fileNames" value="*-watcher.properties"/>
     </beans:bean>
+    <context:component-scan base-package="com.nibodha.ip.services.camel"/>
+    <context:component-scan base-package="com.nibodha.ip.processors"/>
+
 
 </beans:beans>

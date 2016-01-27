@@ -15,7 +15,8 @@
  */
 package com.nibodha.ip.launcher;
 
-import com.nibodha.ip.camel.RouteDefinitionsInjector;
+import com.nibodha.ip.services.camel.RouteDefinitionsInjector;
+import com.nibodha.ip.services.camel.spring.ConfigurationDirectoryWatcher;
 import com.nibodha.ip.services.config.PlatformConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +66,8 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         final ConfigurableApplicationContext configurableApplicationContext = application.run(args);
         final RouteDefinitionsInjector routeDefinitionsInjector = configurableApplicationContext.getBean(RouteDefinitionsInjector.class);
         routeDefinitionsInjector.inject();
+        final ConfigurationDirectoryWatcher configurationDirectoryWatcher = configurableApplicationContext.getBean(ConfigurationDirectoryWatcher.class);
+        configurationDirectoryWatcher.start();
     }
 
 

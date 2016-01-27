@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.camel;
+package com.nibodha.ip.services.camel;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.junit.Assert;

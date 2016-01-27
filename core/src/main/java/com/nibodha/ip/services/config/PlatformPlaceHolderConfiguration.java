@@ -16,7 +16,7 @@
 
 package com.nibodha.ip.services.config;
 
-import com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer;
+import com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Bean;

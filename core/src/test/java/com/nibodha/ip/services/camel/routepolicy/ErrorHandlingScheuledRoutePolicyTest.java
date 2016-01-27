@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.camel.routepolicy;
+package com.nibodha.ip.services.camel.routepolicy;
 
 import org.apache.camel.ServiceStatus;
 import org.apache.camel.builder.RouteBuilder;

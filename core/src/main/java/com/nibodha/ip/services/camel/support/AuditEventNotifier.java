@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.camel.support;
+package com.nibodha.ip.services.camel.support;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.management.event.ExchangeCompletedEvent;
