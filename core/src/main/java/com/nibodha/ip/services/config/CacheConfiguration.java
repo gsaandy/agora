@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
+ * Copyright 2016 Nibodha Technologies Pvt. Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import java.io.InputStream;
  * @version 1.0
  */
 @Configuration
-@ConditionalOnProperty(prefix = "platform.cache", value = "enabled", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = "platform.cache", value = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration {
 

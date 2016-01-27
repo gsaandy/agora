@@ -14,35 +14,25 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.cache;
+package com.nibodha.ip.services.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.Resource;
+import com.nibodha.ip.services.cache.CacheProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 /**
- * @author gibugeorge on 24/01/16.
+ * @author gibugeorge on 27/01/16.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "platform.cache")
-public class CacheProperties {
+@Configuration
+public class CachePropertiesConfiguration {
 
-    private boolean enabled = true;
-    private Resource config;
-
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(final boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Resource getConfig() {
-        return config;
-    }
-
-    public void setConfig(final Resource config) {
-        this.config = config;
+    @Bean
+    public CacheProperties cacheProperties() {
+        final CacheProperties cacheProperties = new CacheProperties();
+        cacheProperties.setEnabled(true);
+        cacheProperties.setConfig(new ClassPathResource("infinispan.xml"));
+        return cacheProperties;
     }
 }
