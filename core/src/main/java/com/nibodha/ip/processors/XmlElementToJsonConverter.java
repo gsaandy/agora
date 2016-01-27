@@ -20,12 +20,13 @@ import com.nibodha.ip.xstream.HierarchicalStreamCopier;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import com.thoughtworks.xstream.io.xml.DomReader;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Element;
 
+import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
@@ -37,16 +38,20 @@ public class XmlElementToJsonConverter implements Processor {
 
     private final HierarchicalStreamCopier copier = new HierarchicalStreamCopier();
     private final JettisonMappedXmlDriver jettisonDriver = new JettisonMappedXmlDriver();
+    private final StaxDriver staxDriver = new StaxDriver();
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        final Element element = exchange.getIn().getBody(Element.class);
-        if (element != null) {
-            final HierarchicalStreamReader sourceReader = new DomReader(element);
+        final String body = exchange.getIn().getBody(String.class);
+        if (StringUtils.isNotBlank(body)) {
+            final HierarchicalStreamReader sourceReader = staxDriver.createReader(new StringReader(body));
             final StringWriter buffer = new StringWriter();
             final HierarchicalStreamWriter destinationWriter = jettisonDriver.createWriter(buffer);
             copier.copy(sourceReader, destinationWriter);
             exchange.getIn().setBody(buffer.toString());
+            sourceReader.close();
+            destinationWriter.close();
         }
     }
+
 }
