@@ -16,12 +16,13 @@
 
 package com.nibodha.ip.services.config;
 
+import org.infinispan.Cache;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -36,12 +37,42 @@ public class DefaultCacheConfigurationTest {
 
 
     @Autowired
-    private ApplicationContext applicationContext;
+    private EmbeddedCacheManager embeddedCacheManager;
+
+    @Before
+    public void setUp() {
+        embeddedCacheManager.getCache("platformCache").put("test1","test1");
+        embeddedCacheManager.getCache("platformCache").put("test2","test2");
+    }
 
     @Test
-    public void testCacheManagerConfiguration() {
-        final EmbeddedCacheManager cacheManager = applicationContext.getBean(EmbeddedCacheManager.class);
-        Assert.assertNotNull(cacheManager);
+    public void testGetFromCache() {
+        final Cache cache = embeddedCacheManager.getCache("platformCache");
+        Assert.assertEquals("test1",cache.get("test1"));
     }
+
+    @Test
+    public void testPutInCache() {
+        final Cache cache = embeddedCacheManager.getCache("platformCache");
+        cache.put("test", "test");
+        Assert.assertEquals("test",cache.get("test"));
+    }
+
+    @Test
+    public void testRemoveFromCache() {
+        final Cache cache = embeddedCacheManager.getCache("platformCache");
+        cache.remove("test1");
+        Assert.assertNull(cache.get("test1"));
+    }
+
+    @Test
+    public void testUpdateCache() {
+        final Cache cache = embeddedCacheManager.getCache("platformCache");
+        Assert.assertEquals("test2",cache.get("test2"));
+        cache.put("test2", "test");
+        Assert.assertEquals("test",cache.get("test2"));
+    }
+
+
 
 }

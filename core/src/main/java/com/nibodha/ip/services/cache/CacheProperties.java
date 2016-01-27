@@ -28,6 +28,9 @@ public class CacheProperties {
 
     private boolean enabled = true;
     private Resource config;
+    private String[] cacheNames;
+
+    public static final String DEFAULT_PLATFORM_CACHE_NAME="platformCache";
 
 
     public boolean isEnabled() {
@@ -44,5 +47,13 @@ public class CacheProperties {
 
     public void setConfig(final Resource config) {
         this.config = config;
+    }
+
+    public String[] getCacheNames() {
+        return cacheNames;
+    }
+
+    public void setCacheNames(String... cacheNames) {
+        this.cacheNames = cacheNames;
     }
 }
