@@ -2,7 +2,7 @@
  * Copyright (c) Nibodha Technologies Pvt. Ltd. 2015. All rights reserved.  http://www.nibodha.com
  */
 
-package com.nibodha.ip.camel;
+package com.nibodha.ip.services.camel;
 
 import org.junit.Assert;
 import org.junit.Test;

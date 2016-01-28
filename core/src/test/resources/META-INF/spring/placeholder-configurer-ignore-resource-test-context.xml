@@ -22,7 +22,7 @@
 
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     <beans:bean id="platformPropertyPlaceholderConfigurer"
-                class="com.nibodha.ip.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
+                class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="test1-application.properties,test-application.yaml"/>
         <beans:property name="ignoreResourceNotFound" value="true"/>

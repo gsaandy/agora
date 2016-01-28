@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.camel.spring.spi;
+package com.nibodha.ip.services.camel.spring.spi;
 
 import com.nibodha.ip.yaml.YamlPropertiesLoader;
 import org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer;
@@ -44,19 +44,25 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
     private Resource[] locations;
     private Boolean ignoreResourceNotFound;
     private YamlPropertiesLoader yamlPropertiesLoader;
+    private Properties properties;
+    private String fileNames;
 
-    public PlatformPropertyPlaceholderConfigurer() {
+
+    public PlatformPropertyPlaceholderConfigurer() throws IOException {
         resourcePatternResolver = new PathMatchingResourcePatternResolver();
         yamlPropertiesLoader = new YamlPropertiesLoader();
         this.setFileEncoding("UTF-8");
+
     }
 
     public void setConfigFileLocation(final Resource configFileLocation) throws IOException {
         this.configFileLocation = configFileLocation;
 
+
     }
 
     public void setFileNames(final String fileNames) throws IOException {
+        this.fileNames = fileNames;
         final String[] fileNamesArray = fileNames.split(",");
         final List<Resource> locationsList = new ArrayList<>();
         for (final String fileName : fileNamesArray) {
@@ -77,7 +83,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
     }
 
     @Override
-    protected void loadProperties(Properties props) throws IOException {
+    public void loadProperties(final Properties props) throws IOException {
         if (this.locations != null) {
             for (final Resource location : this.locations) {
                 if (logger.isInfoEnabled()) {
@@ -85,6 +91,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
                 }
                 try {
                     doLoadProperties(props, location);
+                    properties = props;
                 } catch (IOException ex) {
                     if (this.ignoreResourceNotFound) {
                         if (logger.isWarnEnabled()) {
@@ -98,7 +105,7 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
         }
     }
 
-    private void doLoadProperties(Properties props, Resource location) throws IOException {
+    private void doLoadProperties(final Properties props, final Resource location) throws IOException {
         if (location.getFilename().endsWith(".yaml")) {
             yamlPropertiesLoader.setResources(location);
             props.putAll(yamlPropertiesLoader.createProperties());
@@ -109,16 +116,24 @@ public class PlatformPropertyPlaceholderConfigurer extends BridgePropertyPlaceho
     }
 
     @Override
-    public void setFileEncoding(String encoding) {
+    public void setFileEncoding(final String encoding) {
         super.setFileEncoding(encoding);
         this.fileEncoding = encoding;
     }
 
     @Override
-    public void setIgnoreResourceNotFound(boolean ignoreResourceNotFound) {
+    public void setIgnoreResourceNotFound(final boolean ignoreResourceNotFound) {
         super.setIgnoreResourceNotFound(ignoreResourceNotFound);
         this.ignoreResourceNotFound = ignoreResourceNotFound;
     }
 
 
+    public void refresh() throws IOException {
+        this.setFileNames(this.fileNames);
+        this.loadProperties(properties);
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
 }
