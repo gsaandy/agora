@@ -63,6 +63,7 @@
                 </executions>
                 <configuration>
                     <mainClass>com.nibodha.ip.launcher.PlatformLauncher</mainClass>
+                    <layout>ZIP</layout>
                     <addResources>false</addResources>
                     <jvmArguments>
                         -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006 -Dconfig.location=file:///${user.dir}/../configuration/target/configuration/local
