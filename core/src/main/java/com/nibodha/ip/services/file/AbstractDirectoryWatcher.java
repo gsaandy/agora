@@ -18,6 +18,7 @@ package com.nibodha.ip.services.file;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContextAware;
 
 import java.io.IOException;
 import java.net.URI;
@@ -29,7 +30,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * @author gibugeorge on 28/01/16.
  * @version 1.0
  */
-public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher {
+public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher{
 
 
     protected final static Logger LOGGER = LoggerFactory.getLogger(AbstractDirectoryWatcher.class);
@@ -72,9 +73,7 @@ public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWat
             }
 
             try {
-                if (kind == ENTRY_CREATE) {
-                    entryCreated();
-                } else if (kind == ENTRY_MODIFY) {
+                if (kind == ENTRY_MODIFY) {
                     entryModified();
                 }
             } catch (IOException e) {

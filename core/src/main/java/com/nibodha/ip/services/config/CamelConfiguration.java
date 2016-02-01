@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
+ * Copyright 2016 Nibodha Technologies Pvt. Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.file;
+package com.nibodha.ip.services.config;
 
-import java.io.IOException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- * @author gibugeorge on 28/01/16.
+ * @author gibugeorge on 02/02/16.
  * @version 1.0
  */
-public interface DirectoryWatcher {
-
-    /**
-     * Starts the directory watcher in new thread
-     */
-    void start();
-
-    /**
-     * This method will be executed new file/folder is modified in the watched directory
-     */
-    void entryModified() throws IOException;
+@Configuration
+@ImportResource("META-INF/spring/nip-camel-context.xml")
+@ConditionalOnProperty(prefix = "platform.routingengine", value = "enabled", havingValue = "true", matchIfMissing = true)
+public class CamelConfiguration {
 }

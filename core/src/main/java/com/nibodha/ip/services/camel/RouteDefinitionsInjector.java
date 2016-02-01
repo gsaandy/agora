@@ -25,6 +25,7 @@ import org.apache.camel.spring.CamelRouteContextFactoryBean;
 import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -34,8 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Component
-public class RouteDefinitionsInjector implements ApplicationContextAware, CamelContextAware {
+public class RouteDefinitionsInjector implements ApplicationContextAware, CamelContextAware, InitializingBean {
 
     private ApplicationContext applicationContext;
 
@@ -61,7 +61,7 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         return this.camelContext;
     }
 
-    public void inject(){
+    protected void inject(){
         addSpringDslRoutes();
         addJavaDslRoutes();
     }
@@ -159,4 +159,8 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         return camelContext.getRouteDefinition(route.getId()) != null;
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        this.inject();
+    }
 }

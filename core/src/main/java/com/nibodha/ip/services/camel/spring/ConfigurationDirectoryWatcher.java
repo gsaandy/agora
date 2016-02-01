@@ -19,6 +19,8 @@ package com.nibodha.ip.services.camel.spring;
 import com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer;
 import com.nibodha.ip.services.file.AbstractDirectoryWatcher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
@@ -41,15 +43,10 @@ public class ConfigurationDirectoryWatcher extends AbstractDirectoryWatcher {
         this.platformPropertyPlaceholderConfigurer = platformPropertyPlaceholderConfigurer;
     }
 
-    @Override
-    public void entryCreated() throws IOException {
-        this.platformPropertyPlaceholderConfigurer.refresh();
-    }
 
     @Override
     public void entryModified() throws IOException {
         this.platformPropertyPlaceholderConfigurer.refresh();
     }
-
 
 }
