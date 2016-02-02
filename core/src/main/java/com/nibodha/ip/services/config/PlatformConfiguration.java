@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-@Import({PlatformPlaceHolderConfiguration.class, EmbeddedContainerConfiguration.class, ActiveMqConfiguration.class, CacheConfiguration.class})
+@Import({PlatformPlaceHolderConfiguration.class, EmbeddedContainerConfiguration.class, CamelConfiguration.class, ActiveMqConfiguration.class, CacheConfiguration.class})
 @ImportResource("classpath*:META-INF/spring/nip-application-context.xml")
 @EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
         DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class,

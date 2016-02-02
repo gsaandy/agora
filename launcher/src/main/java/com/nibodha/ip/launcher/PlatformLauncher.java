@@ -64,8 +64,6 @@ public class PlatformLauncher extends SpringBootServletInitializer {
         application.setWebEnvironment(true);
         application.setLogStartupInfo(true);
         final ConfigurableApplicationContext configurableApplicationContext = application.run(args);
-        final RouteDefinitionsInjector routeDefinitionsInjector = configurableApplicationContext.getBean(RouteDefinitionsInjector.class);
-        routeDefinitionsInjector.inject();
         final ConfigurationDirectoryWatcher configurationDirectoryWatcher = configurableApplicationContext.getBean(ConfigurationDirectoryWatcher.class);
         configurationDirectoryWatcher.start();
     }

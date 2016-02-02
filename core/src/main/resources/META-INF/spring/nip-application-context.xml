@@ -24,8 +24,7 @@ Copyright 2016 Nibodha Technologies Pvt. Ltd.
     <context:component-scan base-package="com.nibodha.ip.services.camel"/>
     <context:component-scan base-package="com.nibodha.ip.processors"/>
 
-    <camelContext id="com.nibodha.ip"/>
-
+    
     <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
 
     <beans:import resource="classpath*:META-INF/spring/batch/config/*.xml"/>
