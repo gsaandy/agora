@@ -30,11 +30,6 @@ public interface DirectoryWatcher {
     void start();
 
     /**
-     * This method will be executed when a new file/folder is created in the watched directory
-     */
-    void entryCreated() throws IOException;
-
-    /**
      * This method will be executed new file/folder is modified in the watched directory
      */
     void entryModified() throws IOException;

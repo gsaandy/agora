@@ -28,17 +28,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Properties;
-import java.util.UUID;
 
 /**
  * @author gibugeorge on 28/01/16.
  * @version 1.0
  */
-@RunWith(CamelSpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:META-INF/spring/directory-watcher-test-context.xml"})
 public class ConfigurationDirectoryWatcherTest {
 
@@ -70,21 +70,10 @@ public class ConfigurationDirectoryWatcherTest {
     }
 
     @Test
-    public void whenNewPropertiesFileIsAddedNewPropertiesAreLoaded() throws Exception {
-        final Properties properties = new Properties();
-        properties.setProperty("test.new", "newvalue");
-        properties.store(new FileWriter(resource.getFile().getAbsolutePath() + "/" + UUID.randomUUID() + "-watcher.properties"), "");
-
-        Thread.sleep(10000);
-        Assert.assertEquals("newvalue", this.propertyPlaceholderConfigurer.getProperties().getProperty("test.new"));
-
-    }
-
-    @Test
     public void whenPropertiesAreModifiedPlaceHolderConfigurerIsRefreshed() throws Exception {
         final Properties properties = new Properties();
         properties.load(new FileReader(resource.getFile().getAbsolutePath() + "/test-watcher.properties"));
-        properties.setProperty("to.modify","modified");
+        properties.setProperty("to.modify", "modified");
         properties.store(new FileWriter(resource.getFile().getAbsolutePath() + "/test-watcher.properties"), "");
         Thread.sleep(10000);
         Assert.assertEquals("modified", this.propertyPlaceholderConfigurer.getProperties().getProperty("to.modify"));
