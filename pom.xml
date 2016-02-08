@@ -405,5 +405,21 @@
             </build>
         </profile>
     </profiles>
+    <!-- TODO: Remove this once artifactory is fixed -->
+    <repositories>
+        <repository>
+            <id>tigerteam-maven2-repository</id>
+            <name>tigerteam.dk Repository for Maven 2</name>
+            <url>http://www.tigerteam.dk/maven2/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>tigerteam-maven2-repository</id>
+            <name>tigerteam.dk Repository for Maven 2</name>
+            <url>http://www.tigerteam.dk/maven2/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
