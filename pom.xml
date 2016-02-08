@@ -26,6 +26,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <default.encoding>UTF-8</default.encoding>
         <java.version>1.8</java.version>
         <sonar.java.source>${java.version}</sonar.java.source>
         <javax.transaction.version>1.1</javax.transaction.version>
@@ -38,7 +39,8 @@
         <spring-data-mongodb.version>1.8.1.RELEASE</spring-data-mongodb.version>
         <javassist.version>3.20.0-GA</javassist.version>
         <xstream.version>1.4.8</xstream.version>
-        <commons-collections.version>4.1</commons-collections.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
         <commons-compress.version>1.10</commons-compress.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
@@ -52,6 +54,9 @@
         <joda-time.version>2.9.1</joda-time.version>
         <cxf.version>3.1.4</cxf.version>
         <hibernate.ogm-version>4.2.0.Final</hibernate.ogm-version>
+        <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
+        <hibernate-validator-legacy.version>4.0.2.GA</hibernate-validator-legacy.version>
+        <trimm.version>1.0.0</trimm.version>
     </properties>
     <developers>
         <developer>
@@ -129,7 +134,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections.version}</version>
+                <version>${commons-collections4.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -268,8 +273,31 @@
                 <artifactId>infinispan-core</artifactId>
                 <version>${infinispan.version}</version>
             </dependency>
+            <dependency>
+                <groupId>dk.tigerteam</groupId>
+                <artifactId>TrimmCore</artifactId>
+                <version>${trimm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dk.tigerteam</groupId>
+                <artifactId>TrimmJpa</artifactId>
+                <version>${trimm.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator-legacy</artifactId>
+                <version>${hibernate-validator-legacy.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
 
     <modules>
         <module>core</module>
@@ -277,6 +305,7 @@
         <module>configuration</module>
         <module>monitoring-console</module>
         <module>dist</module>
+        <module>test-support</module>
     </modules>
     <distributionManagement>
         <repository>

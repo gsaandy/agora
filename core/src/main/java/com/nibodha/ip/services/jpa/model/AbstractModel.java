@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nibodha Technologies Pvt. Ltd.
+ * Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.config;
+package com.nibodha.ip.services.jpa.model;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import javax.persistence.*;
 
 /**
- * @author gibugeorge on 11/01/16.
+ * @author gibugeorge on 08/02/16.
  * @version 1.0
  */
-@Configuration
-@ImportResource("classpath*:META-INF/spring/activemq-context.xml")
-@ConditionalOnProperty(prefix = "platform.mq",  value = "enabled", havingValue = "true", matchIfMissing = true)
-public class ActiveMqConfiguration {
+
+@MappedSuperclass
+public abstract class AbstractModel {
+
+    @Id
+    @SequenceGenerator(name = "JPA_GEN", sequenceName = "JPA_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "JPA_GEN")
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
 }
+
