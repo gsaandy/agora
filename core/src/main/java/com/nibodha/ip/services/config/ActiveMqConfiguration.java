@@ -26,6 +26,6 @@ import org.springframework.context.annotation.ImportResource;
  */
 @Configuration
 @ImportResource("classpath*:META-INF/spring/activemq-context.xml")
-@ConditionalOnProperty(prefix = "spring.activemq",  value = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "platform.mq",  value = "enabled", havingValue = "true", matchIfMissing = true)
 public class ActiveMqConfiguration {
 }

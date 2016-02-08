@@ -1,1 +1,2 @@
 org.springframework.context.ApplicationListener=org.springframework.boot.actuate.system.ApplicationPidFileWriter,org.springframework.boot.actuate.system.EmbeddedServerPortFileWriter
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration
