@@ -16,9 +16,14 @@
 
 package com.nibodha.ip.services.config;
 
+import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.activemq.pool.PooledConnectionFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.jms.connection.JmsTransactionManager;
 
 /**
  * @author gibugeorge on 02/02/16.
@@ -27,5 +32,15 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @ImportResource("META-INF/spring/nip-camel-context.xml")
 @ConditionalOnProperty(prefix = "platform.routingengine", value = "enabled", havingValue = "true", matchIfMissing = true)
+@AutoConfigureAfter(PlatformMqConfiguration.class)
 public class CamelConfiguration {
+
+    @Bean(name = "activemq")
+    public ActiveMQComponent activeMQComponent(final PooledConnectionFactory pooledConnectionFactory) {
+        final ActiveMQComponent activeMQComponent = new ActiveMQComponent();
+        activeMQComponent.setConnectionFactory(pooledConnectionFactory);
+        activeMQComponent.setTransacted(true);
+        activeMQComponent.setTransactionManager(new JmsTransactionManager(pooledConnectionFactory));
+        return activeMQComponent;
+    }
 }

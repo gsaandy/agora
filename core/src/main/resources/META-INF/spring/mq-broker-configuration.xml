@@ -21,18 +21,18 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
-    <beans:bean id="bridgePropertyPlaceholder"
+    <beans:bean id="propertyPlaceholderConfigurer"
                 class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="classpath:application.properties,*-is.properties"/>
     </beans:bean>
 
-    <amq:broker useJmx="true" brokerName="activemqbroker" useShutdownHook="false"
-                xmlns="http://activemq.apache.org/schema/core" enableStatistics="true" brokerId="activemqbroker">
+    <amq:broker useJmx="true" brokerName="mqBroker" useShutdownHook="false"
+                xmlns="http://activemq.apache.org/schema/core" enableStatistics="true" brokerId="mqBroker">
 
 
         <persistenceAdapter>
-            <kahaDB directory="${spring.activemq.data}" brokerName="activemqbroker"/>
+            <kahaDB directory="${platform.mq.data-dir}" brokerName="activemqbroker"/>
         </persistenceAdapter>
         <destinations>
 
@@ -40,7 +40,7 @@
 
         <transportConnectors>
             <transportConnector name="activemq"
-                                uri="${spring.activemq.broker-url}:${spring.activemq.port}?wireFormat.maxInactivityDurationInitalDelay=30000"/>
+                                uri="${platform.mq.broker-url}?wireFormat.maxInactivityDurationInitalDelay=30000"/>
         </transportConnectors>
         <destinationPolicy>
             <policyMap>

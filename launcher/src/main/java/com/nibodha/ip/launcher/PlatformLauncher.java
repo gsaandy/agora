@@ -15,16 +15,23 @@
  */
 package com.nibodha.ip.launcher;
 
-import com.nibodha.ip.services.camel.RouteDefinitionsInjector;
 import com.nibodha.ip.services.camel.spring.ConfigurationDirectoryWatcher;
-import com.nibodha.ip.services.config.PlatformConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
+import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration;
+import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -33,7 +40,11 @@ import java.util.Properties;
  * Created by gibugeorge on 28/11/15.
  */
 @Configuration
-@Import(PlatformConfiguration.class)
+@EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
+        DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class,
+        MongoDataAutoConfiguration.class, CacheAutoConfiguration.class, JmsAutoConfiguration.class
+})
+
 public class PlatformLauncher extends SpringBootServletInitializer {
 
 
