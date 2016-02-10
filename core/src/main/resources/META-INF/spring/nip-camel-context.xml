@@ -21,6 +21,7 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+    <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
     <camelContext id="com.nibodha.ip"/>
     <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.camel.RouteDefinitionsInjector"/>
 

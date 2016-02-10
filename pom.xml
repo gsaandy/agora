@@ -249,7 +249,6 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
@@ -295,17 +294,27 @@
                 <artifactId>hibernate-validator-legacy</artifactId>
                 <version>${hibernate-validator-legacy.version}</version>
             </dependency>
+            <dependency>
+                <groupId>dk.tigerteam</groupId>
+                <artifactId>TrimmPersistence</artifactId>
+                <version>${trimm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
 
     <modules>
+        <module>test-support</module>
         <module>core</module>
         <module>launcher</module>
         <module>configuration</module>
         <module>monitoring-console</module>
         <module>dist</module>
-        <module>test-support</module>
     </modules>
     <distributionManagement>
         <repository>

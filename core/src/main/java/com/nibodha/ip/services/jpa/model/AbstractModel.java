@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
+ * Copyright 2016 Nibodha Technologies Pvt. Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.nibodha.ip.services.jpa.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author gibugeorge on 08/02/16.
@@ -24,7 +25,7 @@ import javax.persistence.*;
  */
 
 @MappedSuperclass
-public abstract class AbstractModel {
+public abstract class AbstractModel implements Serializable{
 
     @Id
     @SequenceGenerator(name = "JPA_GEN", sequenceName = "JPA_SEQ")
