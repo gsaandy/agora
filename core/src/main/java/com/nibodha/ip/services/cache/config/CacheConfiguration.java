@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nibodha Technologies Pvt. Ltd.
+ * Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.config;
+package com.nibodha.ip.services.cache.config;
 
 import com.nibodha.ip.services.cache.CacheProperties;
 import com.nibodha.ip.services.cache.InifinispanLoggingListener;
+import com.nibodha.ip.services.mq.config.PlatformMqConfiguration;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;

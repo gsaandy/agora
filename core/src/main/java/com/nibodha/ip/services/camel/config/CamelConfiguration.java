@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nibodha Technologies Pvt. Ltd.
+ * Copyright 2016 Nibodha Trechnologies Pvt. Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.config;
+package com.nibodha.ip.services.camel.config;
 
+import com.nibodha.ip.services.mq.config.PlatformMqConfiguration;
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

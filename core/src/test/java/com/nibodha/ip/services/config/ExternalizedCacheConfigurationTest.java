@@ -16,6 +16,7 @@
 
 package com.nibodha.ip.services.config;
 
+import com.nibodha.ip.services.cache.config.CacheConfiguration;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.junit.Assert;
 import org.junit.Test;

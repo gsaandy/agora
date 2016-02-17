@@ -57,6 +57,7 @@
         <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
         <hibernate-validator-legacy.version>4.0.2.GA</hibernate-validator-legacy.version>
         <trimm.version>1.0.0</trimm.version>
+        <hikariCP.verion>2.4.3</hikariCP.verion>
     </properties>
     <developers>
         <developer>
@@ -303,6 +304,11 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikariCP.verion}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

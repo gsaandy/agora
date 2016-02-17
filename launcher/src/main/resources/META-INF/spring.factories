@@ -6,6 +6,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration,\
 com.nibodha.ip.services.config.PlatformConfiguration,\
 com.nibodha.ip.services.config.EmbeddedContainerConfiguration,\
-com.nibodha.ip.services.config.CamelConfiguration,\
-com.nibodha.ip.services.config.PlatformMqConfiguration,\
-com.nibodha.ip.services.config.CacheConfiguration
+com.nibodha.ip.services.camel.config.CamelConfiguration,\
+com.nibodha.ip.services.mq.config.PlatformMqConfiguration,\
+com.nibodha.ip.services.cache.config.CacheConfiguration,\
+com.nibodha.ip.services.jdbc.config.DatasourceConfiguration
