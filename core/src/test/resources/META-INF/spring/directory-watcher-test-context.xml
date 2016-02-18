@@ -17,18 +17,16 @@
 
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:context="http://www.springframework.org/schema/context"
              xmlns="http://camel.apache.org/schema/spring"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     <beans:bean id="watcherTestPropertyPlaceHolder"
                 class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="*-watcher.properties"/>
     </beans:bean>
-    <context:component-scan base-package="com.nibodha.ip.services.camel"/>
-    <context:component-scan base-package="com.nibodha.ip.processors"/>
 
+    <beans:bean id="configurationDirectoryWatcher" class="com.nibodha.ip.services.camel.spring.ConfigurationDirectoryWatcher"/>
 
 </beans:beans>
