@@ -42,11 +42,10 @@ import java.util.Properties;
 @Configuration
 @EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
         DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class,
-        MongoDataAutoConfiguration.class, CacheAutoConfiguration.class, JmsAutoConfiguration.class
+        MongoDataAutoConfiguration.class, CacheAutoConfiguration.class, JmsAutoConfiguration.class, DataSourceAutoConfiguration.class
 })
 
 public class PlatformLauncher extends SpringBootServletInitializer {
-
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLauncher.class);
 
