@@ -23,7 +23,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "platform.jdbc.datasource")
-public class DatasourceProperties {
+public class DataSourceProperties {
 
     private boolean enabled = false;
     private String jdbcUrl;

@@ -16,7 +16,7 @@
 
 package com.nibodha.ip.services.jdbc.config;
 
-import com.nibodha.ip.services.jdbc.DatasourceProperties;
+import com.nibodha.ip.services.jdbc.DataSourceProperties;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,26 +30,26 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0
  */
 @Configuration
-@EnableConfigurationProperties(DatasourceProperties.class)
+@EnableConfigurationProperties(DataSourceProperties.class)
 public class DatasourceConfiguration {
 
     @Autowired
-    private DatasourceProperties datasourceProperties;
+    private DataSourceProperties dataSourceProperties;
 
     @Bean(name = "plartformDataSource")
     @ConditionalOnProperty(prefix = "platform.jdbc.datasource", value = "enabled", havingValue = "true", matchIfMissing = false)
     public HikariDataSource hikariDataSource() {
         final HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(datasourceProperties.getJdbcUrl());
-        hikariConfig.setUsername(datasourceProperties.getUserName());
-        hikariConfig.setPassword(datasourceProperties.getPasssword());
-        hikariConfig.addDataSourceProperty("cachePrepStmts", datasourceProperties.isCachePrepStmts());
-        hikariConfig.addDataSourceProperty("prepStmtCacheSize", datasourceProperties.getPrepStmtCacheSize());
-        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", datasourceProperties.getPrepStmtCacheSqlLimit());
+        hikariConfig.setJdbcUrl(dataSourceProperties.getJdbcUrl());
+        hikariConfig.setUsername(dataSourceProperties.getUserName());
+        hikariConfig.setPassword(dataSourceProperties.getPasssword());
+        hikariConfig.addDataSourceProperty("cachePrepStmts", dataSourceProperties.isCachePrepStmts());
+        hikariConfig.addDataSourceProperty("prepStmtCacheSize", dataSourceProperties.getPrepStmtCacheSize());
+        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", dataSourceProperties.getPrepStmtCacheSqlLimit());
         final HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-        hikariDataSource.setMaximumPoolSize(datasourceProperties.getMaximumPoolSize());
-        hikariDataSource.setMaxLifetime(datasourceProperties.getMaxLifeTime());
-        hikariDataSource.setIdleTimeout(datasourceProperties.getIdleTimeout());
+        hikariDataSource.setMaximumPoolSize(dataSourceProperties.getMaximumPoolSize());
+        hikariDataSource.setMaxLifetime(dataSourceProperties.getMaxLifeTime());
+        hikariDataSource.setIdleTimeout(dataSourceProperties.getIdleTimeout());
         return hikariDataSource;
     }
 }

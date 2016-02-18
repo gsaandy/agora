@@ -27,7 +27,6 @@
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="classpath:test-is.properties"/>
     </beans:bean>
-    <!--context:component-scan base-package="com.nibodha.ip.services.camel"/-->
     <context:component-scan base-package="com.nibodha.ip.processors"/>
     <camelContext id="com.nibodha.ip.test"/>
     <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.camel.RouteDefinitionsInjector"/>
