@@ -24,7 +24,7 @@
     <beans:bean id="propertyPlaceholderConfigurer"
                 class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
-        <beans:property name="fileNames" value="classpath:application.properties,*-is.properties"/>
+        <beans:property name="fileNames" value="classpath:application.properties,*.yaml,*.properties"/>
     </beans:bean>
 
     <amq:broker useJmx="true" brokerName="mqBroker" useShutdownHook="false"
