@@ -77,6 +77,40 @@ The integration platform is a multi module maven project with the following modu
 * launcher - provides services to launch the integration platform
 * configuration -  contains the platform configuration files
 
+##Platform Configuration Properties List and default values##
+
+    MQ Configuration
+
+        platform.mq.broker-url=tcp://localhost:61616
+        platform.mq.data-dir=${user.home}/mq-data
+        platform.mq.enabled=false
+        platform.mq.password=
+        platform.mq.user-name=
+    
+    Datasource Configuration
+         
+        platform.jdbc.datasource.enabled=false
+        platform.jdbc.datasource.cache-prep-stmts=true
+        platform.jdbc.datasource.enabled=false
+        platform.jdbc.datasource.idle-timeout=30000
+        platform.jdbc.datasource.jdbc-url=
+        platform.jdbc.datasource.max-life-time=30000
+        platform.jdbc.datasource.maximum-pool-size=5
+        platform.jdbc.datasource.passsword=
+        platform.jdbc.datasource.prep-stmt-cache-size=250
+        platform.jdbc.datasource.prep-stmt-cache-sql-limit=2048
+        platform.jdbc.datasource.use-server-prep-stmts=true
+        platform.jdbc.datasource.user-name=
+     
+    Cache Configuration
+        
+        platform.cache.enabled=true
+        platform.cache.cache-names[0]=
+        platform.cache.config=
+        
+
+
+
 ##License##
 
 The Nibodha Integration Platform is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0)

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.config;
+package com.nibodha.ip.services.camel.config;
 
+import com.nibodha.ip.services.mq.config.PlatformMqConfiguration;
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

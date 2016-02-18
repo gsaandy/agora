@@ -14,19 +14,25 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.exceptions;
+package com.nibodha.ip.services.jdbc.config;
+
+import com.nibodha.ip.services.jdbc.DataSourceProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * @author Gibu George (gibu.george@nibodha.com)
+ * @author gibugeorge on 18/02/16.
  * @version 1.0
  */
+@Configuration
+public class DataSourcePropertiesConfiguration {
 
-public class PlatformRuntimeException extends RuntimeException {
 
-    public PlatformRuntimeException(final String message) {
-        super(message);
-    }
-    public PlatformRuntimeException(final String message, final Exception e) {
-        super(message, e);
+    @Bean
+    public DataSourceProperties dataSourceProperties() {
+        final DataSourceProperties dataSourceProperties = new DataSourceProperties();
+        dataSourceProperties.setEnabled(true);
+        dataSourceProperties.setJdbcUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+        return dataSourceProperties;
     }
 }

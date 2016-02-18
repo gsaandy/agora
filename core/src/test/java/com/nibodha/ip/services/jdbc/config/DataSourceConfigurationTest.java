@@ -14,42 +14,48 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.camel;
+package com.nibodha.ip.services.jdbc.config;
 
-import org.apache.camel.builder.RouteBuilder;
+import com.zaxxer.hikari.HikariDataSource;
+import org.h2.tools.Server;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.sql.SQLException;
 
 /**
- * @author gibugeorge on 14/01/16.
+ * @author gibugeorge on 18/02/16.
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:META-INF/spring/nip-test-context.xml"})
-public class JavaDslRouteDefinitionsInjctorTest {
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {DataSourcePropertiesConfiguration.class, DatasourceConfiguration.class})
+public class DataSourceConfigurationTest {
 
-    static {
-        System.setProperty("config.location","classpath:.");
-    }
+    private static Server server;
+
     @Autowired
-    private RouteDefinitionsInjector routeDefinitionsInjector;
+    private HikariDataSource hikariDataSource;
+
+    @BeforeClass
+    public static void setup() throws SQLException {
+        System.setProperty("platform.jdbc.datasource.enabled","true");
+        server = Server.createTcpServer().start();
+    }
 
     @Test
-    public void whenRouteContextIsAvailableRoutesAreInjectedToCamelContext() throws Exception{
-        routeDefinitionsInjector.inject();
-        Assert.assertTrue(routeDefinitionsInjector.getCamelContext().getRoutes().size()>0);
+    public void test(){
+        Assert.assertNotNull(hikariDataSource);
     }
-}
 
-class JavaDslRouteBuilder extends RouteBuilder {
-
-    @Override
-    public void configure() throws Exception {
-        from("direct:test").to("mock:result");
+    @AfterClass
+    public static void tearDown() {
+        server.stop();
     }
 }

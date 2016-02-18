@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.config;
+package com.nibodha.ip.services.cache.config;
 
 import com.nibodha.ip.services.cache.CacheProperties;
 import com.nibodha.ip.services.cache.InifinispanLoggingListener;
+import com.nibodha.ip.services.mq.config.PlatformMqConfiguration;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;

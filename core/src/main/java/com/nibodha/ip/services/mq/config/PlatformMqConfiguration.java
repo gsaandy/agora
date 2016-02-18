@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.config;
+package com.nibodha.ip.services.mq.config;
 
+import com.nibodha.ip.services.config.PlatformConfiguration;
 import com.nibodha.ip.services.mq.PlatformMqProperties;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnectionFactory;

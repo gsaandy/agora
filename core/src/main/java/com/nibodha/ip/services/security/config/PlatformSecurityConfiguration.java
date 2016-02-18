@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.exceptions;
+package com.nibodha.ip.services.security.config;
+
+import com.nibodha.ip.services.security.PlatformSecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * @author Gibu George (gibu.george@nibodha.com)
+ * @author gibugeorge on 10/02/16.
  * @version 1.0
  */
+@Configuration
+@EnableConfigurationProperties(PlatformSecurityProperties.class)
+public class PlatformSecurityConfiguration {
 
-public class PlatformRuntimeException extends RuntimeException {
-
-    public PlatformRuntimeException(final String message) {
-        super(message);
-    }
-    public PlatformRuntimeException(final String message, final Exception e) {
-        super(message, e);
-    }
+    @Autowired
+    private PlatformSecurityProperties platformSecurityProperties;
 }
