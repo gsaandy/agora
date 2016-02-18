@@ -45,7 +45,7 @@ public class PlatformPlaceHolderConfiguration implements ResourceLoaderAware {
         platformPropertyPlaceholderConfigurer.setConfigFileLocation(configLocation);
         platformPropertyPlaceholderConfigurer.setFileEncoding("UTF-8");
         platformPropertyPlaceholderConfigurer.setIgnoreResourceNotFound(true);
-        platformPropertyPlaceholderConfigurer.setFileNames("classpath:application.properties, *.yaml,*.properties");
+        platformPropertyPlaceholderConfigurer.setFileNames("classpath:application.properties,*.yaml,*.properties");
         return platformPropertyPlaceholderConfigurer;
     }
 
