@@ -9,4 +9,5 @@ com.nibodha.ip.services.config.EmbeddedContainerConfiguration,\
 com.nibodha.ip.services.camel.config.CamelConfiguration,\
 com.nibodha.ip.services.mq.config.PlatformMqConfiguration,\
 com.nibodha.ip.services.cache.config.CacheConfiguration,\
-com.nibodha.ip.services.jdbc.config.DatasourceConfiguration
+com.nibodha.ip.services.jdbc.config.DatasourceConfiguration,\
+com.nibodha.ip.services.cxf.config.CxfServeletConfiguration
