@@ -19,15 +19,23 @@ package com.nibodha.ip.processors;
 import com.nibodha.ip.xstream.HierarchicalStreamCopier;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.StreamException;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
+import com.thoughtworks.xstream.io.json.JettisonStaxWriter;
+import com.thoughtworks.xstream.io.xml.QNameMap;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.io.xml.StaxWriter;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jettison.mapped.Configuration;
+import org.codehaus.jettison.mapped.MappedXMLStreamWriter;
 import org.springframework.stereotype.Component;
 
+import javax.xml.stream.XMLStreamException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * @author gibugeorge on 14/12/15.
@@ -37,8 +45,16 @@ import java.io.StringWriter;
 public class XmlElementToJsonConverter implements Processor {
 
     private final HierarchicalStreamCopier copier = new HierarchicalStreamCopier();
-    private final JettisonMappedXmlDriver jettisonDriver = new JettisonMappedXmlDriver();
+    private final CustomJettisonMappedXmlDriver jettisonDriver;
     private final StaxDriver staxDriver = new StaxDriver();
+
+
+    public XmlElementToJsonConverter() {
+        Configuration configuration = new Configuration();
+        configuration.setAttributeKey("");
+        jettisonDriver = new CustomJettisonMappedXmlDriver(configuration);
+
+    }
 
     @Override
     public void process(final Exchange exchange) throws Exception {
@@ -47,10 +63,32 @@ public class XmlElementToJsonConverter implements Processor {
             final HierarchicalStreamReader sourceReader = staxDriver.createReader(new StringReader(body));
             final StringWriter buffer = new StringWriter();
             final HierarchicalStreamWriter destinationWriter = jettisonDriver.createWriter(buffer);
+
             copier.copy(sourceReader, destinationWriter);
             exchange.getIn().setBody(buffer.toString());
             sourceReader.close();
             destinationWriter.close();
+        }
+    }
+
+    class CustomJettisonMappedXmlDriver extends JettisonMappedXmlDriver {
+        CustomJettisonMappedXmlDriver(final Configuration configuration) {
+            super(configuration);
+        }
+
+        public HierarchicalStreamWriter createWriter(final Writer writer) {
+
+            try {
+                if (useSerializeAsArray) {
+                    MappedXMLStreamWriter xmlStreamWriter = (MappedXMLStreamWriter) mof.createXMLStreamWriter(writer);
+                    xmlStreamWriter.setValueKey("value");
+                    return new JettisonStaxWriter(new QNameMap(), xmlStreamWriter, getNameCoder(), convention);
+                } else {
+                    return new StaxWriter(new QNameMap(), mof.createXMLStreamWriter(writer), getNameCoder());
+                }
+            } catch (final XMLStreamException e) {
+                throw new StreamException(e);
+            }
         }
     }
 
