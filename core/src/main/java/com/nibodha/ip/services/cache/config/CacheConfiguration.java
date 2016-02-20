@@ -16,23 +16,27 @@
 
 package com.nibodha.ip.services.cache.config;
 
-import com.nibodha.ip.services.cache.CacheProperties;
 import com.nibodha.ip.services.cache.InifinispanLoggingListener;
 import com.nibodha.ip.services.mq.config.PlatformMqConfiguration;
+import org.apache.commons.lang3.StringUtils;
+import org.infinispan.Cache;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
 /**
  * @author gibugeorge on 24/01/16.
@@ -40,34 +44,37 @@ import java.io.InputStream;
  */
 @Configuration
 @ConditionalOnProperty(prefix = "platform.cache", value = "enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties(CacheProperties.class)
 @AutoConfigureAfter(PlatformMqConfiguration.class)
 public class CacheConfiguration {
 
+    public static final String DEFAULT_PLATFORM_CACHE_NAME = "platformCache";
+
+    private static Logger LOGGER = LoggerFactory.getLogger(CacheConfiguration.class);
+
     @Autowired
-    private CacheProperties cacheProperties;
+    private ResourceLoader resourceLoader;
 
     @Bean
-    public EmbeddedCacheManager infinispanCacheManager() throws IOException {
-        final EmbeddedCacheManager cacheManager = createEmbeddedCacheManager();
-        if (this.cacheProperties.getConfig() == null) {
-            if (cacheProperties.getCacheNames() == null) {
-                cacheManager.startCaches(CacheProperties.DEFAULT_PLATFORM_CACHE_NAME);
-                cacheManager.getCache(CacheProperties.DEFAULT_PLATFORM_CACHE_NAME, true).addListener(new InifinispanLoggingListener());
-            } else {
-                cacheManager.startCaches(cacheProperties.getCacheNames());
-                for (String cacheName : cacheProperties.getCacheNames()) {
-                    cacheManager.getCache(cacheName, true).addListener(new InifinispanLoggingListener());
-                }
-            }
+    public EmbeddedCacheManager infinispanCacheManager(@Value("${platform.cache.config.path:}") final String cacheConfigPath) throws IOException {
+        final EmbeddedCacheManager cacheManager = createEmbeddedCacheManager(cacheConfigPath);
+        if (StringUtils.isEmpty(cacheConfigPath)) {
+            cacheManager.getCache(DEFAULT_PLATFORM_CACHE_NAME, true);
+        }
+        final Set<String> cacheNames = cacheManager.getCacheNames();
+        for (String cacheName : cacheNames) {
+            final Cache cache = cacheManager.getCache(cacheName);
+            cache.start();
+            cache.addListener(new InifinispanLoggingListener());
         }
         return cacheManager;
     }
 
-    private EmbeddedCacheManager createEmbeddedCacheManager() throws IOException {
-        Resource location = this.cacheProperties.getConfig();
-        if (location != null) {
-            InputStream in = location.getInputStream();
+    private EmbeddedCacheManager createEmbeddedCacheManager(final String cacheConfigPath) throws IOException {
+        if (StringUtils.isNotEmpty(cacheConfigPath)) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("Configuring cache based on configuration file " + cacheConfigPath);
+            }
+            InputStream in = resourceLoader.getResource(cacheConfigPath).getInputStream();
             try {
                 return new DefaultCacheManager(in);
             } finally {
@@ -78,11 +85,14 @@ public class CacheConfiguration {
     }
 
     private GlobalConfiguration getDefaultCacheConfiguration() {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Configuring default p[latform cache");
+        }
         return GlobalConfigurationBuilder
                 .defaultClusteredBuilder()
                 .nonClusteredDefault()
                 .globalJmxStatistics()
-                .cacheManagerName("Platform Cache Manager")
+                .cacheManagerName("Platform Cache Manager").jmxDomain("com.nibodha.ip.cache")
                 .enable()
                 .build();
 

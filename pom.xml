@@ -74,6 +74,7 @@
         <hibernate-validator-legacy.version>4.0.2.GA</hibernate-validator-legacy.version>
         <trimm.version>1.0.0</trimm.version>
         <hikariCP.verion>2.4.3</hikariCP.verion>
+        <infinispan.version>8.1.2.Final</infinispan.version>
     </properties>
     <developers>
         <developer>
