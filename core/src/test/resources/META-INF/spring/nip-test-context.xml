@@ -32,4 +32,6 @@
     <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.camel.RouteDefinitionsInjector"/>
     <beans:bean id="routeBuilder" class="com.nibodha.ip.services.camel.JavaDslRouteBuilder"/>
 
+    <beans:bean id="objectMapper" class="com.nibodha.ip.services.json.config.JacksonObjectMapperFactoryBean"/>
+
 </beans:beans>
