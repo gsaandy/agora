@@ -24,7 +24,7 @@ public class MapToBeanConverter implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        final String className = exchange.getIn().getHeader("MapToBeanType", String.class);
+        final String className = exchange.getIn().getHeader("ConvertMapToBeanType", String.class);
         final Map payload = exchange.getIn().getBody(Map.class);
 
         if (className != null && payload != null) {
