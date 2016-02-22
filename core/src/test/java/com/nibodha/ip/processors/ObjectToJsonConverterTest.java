@@ -11,10 +11,7 @@ import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class MapToBeanConverterTest extends CamelTestSupport {
+public class ObjectToJsonConverterTest extends CamelTestSupport {
 
     @Produce(uri = "direct:start")
     protected ProducerTemplate template;
@@ -36,19 +33,15 @@ public class MapToBeanConverterTest extends CamelTestSupport {
     }
 
     @Test
-    public void convertMap() {
-        final Map<String, Object> message = new HashMap<>();
-        final String code = "key";
-        final String value = "Value";
-        message.put("code", code);
-        message.put("value", value);
-        exchange.getIn().setBody(message);
-        exchange.getIn().setHeader("ConvertMapToBeanType", "com.nibodha.ip.processors.TestPojo");
+    public void convertObjectToJson() {
+        final TestPojo testPojo = new TestPojo();
+        testPojo.setCode("Code 1");
+        testPojo.setValue("Value 1");
+        exchange.getIn().setBody(testPojo);
         template.send(exchange);
-        final TestPojo testPojo = exchange.getIn().getBody(TestPojo.class);
-        assertNotNull(testPojo);
-        assertEquals(code, testPojo.getCode());
-        assertEquals(value, testPojo.getValue());
+        final String testPojoJson = exchange.getIn().getBody(String.class);
+        assertNotNull(testPojoJson);
+        assertEquals("{\"code\":\"Code 1\",\"value\":\"Value 1\"}", testPojoJson);
     }
 
     @Override
@@ -56,7 +49,7 @@ public class MapToBeanConverterTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("direct:start").process(new MapToBeanConverter(new ObjectMapper())).to("mock:result");
+                from("direct:start").process(new ObjectToJsonConverter(new ObjectMapper())).to("mock:result");
             }
         };
     }
