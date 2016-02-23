@@ -72,9 +72,9 @@
         <hibernate.ogm-version>4.2.0.Final</hibernate.ogm-version>
         <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
         <hibernate-validator-legacy.version>4.0.2.GA</hibernate-validator-legacy.version>
-        <trimm.version>1.0.0</trimm.version>
         <hikariCP.verion>2.4.3</hikariCP.verion>
         <infinispan.version>8.1.2.Final</infinispan.version>
+        <javax-inject.version>1</javax-inject.version>
     </properties>
     <developers>
         <developer>
@@ -291,18 +291,6 @@
                 <version>${infinispan.version}</version>
             </dependency>
             <dependency>
-                <groupId>dk.tigerteam</groupId>
-                <artifactId>TrimmCore</artifactId>
-                <version>${trimm.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>dk.tigerteam</groupId>
-                <artifactId>TrimmJpa</artifactId>
-                <version>${trimm.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
@@ -313,11 +301,6 @@
                 <version>${hibernate-validator-legacy.version}</version>
             </dependency>
             <dependency>
-                <groupId>dk.tigerteam</groupId>
-                <artifactId>TrimmPersistence</artifactId>
-                <version>${trimm.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
@@ -326,6 +309,16 @@
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
                 <version>${hikariCP.verion}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>${javax-inject.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-infinispan</artifactId>
+                <version>${camel.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
