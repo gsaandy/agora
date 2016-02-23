@@ -62,7 +62,7 @@
         </destinationPolicy>
 
         <managementContext>
-            <managementContext useMBeanServer="true"/>
+            <managementContext useMBeanServer="true" createConnector="false" jmxDomainName="com.nibodha.ip"/>
         </managementContext>
 
 

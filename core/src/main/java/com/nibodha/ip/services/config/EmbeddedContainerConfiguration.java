@@ -16,6 +16,7 @@
 
 package com.nibodha.ip.services.config;
 
+import org.eclipse.jetty.jmx.ConnectorServer;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.xml.XmlConfiguration;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import org.xml.sax.SAXException;
 
+import javax.management.remote.JMXServiceURL;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -44,7 +46,8 @@ public class EmbeddedContainerConfiguration {
 
     @Bean
     public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory(
-            @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path:}") final String jettyConfigXmlPath) {
+            @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path:}") final String jettyConfigXmlPath,
+            @Value("${platform.jmx.port:1099}") final String jmxPort) {
         final JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory(Integer.valueOf(mainPort));
         factory.addServerCustomizers(new JettyServerCustomizer() {
             @Override
@@ -60,8 +63,17 @@ public class EmbeddedContainerConfiguration {
                         LOGGER.error("Exception configuring the server configuration", e);
                     }
                 }
+                try {
+                    final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:"+jmxPort+"/jmxrmi"), "com.nibodha.ip.jmx:name=rmiconnectorserver");
+                    server.addBean(connectorServer);
+                } catch (Exception e) {
+                    LOGGER.error("Exception configuring the mbean connector server", e);
+                }
                 final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
+                mbContainer.setDomain("com.nibodha.ip");
                 server.addBean(mbContainer);
+
+
             }
         });
         return factory;
