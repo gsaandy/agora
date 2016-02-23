@@ -36,21 +36,8 @@
             <artifactId>h2</artifactId>
         </dependency>
         <dependency>
-            <groupId>dk.tigerteam</groupId>
-            <artifactId>TrimmPersistence</artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dk.tigerteam</groupId>
-            <artifactId>TrimmPersistenceHibernate</artifactId>
-            <version>${trimm.version}</version>
         </dependency>
     </dependencies>
 </project>
