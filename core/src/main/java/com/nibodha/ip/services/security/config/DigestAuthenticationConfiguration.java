@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security;
+package com.nibodha.ip.services.security.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.nibodha.ip.services.security.PlatformSecurityProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.core.annotation.Order;
 
 /**
- * @author gibugeorge on 10/02/16.
+ * @author gibugeorge on 26/02/16.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "platform.security")
-public class PlatformSecurityProperties {
+
+@Configuration
+@Order(PlatformSecurityProperties.BASIC_AUTH_ORDER)
+@ImportResource("META-INF/spring/digest-auth-context.xml")
+public class DigestAuthenticationConfiguration{
+
 }
