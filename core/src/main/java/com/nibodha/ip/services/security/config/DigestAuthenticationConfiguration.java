@@ -16,7 +16,7 @@
 
 package com.nibodha.ip.services.security.config;
 
-import com.nibodha.ip.services.security.PlatformSecurityProperties;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.annotation.Order;
@@ -27,7 +27,7 @@ import org.springframework.core.annotation.Order;
  */
 
 @Configuration
-@Order(PlatformSecurityProperties.BASIC_AUTH_ORDER)
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 @ImportResource("META-INF/spring/digest-auth-context.xml")
 public class DigestAuthenticationConfiguration{
 
