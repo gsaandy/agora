@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security;
+package com.nibodha.ip.services.cache;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
- * @author gibugeorge on 10/02/16.
+ * @author gibugeorge on 25/02/16.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "platform.security")
-public class PlatformSecurityProperties {
+public class CacheProperties {
+
+    @Value("${platform.cache.enabled:true}")
+    private boolean enabled;
+    @Value("${platform.cache.config.path:}")
+    private String config;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public String getConfig() {
+        return config;
+    }
 }

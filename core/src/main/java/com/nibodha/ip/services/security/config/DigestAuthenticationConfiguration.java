@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.jpa.model;
+package com.nibodha.ip.services.security.config;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.nibodha.ip.services.security.PlatformSecurityProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.core.annotation.Order;
 
 /**
- * @author gibugeorge on 08/02/16.
+ * @author gibugeorge on 26/02/16.
  * @version 1.0
  */
 
-@MappedSuperclass
-public abstract class AbstractModel implements Serializable{
+@Configuration
+@Order(PlatformSecurityProperties.BASIC_AUTH_ORDER)
+@ImportResource("META-INF/spring/digest-auth-context.xml")
+public class DigestAuthenticationConfiguration{
 
-    @Id
-    @SequenceGenerator(name = "JPA_GEN", sequenceName = "JPA_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "JPA_GEN")
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
 }
-

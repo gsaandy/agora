@@ -16,6 +16,7 @@
 
 package com.nibodha.ip.services.cache.config;
 
+import com.nibodha.ip.services.cache.CacheProperties;
 import com.nibodha.ip.services.cache.InifinispanLoggingListener;
 import com.nibodha.ip.services.mq.config.PlatformMqConfiguration;
 import org.apache.commons.lang3.StringUtils;
@@ -54,10 +55,11 @@ public class CacheConfiguration {
     @Autowired
     private ResourceLoader resourceLoader;
 
+
     @Bean
-    public EmbeddedCacheManager infinispanCacheManager(@Value("${platform.cache.config.path:}") final String cacheConfigPath) throws IOException {
-        final EmbeddedCacheManager cacheManager = createEmbeddedCacheManager(cacheConfigPath);
-        if (StringUtils.isEmpty(cacheConfigPath)) {
+    public EmbeddedCacheManager infinispanCacheManager(final CacheProperties cacheProperties) throws IOException {
+        final EmbeddedCacheManager cacheManager = createEmbeddedCacheManager(cacheProperties.getConfig());
+        if (StringUtils.isEmpty(cacheProperties.getConfig())) {
             cacheManager.getCache(DEFAULT_PLATFORM_CACHE_NAME, true);
         }
         final Set<String> cacheNames = cacheManager.getCacheNames();
@@ -96,5 +98,10 @@ public class CacheConfiguration {
                 .enable()
                 .build();
 
+    }
+
+    @Bean
+    public CacheProperties cacheProperties() {
+        return new CacheProperties();
     }
 }
