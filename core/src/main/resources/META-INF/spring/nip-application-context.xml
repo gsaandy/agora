@@ -24,9 +24,11 @@
     <context:component-scan base-package="com.nibodha.ip.services.camel"/>
     <context:component-scan base-package="com.nibodha.ip.processors"/>
     <context:component-scan base-package="com.nibodha.ip.services.cache"/>
+
     <beans:import resource="classpath*:META-INF/spring/batch/config/*.xml"/>
     <beans:import resource="classpath*:META-INF/spring/batch/jobs/*.xml"/>
 
+    <beans:import resource="classpath*:META-INF/spring/*-web-context.xml"/>
     <beans:bean id="objectMapper" class="com.nibodha.ip.services.json.config.JacksonObjectMapperFactoryBean"/>
 
 </beans:beans>
