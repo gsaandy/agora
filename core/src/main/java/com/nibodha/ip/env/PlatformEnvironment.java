@@ -17,6 +17,8 @@
 package com.nibodha.ip.env;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.env.StandardEnvironment;
@@ -35,6 +37,7 @@ import java.util.Properties;
 public class PlatformEnvironment extends StandardEnvironment {
 
     private static final String ENV_CONFIG_FILE_EXTENSION = "*.properties";
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformEnvironment.class);
 
     @Override
     protected void customizePropertySources(final MutablePropertySources propertySources) {
@@ -57,7 +60,7 @@ public class PlatformEnvironment extends StandardEnvironment {
                 propertySources.addLast(new PropertiesPropertySource("externalizedProperties", properties));
 
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("Exception reading resources", e);
             }
 
         }
