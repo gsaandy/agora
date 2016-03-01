@@ -16,40 +16,112 @@
 
 package com.nibodha.ip.services.jdbc.config;
 
-import com.nibodha.ip.services.jdbc.DataSourceProperties;
+import com.nibodha.ip.exceptions.PlatformRuntimeException;
+import com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.core.env.Environment;
 
 /**
  * @author gibugeorge on 17/02/16.
  * @version 1.0
  */
-@Configuration
-@EnableConfigurationProperties(DataSourceProperties.class)
-public class DatasourceConfiguration {
+public class DatasourceConfiguration implements BeanDefinitionRegistryPostProcessor {
 
-    @Autowired
-    private DataSourceProperties dataSourceProperties;
 
-    @Bean(name = "plartformDataSource")
-    @ConditionalOnProperty(prefix = "platform.jdbc.datasource", value = "enabled", havingValue = "true", matchIfMissing = false)
-    public HikariDataSource hikariDataSource() {
-        final HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(dataSourceProperties.getJdbcUrl());
-        hikariConfig.setUsername(dataSourceProperties.getUserName());
-        hikariConfig.setPassword(dataSourceProperties.getPasssword());
-        hikariConfig.addDataSourceProperty("cachePrepStmts", dataSourceProperties.isCachePrepStmts());
-        hikariConfig.addDataSourceProperty("prepStmtCacheSize", dataSourceProperties.getPrepStmtCacheSize());
-        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", dataSourceProperties.getPrepStmtCacheSqlLimit());
-        final HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-        hikariDataSource.setMaximumPoolSize(dataSourceProperties.getMaximumPoolSize());
-        hikariDataSource.setMaxLifetime(dataSourceProperties.getMaxLifeTime());
-        hikariDataSource.setIdleTimeout(dataSourceProperties.getIdleTimeout());
-        return hikariDataSource;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatasourceConfiguration.class);
+
+
+    private PlatformPropertyPlaceholderConfigurer platformPropertyPlaceholderConfigurer;
+
+
+    private final boolean isDataSourceEnabled;
+
+    private final Environment environment;
+
+
+    public DatasourceConfiguration(final Environment environment) {
+        this.environment = environment;
+        isDataSourceEnabled = Boolean.parseBoolean(environment.getProperty("platform.jdbc.datasource.enabled"));
+    }
+
+    public boolean dataSourceConfiguration(final BeanDefinitionRegistry beanDefinitionRegistry) {
+
+        if (!isDataSourceEnabled && LOGGER.isInfoEnabled()) {
+            LOGGER.info("Platform datasource is disabled");
+            return false;
+        }
+        String[] dataSourceNames = getDsNames();
+        if (isDataSourceEnabled) {
+            for (String dataSourceName : dataSourceNames) {
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Configuring datasource with name {}", dataSourceName);
+                }
+                final HikariConfig hikariConfig = new HikariConfig();
+                hikariConfig.setPoolName(dataSourceName);
+                final String jdbcUrl = getProperty("jdbc-url", dataSourceName);
+                if (StringUtils.isEmpty(jdbcUrl)) {
+                    throw new PlatformRuntimeException("JDBC Url must be configured");
+                }
+                hikariConfig.setJdbcUrl(jdbcUrl);
+                final String userName = getProperty("user-name", dataSourceName) != null ? getProperty("user-name", dataSourceName) : "";
+                hikariConfig.setUsername(userName);
+                final String password = getProperty("password", dataSourceName) != null ? getProperty("password", dataSourceName) : "";
+                hikariConfig.setPassword(password);
+                hikariConfig.addDataSourceProperty("cachePrepStmts", getProperty("cache-prep-stmts", dataSourceName));
+                hikariConfig.addDataSourceProperty("prepStmtCacheSize", getProperty("prep-stmt-cache-size", dataSourceName));
+                hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", getProperty("prep-stmt-cache-sql-limit", dataSourceName));
+                final GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
+                genericBeanDefinition.setBeanClass(HikariDataSource.class);
+                final ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
+                constructorArgumentValues.addGenericArgumentValue(hikariConfig);
+                genericBeanDefinition.setConstructorArgumentValues(constructorArgumentValues);
+                final MutablePropertyValues mutablePropertyValues = new MutablePropertyValues();
+                mutablePropertyValues.add("maximumPoolSize", getProperty("maximum-pool-size", dataSourceName));
+                mutablePropertyValues.add("maxLifetime", getProperty("max-life-time", dataSourceName));
+                mutablePropertyValues.add("idleTimeout", getProperty("idle-timeout", dataSourceName));
+                genericBeanDefinition.setPropertyValues(mutablePropertyValues);
+                beanDefinitionRegistry.registerBeanDefinition(dataSourceName, genericBeanDefinition);
+            }
+
+        }
+        return true;
+    }
+
+
+    private String getProperty(final String key, final String dataSourceName) {
+        final String actualKey = "platform.jdbc.datasource." + dataSourceName + "." + key;
+        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("platform.jdbc.datasource.default." + key);
+    }
+
+    private String[] getDsNames() {
+        final String dsNameProperty = environment.getProperty("platform.jdbc.datasource.names");
+        final String[] dsNames;
+        if (StringUtils.isNotEmpty(dsNameProperty)) {
+            dsNames = dsNameProperty.split(",");
+        } else {
+            dsNames = new String[]{"defaultDS"};
+        }
+        return dsNames;
+    }
+
+    @Override
+    public void postProcessBeanFactory(final ConfigurableListableBeanFactory beanFactory) throws BeansException {
+
+    }
+
+    @Override
+    public void postProcessBeanDefinitionRegistry(final BeanDefinitionRegistry registry) throws BeansException {
+        dataSourceConfiguration(registry);
     }
 }

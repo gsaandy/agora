@@ -24,9 +24,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.sql.SQLException;
 
@@ -35,23 +35,25 @@ import java.sql.SQLException;
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {DataSourcePropertiesConfiguration.class, DatasourceConfiguration.class})
+@ContextConfiguration(locations = {"classpath*:META-INF/spring/datasource-config-test-context.xml"})
 public class DataSourceConfigurationTest {
 
     private static Server server;
 
     @Autowired
-    private HikariDataSource hikariDataSource;
+    private ApplicationContext applicationContext;
+
 
     @BeforeClass
     public static void setup() throws SQLException {
-        System.setProperty("platform.jdbc.datasource.enabled","true");
+        System.setProperty("config.location","classpath:");
         server = Server.createTcpServer().start();
     }
 
     @Test
-    public void test(){
-        Assert.assertNotNull(hikariDataSource);
+    public void testDataSourceConfiguration(){
+        final HikariDataSource testDS = applicationContext.getBean("testDS", HikariDataSource.class);
+        Assert.assertNotNull(testDS);
     }
 
     @AfterClass

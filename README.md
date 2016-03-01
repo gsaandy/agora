@@ -96,7 +96,7 @@ The integration platform is a multi module maven project with the following modu
         platform.jdbc.datasource.jdbc-url=
         platform.jdbc.datasource.max-life-time=30000
         platform.jdbc.datasource.maximum-pool-size=5
-        platform.jdbc.datasource.passsword=
+        platform.jdbc.datasource.password=
         platform.jdbc.datasource.prep-stmt-cache-size=250
         platform.jdbc.datasource.prep-stmt-cache-sql-limit=2048
         platform.jdbc.datasource.use-server-prep-stmts=true

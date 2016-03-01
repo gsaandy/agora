@@ -16,7 +16,9 @@
 
 package com.nibodha.ip.launcher;
 
+import com.nibodha.ip.env.PlatformEnvironment;
 import com.nibodha.ip.services.camel.spring.ConfigurationDirectoryWatcher;
+import com.nibodha.ip.services.jdbc.config.DatasourceConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -33,8 +35,12 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.StandardEnvironment;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -74,6 +80,15 @@ public class PlatformLauncher extends SpringBootServletInitializer {
 
     public void run(final String[] args) {
         final SpringApplication application = new SpringApplication(PlatformLauncher.class);
+        final ConfigurableEnvironment environment = new PlatformEnvironment();
+
+        application.setEnvironment(environment);
+        application.addInitializers(new ApplicationContextInitializer<ConfigurableApplicationContext>() {
+            @Override
+            public void initialize(final ConfigurableApplicationContext applicationContext) {
+                applicationContext.addBeanFactoryPostProcessor(new DatasourceConfiguration(applicationContext.getEnvironment()));
+            }
+        });
         application.setRegisterShutdownHook(true);
         application.setWebEnvironment(true);
         application.setLogStartupInfo(true);
