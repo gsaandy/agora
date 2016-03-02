@@ -79,7 +79,7 @@ The integration platform is a multi module maven project with the following modu
 
 ##Platform Configuration Properties List and default values##
 
-    MQ Configuration
+###MQ Configuration
 
         platform.mq.broker-url=tcp://localhost:61616
         platform.mq.data-dir=${user.home}/mq-data
@@ -87,25 +87,26 @@ The integration platform is a multi module maven project with the following modu
         platform.mq.password=
         platform.mq.user-name=
     
-    Datasource Configuration
-         
-        platform.jdbc.datasource.enabled=false
-        platform.jdbc.datasource.cache-prep-stmts=true
-        platform.jdbc.datasource.enabled=false
-        platform.jdbc.datasource.idle-timeout=30000
-        platform.jdbc.datasource.jdbc-url=
-        platform.jdbc.datasource.max-life-time=30000
-        platform.jdbc.datasource.maximum-pool-size=5
-        platform.jdbc.datasource.password=
-        platform.jdbc.datasource.prep-stmt-cache-size=250
-        platform.jdbc.datasource.prep-stmt-cache-sql-limit=2048
-        platform.jdbc.datasource.use-server-prep-stmts=true
-        platform.jdbc.datasource.user-name=
+###Datasource Configuration
+    
+	     platform.jdbc.datasource.enabled=false
+        platform.jdbc.datasource.names=<comma separated ds names> 
+        platform.jdbc.datasource.default.cache-prep-stmts=true
+        platform.jdbc.datasource.default.idle-timeout=30000
+
+        platform.jdbc.datasource.default.max-life-time=30000
+        platform.jdbc.datasource.default.maximum-pool-size=5
+        platform.jdbc.datasource.default.prep-stmt-cache-size=250
+        platform.jdbc.datasource.default.prep-stmt-cache-sql-limit=2048
+        platform.jdbc.datasource.default.use-server-prep-stmts=true
+        
+        platform.jdbc.datasource.<dsname>.password=
+        platform.jdbc.datasource.<dsname>.jdbc-url=
+        platform.jdbc.datasource.<dsname>.user-name=
      
-    Cache Configuration
+###Cache Configuration
         
         platform.cache.enabled=true
-        platform.cache.cache-names[0]=
         platform.cache.config=
         
 
@@ -117,7 +118,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 
 ##FAQs##
 
-1. How to set up development environment?
+1. ###How to set up development environment?
 
 	a. Fork the integration-platform project to the developers gitlab account.
 	
@@ -128,7 +129,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	For windows C:\users\<username>\.m2
 	For linux/mac ~/.m2
 
-2. How to build and run the platform?
+2. ###How to build and run the platform?
    
    Execute the following commands in terminal/command prompt
    
@@ -144,7 +145,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
    
    `mvn spring-boot:run`
    
-2. How to start the monitoring console?
+3. ###How to start the monitoring console?
 
 	If the integration platform is not built, build the integration platform using maven.
 	
@@ -158,3 +159,25 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	
 	Once the monitoring console is up and running, open bowser and got to 
 	http://localhost:8081, enter admin/admin to login.
+	
+4. ###	How to add datasource?
+	
+	Change the property
+	 
+	  	platform.jdbc.datasource.enabled=true
+	
+	Add datasource names
+	
+		platform.jdbc.datasource.names=ds1
+		
+	If more than one datasource needs to be added, add comma separated ds names.
+	
+	Add jdbc url, user name, password properties for the datasource
+	
+		 platform.jdbc.datasource.ds1.jdbc-url=jdbc:oracle:thin:@localhost:1521:orcl
+        platform.jdbc.datasource.ds1.user-name=scott
+        platform.jdbc.datasource.ds1.password=tiger
+    
+   The default values are taken for the other properities mentioned, if property need to be specified for a specific datasource replace "default" with datasource name.   
+			
+
