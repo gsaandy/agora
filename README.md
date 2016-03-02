@@ -118,7 +118,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 
 ##FAQs##
 
-1. ###How to set up development environment?
+###1. How to set up development environment?
 
 	a. Fork the integration-platform project to the developers gitlab account.
 	
@@ -129,7 +129,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	For windows C:\users\<username>\.m2
 	For linux/mac ~/.m2
 
-2. ###How to build and run the platform?
+###2. How to build and run the platform?
    
    Execute the following commands in terminal/command prompt
    
@@ -145,7 +145,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
    
    `mvn spring-boot:run`
    
-3. ###How to start the monitoring console?
+###3. How to start the monitoring console?
 
 	If the integration platform is not built, build the integration platform using maven.
 	
@@ -160,7 +160,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	Once the monitoring console is up and running, open bowser and got to 
 	http://localhost:8081, enter admin/admin to login.
 	
-4. ###	How to add datasource?
+###4. How to add datasource?
 	
 	Change the property
 	 
