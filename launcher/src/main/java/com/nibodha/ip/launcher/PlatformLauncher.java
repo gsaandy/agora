@@ -34,13 +34,10 @@ import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfigura
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.StandardEnvironment;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -55,7 +52,7 @@ import java.util.Properties;
         SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class
 })
 
-public class PlatformLauncher extends SpringBootServletInitializer {
+public class PlatformLauncher {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLauncher.class);
 
