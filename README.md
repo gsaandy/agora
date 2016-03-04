@@ -2,11 +2,11 @@
 NIP provides a platform to build different integration services.
 
 
-##Prerequisites##
+## Prerequisites ##
 * JDK 1.8
 * Maven 3.3
 
-##Technology Stack##
+## Technology Stack ##
 
 
 * Spring Framework 4.2.3.RELEASE
@@ -83,7 +83,7 @@ TODO: Add Info
 
 TODO: Add Info
 
-##Project Structure##
+## Project Structure ##
 
 The integration platform is a multi module maven project with the following modules
 
@@ -91,7 +91,7 @@ The integration platform is a multi module maven project with the following modu
 * launcher - provides services to launch the integration platform
 * configuration -  contains the platform configuration files
 
-##Platform Configuration Properties List and default values##
+## Platform Configuration Properties List and default values ##
 
 ### MQ Configuration ###
 
@@ -126,13 +126,13 @@ The integration platform is a multi module maven project with the following modu
 
 
 
-##License##
+## License ##
 
 The Nibodha Integration Platform is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0)
 
-##FAQs##
+## FAQs ##
 
-###1. How to set up development environment? ###
+### 1. How to set up development environment? ###
 
 	a. Fork the integration-platform project to the developers gitlab account.
 	
@@ -143,7 +143,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	For windows C:\users\<username>\.m2
 	For linux/mac ~/.m2
 
-###2. How to build and run the platform? ###
+### 2. How to build and run the platform? ###
    
    Execute the following commands in terminal/command prompt
    
@@ -159,7 +159,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
    
    `mvn spring-boot:run`
    
-###3. How to start the monitoring console? ###
+### 3. How to start the monitoring console? ###
 
 	If the integration platform is not built, build the integration platform using maven.
 	
