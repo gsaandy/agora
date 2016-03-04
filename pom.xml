@@ -61,7 +61,7 @@
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
         <pentaho-kettle.version>6.1.0.0-99</pentaho-kettle.version>
-        <hibernate.version>5.0.5.Final</hibernate.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
         <hibernate-maven-plugin.version>2.2</hibernate-maven-plugin.version>
         <cglib.version>2.1_3</cglib.version>
         <jetty.version>9.3.6.v20151106</jetty.version>
@@ -70,7 +70,7 @@
         <joda-time.version>2.9.1</joda-time.version>
         <cxf.version>3.1.4</cxf.version>
         <hibernate.ogm-version>4.2.0.Final</hibernate.ogm-version>
-        <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
+        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <hibernate-validator-legacy.version>4.0.2.GA</hibernate-validator-legacy.version>
         <hikariCP.verion>2.4.3</hikariCP.verion>
         <infinispan.version>8.1.2.Final</infinispan.version>
