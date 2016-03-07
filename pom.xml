@@ -405,6 +405,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/facade/**/*.*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
         </plugins>
