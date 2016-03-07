@@ -2,11 +2,11 @@
 NIP provides a platform to build different integration services.
 
 
-##Prerequisites##
+## Prerequisites ##
 * JDK 1.8
 * Maven 3.3
 
-##Technology Stack##
+## Technology Stack ##
 
 
 * Spring Framework 4.2.3.RELEASE
@@ -14,6 +14,9 @@ NIP provides a platform to build different integration services.
 * Spring Batch 3.0.5.RELEASE
 * Apache Camel 2.16.1
 * Spring Data 1.11.1.RELEASE
+* Infinispan 8.1.2
+* Apache Active MQ 5.6
+* HikariCP 2.4.3
 
 ## Architecture ##
 
@@ -23,15 +26,26 @@ NIP provides a platform to build different integration services.
 * Services layer
 * Application Layer 
 
+![](integration-platform-architecture.png)
+
 ### Kernel Layer ###
 
 The NIP kernel layer is based on Spring Boot that provides an embedded Jetty Servlet Container into which we can deploy the applications. The kernel layer provides the following features:
 
-* Deployment
-* Logging
-* JMX Server
-* Configuration
-* Security
+#### Deployment ####
+The NIP provides support to deploy services external to the bundled application, so the customer/deployer can decide which service is being deployed on which server.
+
+#### Logging ####
+A dynamic logging component which is based on logback and supports different APIs like SLF4J, Java Logging etc.
+
+#### JMX Server ####
+The NIP uses jolokia agent to provide restful access to the MBeans, so that the any mbean client can connect to the server.
+
+#### Configuration ####
+The properties files for configuration are monitored and the changes are automatically propagated to the relevent services/applications
+
+#### Security ####
+The security framework is based on spring security.
 
 ### Services Layer ###
 
@@ -51,15 +65,15 @@ The routing/integration engine based on Apache Camel allows the developer to def
             
 #### Transformation Engine ####
 
-TODO: Add Info
+The transformation engine is a custom bean mapping framework.
 
 #### Auditing ####
 
-TODO: Add Info
+The auditing service logs the inbound and outbound messages to an audit log file.
 
 #### ETL Engine ####
 
-TODO: Add Info
+The ETL engine is realized using Spring Batch, and is used extract transform and load from/to different datasources.
 
 ### Application Layer ###
 
@@ -69,7 +83,7 @@ TODO: Add Info
 
 TODO: Add Info
 
-##Project Structure##
+## Project Structure ##
 
 The integration platform is a multi module maven project with the following modules
 
@@ -77,9 +91,9 @@ The integration platform is a multi module maven project with the following modu
 * launcher - provides services to launch the integration platform
 * configuration -  contains the platform configuration files
 
-##Platform Configuration Properties List and default values##
+## Platform Configuration Properties List and default values ##
 
-###MQ Configuration
+### MQ Configuration ###
 
         platform.mq.broker-url=tcp://localhost:61616
         platform.mq.data-dir=${user.home}/mq-data
@@ -87,7 +101,7 @@ The integration platform is a multi module maven project with the following modu
         platform.mq.password=
         platform.mq.user-name=
     
-###Datasource Configuration
+### Datasource Configuration ###
     
 	     platform.jdbc.datasource.enabled=false
         platform.jdbc.datasource.names=<comma separated ds names> 
@@ -104,7 +118,7 @@ The integration platform is a multi module maven project with the following modu
         platform.jdbc.datasource.<dsname>.jdbc-url=
         platform.jdbc.datasource.<dsname>.user-name=
      
-###Cache Configuration
+### Cache Configuration ###
         
         platform.cache.enabled=true
         platform.cache.config=
@@ -112,13 +126,13 @@ The integration platform is a multi module maven project with the following modu
 
 
 
-##License##
+## License ##
 
 The Nibodha Integration Platform is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0)
 
-##FAQs##
+## FAQs ##
 
-###1. How to set up development environment?
+### 1. How to set up development environment? ###
 
 	a. Fork the integration-platform project to the developers gitlab account.
 	
@@ -129,7 +143,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	For windows C:\users\<username>\.m2
 	For linux/mac ~/.m2
 
-###2. How to build and run the platform?
+### 2. How to build and run the platform? ###
    
    Execute the following commands in terminal/command prompt
    
@@ -145,7 +159,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
    
    `mvn spring-boot:run`
    
-###3. How to start the monitoring console?
+### 3. How to start the monitoring console? ###
 
 	If the integration platform is not built, build the integration platform using maven.
 	
@@ -160,7 +174,7 @@ The Nibodha Integration Platform is released under version 2.0 of the [Apache Li
 	Once the monitoring console is up and running, open bowser and got to 
 	http://localhost:8081, enter admin/admin to login.
 	
-###4. How to add datasource?
+### 4. How to add datasource? ###
 	
 	Change the property
 	 
