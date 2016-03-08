@@ -41,7 +41,6 @@ public class JavaDslRouteDefinitionsInjctorTest {
 
     @Test
     public void whenRouteContextIsAvailableRoutesAreInjectedToCamelContext() throws Exception{
-        routeDefinitionsInjector.inject();
         Assert.assertTrue(routeDefinitionsInjector.getCamelContext().getRoutes().size()>0);
     }
 }

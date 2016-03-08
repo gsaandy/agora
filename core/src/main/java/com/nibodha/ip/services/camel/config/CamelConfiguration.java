@@ -31,7 +31,7 @@ import org.springframework.jms.connection.JmsTransactionManager;
  * @version 1.0
  */
 @Configuration
-@ImportResource("META-INF/spring/nip-camel-context.xml")
+@ImportResource("classpath:META-INF/spring/nip-camel-context.xml")
 @ConditionalOnProperty(prefix = "platform.routingengine", value = "enabled", havingValue = "true", matchIfMissing = true)
 @AutoConfigureAfter(PlatformMqConfiguration.class)
 public class CamelConfiguration {
@@ -43,5 +43,10 @@ public class CamelConfiguration {
         activeMQComponent.setTransacted(true);
         activeMQComponent.setTransactionManager(new JmsTransactionManager(pooledConnectionFactory));
         return activeMQComponent;
+    }
+
+    @Bean
+    public JmsTransactionManager jmsTransactionManager(final PooledConnectionFactory pooledConnectionFactory) {
+        return new JmsTransactionManager(pooledConnectionFactory);
     }
 }
