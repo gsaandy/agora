@@ -24,27 +24,21 @@ import com.nibodha.ip.exceptions.PlatformRuntimeException;
  */
 public class Error {
 
-    private final Exception exception;
+    private final Class<? extends Exception> exception;
 
-    private final String errorType;
+    private final String exceptionMessage;
 
-    private final String errorCode;
 
-    public Error(final Exception exception, final String errorCode, final String errorType) {
+    public Error(final Class<? extends Exception> exception, final String exceptionMessage) {
         this.exception = exception;
-        this.errorCode = errorCode;
-        this.errorType = errorType;
+        this.exceptionMessage = exceptionMessage;
     }
 
-    public Exception getException() {
+    public Class<? extends Exception> getException() {
         return exception;
     }
 
-    public String getErrorType() {
-        return errorType;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 }

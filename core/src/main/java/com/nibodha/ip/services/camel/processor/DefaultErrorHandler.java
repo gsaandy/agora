@@ -19,6 +19,8 @@ package com.nibodha.ip.services.camel.processor;
 import com.nibodha.ip.domain.Error;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author gibugeorge on 08/03/16.
@@ -26,13 +28,15 @@ import org.apache.camel.Processor;
  */
 public class DefaultErrorHandler implements Processor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultErrorHandler.class);
+
     @Override
     public void process(final Exchange exchange) throws Exception {
 
         final Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
-        final String errorCode = exchange.getIn().getHeader("ERROR_CODE", String.class);
-        final String errorType = exchange.getIn().getHeader("ERROR_TYPE", String.class);
-        final Error error = new Error(exception, errorCode, errorType);
+        LOGGER.error("Exception in route {}", exchange.getFromRouteId());
+        LOGGER.error("Exception is ", exception);
+        final Error error = new Error(exception.getClass(), exception.getMessage());
         exchange.getIn().setBody(error);
     }
 }
