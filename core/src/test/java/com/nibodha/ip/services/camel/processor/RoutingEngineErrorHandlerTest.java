@@ -68,8 +68,8 @@ public class RoutingEngineErrorHandlerTest {
         template.send(exchange);
         final Error error = exchange.getIn().getBody(Error.class);
         Assert.assertNotNull(error);
-        Assert.assertTrue(error.getException() instanceof PlatformRuntimeException);
-        
+        Assert.assertTrue(error.getException() == PlatformRuntimeException.class);
+
     }
 
 
@@ -79,6 +79,6 @@ class TestRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:start").setHeader("ERROR_CODE", new ConstantExpression("ERROR_CODE")).setHeader("ERROR_TYPE", new ConstantExpression("ERROR_TYPE")).throwException(new PlatformRuntimeException("error")).to("mock:result");
+        from("direct:start").id("com.nibodha.ip.test.exceptionhandling").throwException(new PlatformRuntimeException("error")).to("mock:result");
     }
 }
