@@ -17,7 +17,6 @@
 package com.nibodha.ip.services.jdbc.config;
 
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
-import com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.lang3.StringUtils;
@@ -40,10 +39,6 @@ public class DatasourceConfiguration implements BeanDefinitionRegistryPostProces
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatasourceConfiguration.class);
-
-
-    private PlatformPropertyPlaceholderConfigurer platformPropertyPlaceholderConfigurer;
-
 
     private final boolean isDataSourceEnabled;
 
