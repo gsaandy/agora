@@ -49,33 +49,44 @@ public class EmbeddedContainerConfiguration {
             @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path:}") final String jettyConfigXmlPath,
             @Value("${platform.jmx.port:1099}") final String jmxPort) {
         final JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory(Integer.valueOf(mainPort));
-        factory.addServerCustomizers(new JettyServerCustomizer() {
-            @Override
-            public void customize(final Server server) {
-                // Expose Jetty managed beans to the JMX platform server provided by Spring
-                if (!StringUtils.isEmpty(jettyConfigXmlPath)) {
-                    try {
-                        final XmlConfiguration xmlConfiguration = new XmlConfiguration(new FileInputStream(jettyConfigXmlPath));
-                        xmlConfiguration.configure(server);
-                    } catch (SAXException | IOException e) {
-                        LOGGER.error("Exception reading the xml configuration", e);
-                    } catch (Exception e) {
-                        LOGGER.error("Exception configuring the server configuration", e);
-                    }
-                }
-                try {
-                    final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:"+jmxPort+"/jmxrmi"), "com.nibodha.ip.jmx:name=rmiconnectorserver");
-                    server.addBean(connectorServer);
-                } catch (Exception e) {
-                    LOGGER.error("Exception configuring the mbean connector server", e);
-                }
-                final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
-                mbContainer.setDomain("com.nibodha.ip");
-                server.addBean(mbContainer);
-
-
-            }
-        });
+        factory.addServerCustomizers(new EmbeddedServerCustomizer(jettyConfigXmlPath, jmxPort));
         return factory;
+    }
+
+    private class EmbeddedServerCustomizer implements JettyServerCustomizer {
+
+        private final String jettyConfigXmlPath;
+        private final String jmxPort;
+
+        public EmbeddedServerCustomizer(final String jettyConfigXmlPath, String jmxPort) {
+            this.jettyConfigXmlPath = jettyConfigXmlPath;
+            this.jmxPort = jmxPort;
+        }
+
+        @Override
+        public void customize(final Server server) {
+            // Expose Jetty managed beans to the JMX platform server provided by Spring
+            if (!StringUtils.isEmpty(jettyConfigXmlPath)) {
+                try {
+                    final XmlConfiguration xmlConfiguration = new XmlConfiguration(new FileInputStream(jettyConfigXmlPath));
+                    xmlConfiguration.configure(server);
+                } catch (SAXException | IOException e) {
+                    LOGGER.error("Exception reading the xml configuration", e);
+                } catch (Exception e) {
+                    LOGGER.error("Exception configuring the server configuration", e);
+                }
+            }
+            try {
+                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi"), "com.nibodha.ip.jmx:name=rmiconnectorserver");
+                server.addBean(connectorServer);
+            } catch (Exception e) {
+                LOGGER.error("Exception configuring the mbean connector server", e);
+            }
+            final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
+            mbContainer.setDomain("com.nibodha.ip");
+            server.addBean(mbContainer);
+
+
+        }
     }
 }

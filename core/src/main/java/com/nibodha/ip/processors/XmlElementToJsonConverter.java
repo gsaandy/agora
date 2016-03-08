@@ -79,6 +79,7 @@ public class XmlElementToJsonConverter implements Processor {
             super(configuration);
         }
 
+        @Override
         public HierarchicalStreamWriter createWriter(final Writer writer) {
 
             try {
@@ -97,6 +98,7 @@ public class XmlElementToJsonConverter implements Processor {
 
     class CustomStaxDriver extends StaxDriver {
 
+        @Override
         public AbstractPullReader createStaxReader(XMLStreamReader in) {
             return new StaxReader(super.getQnameMap(), in, getNameCoder());
         }
