@@ -74,6 +74,7 @@ public class RoutingEngineErrorHandlerBuilder extends DeadLetterChannelBuilder {
      * Always returns true as this the error handler always support transaction
      * @return
      */
+    @Override
     public boolean supportTransacted() {
         return true;
     }
