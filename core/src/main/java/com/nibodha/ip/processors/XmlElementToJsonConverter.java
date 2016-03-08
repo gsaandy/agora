@@ -17,11 +17,13 @@
 package com.nibodha.ip.processors;
 
 import com.nibodha.ip.xstream.HierarchicalStreamCopier;
+import com.nibodha.ip.xstream.StaxReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.StreamException;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.io.json.JettisonStaxWriter;
+import com.thoughtworks.xstream.io.xml.AbstractPullReader;
 import com.thoughtworks.xstream.io.xml.QNameMap;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import com.thoughtworks.xstream.io.xml.StaxWriter;
@@ -33,6 +35,7 @@ import org.codehaus.jettison.mapped.MappedXMLStreamWriter;
 import org.springframework.stereotype.Component;
 
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -46,7 +49,7 @@ public class XmlElementToJsonConverter implements Processor {
 
     private final HierarchicalStreamCopier copier = new HierarchicalStreamCopier();
     private final CustomJettisonMappedXmlDriver jettisonDriver;
-    private final StaxDriver staxDriver = new StaxDriver();
+    private final CustomStaxDriver staxDriver = new CustomStaxDriver();
 
 
     public XmlElementToJsonConverter() {
@@ -89,6 +92,13 @@ public class XmlElementToJsonConverter implements Processor {
             } catch (final XMLStreamException e) {
                 throw new StreamException(e);
             }
+        }
+    }
+
+    class CustomStaxDriver extends StaxDriver {
+
+        public AbstractPullReader createStaxReader(XMLStreamReader in) {
+            return new StaxReader(super.getQnameMap(), in, getNameCoder());
         }
     }
 
