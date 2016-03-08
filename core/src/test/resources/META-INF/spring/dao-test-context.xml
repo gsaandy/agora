@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2016 Nibodha Technologies Pvt. Ltd.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://camel.apache.org/schema/spring" xmlns:tx="http://www.springframework.org/schema/tx"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <beans:bean id="testEntityManagerFactory"
+                class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+
+        <beans:property name="dataSource" ref="testDS"/>
+        <beans:property name="packagesToScan"
+                        value="com.nibodha.ip.dao"/>
+        <beans:property name="persistenceUnitName" value="test"/>
+        <beans:property name="jpaVendorAdapter">
+            <beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </beans:property>
+        <beans:property name="persistenceProvider">
+            <beans:bean class="org.hibernate.jpa.HibernatePersistenceProvider"/>
+        </beans:property>
+        <beans:property name="jpaProperties">
+            <beans:props>
+                <beans:prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</beans:prop>
+                <beans:prop key="hibernate.show_sql">true</beans:prop>
+                <beans:prop key="hibernate.hbm2ddl.auto">create-drop</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <beans:property name="entityManagerFactory" ref="testEntityManagerFactory"/>
+    </beans:bean>
+    <beans:bean id="testDao" class="com.nibodha.ip.dao.SampleDao"/>
+
+
+    <beans:bean id="dataSourceConfiguration"
+                class="com.nibodha.ip.services.jdbc.config.DatasourceConfiguration">
+        <beans:constructor-arg name="environment" ref="platformEnvironment"/>
+    </beans:bean>
+    <beans:bean id="platformEnvironment" class="com.nibodha.ip.env.PlatformEnvironment"/>
+
+</beans:beans>

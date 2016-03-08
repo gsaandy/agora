@@ -44,6 +44,7 @@ public class StaxReader extends AbstractPullReader {
         moveDown();
     }
 
+    @Override
     protected int pullNextEvent() {
         try {
             switch (in.next()) {
@@ -67,36 +68,44 @@ public class StaxReader extends AbstractPullReader {
         }
     }
 
+    @Override
     protected String pullElementName() {
         // let the QNameMap handle any mapping of QNames to Java class names
         QName qname = in.getName();
         return qnameMap.getJavaClassName(qname);
     }
 
+    @Override
     protected String pullText() {
         return in.getText();
     }
 
+    @Override
     public String getAttribute(String name) {
         return in.getAttributeValue(null, encodeAttribute(name));
     }
 
+    @Override
     public String getAttribute(int index) {
         return in.getAttributeValue(index);
     }
 
+    @Override
     public int getAttributeCount() {
         return in.getAttributeCount();
     }
 
+    @Override
     public String getAttributeName(int index) {
         return decodeAttribute(in.getAttributeLocalName(index));
     }
 
+    @Override
     public void appendErrors(ErrorWriter errorWriter) {
         errorWriter.add("line number", String.valueOf(in.getLocation().getLineNumber()));
     }
 
+    @Override
     public void close() {
         try {
             in.close();
