@@ -70,6 +70,15 @@ public class XmlElementToJsonConverterTest extends CamelTestSupport {
         template.send(exchange);
         assertEquals("{\"tests\":{\"test\":{\"id\":\"1\",\"value\":\"1234\"}}}", exchange.getIn().getBody());
     }
+    @Test
+    public void whenInputElementHasCDATAProperJsonStringIsReturned() {
+        final String xmlString = "<tests>\n\r  " +
+                "   <test id=\"1\"><![CDATA[1234]]></test>\n\r   " +
+                "</tests>  ";
+        exchange.getIn().setBody(xmlString);
+        template.send(exchange);
+        assertEquals("{\"tests\":{\"test\":{\"id\":\"1\",\"value\":\"1234\"}}}", exchange.getIn().getBody());
+    }
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
