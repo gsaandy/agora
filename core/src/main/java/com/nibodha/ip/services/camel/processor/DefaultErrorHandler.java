@@ -16,7 +16,9 @@
 
 package com.nibodha.ip.services.camel.processor;
 
-import com.nibodha.ip.domain.Error;
+import com.nibodha.ip.domain.ErrorInfo;
+import com.nibodha.ip.exceptions.ExceptionType;
+import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
@@ -32,11 +34,14 @@ public class DefaultErrorHandler implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-
         final Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
         LOGGER.error("Exception in route {}", exchange.getFromRouteId());
         LOGGER.error("Exception is ", exception);
-        final Error error = new Error(exception.getClass(), exception.getMessage());
-        exchange.getIn().setBody(error);
+        ExceptionType type = PlatformRuntimeException.Type.GENERIC;
+        if (exception instanceof PlatformRuntimeException) {
+            type = ((PlatformRuntimeException) exception).getType();
+        }
+        final ErrorInfo errorInfo = new ErrorInfo(type, exception.getMessage());
+        exchange.getIn().setBody(errorInfo);
     }
 }

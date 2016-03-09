@@ -83,7 +83,10 @@ public class RouteDefinitionsInjector implements ApplicationContextAware, CamelC
         final Set<String> routeContextNames = routeContexts.keySet();
         for (final String routeContextName : routeContextNames) {
             if (StringUtils.isEmpty(routeContextName)) {
-                throw new PlatformRuntimeException("The route context id cannot be null");
+                if(LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Skipping the route context as id is null");
+                }
+                continue;
 
             }
             final String routeContextId = routeContextName.replace("&", "");

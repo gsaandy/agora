@@ -23,10 +23,36 @@ package com.nibodha.ip.exceptions;
 
 public class PlatformRuntimeException extends RuntimeException {
 
-    public PlatformRuntimeException(final String message) {
-        super(message);
-    }
-    public PlatformRuntimeException(final String message, final Exception e) {
+    private ExceptionType type;
+
+    public PlatformRuntimeException(final ExceptionType type,
+                                    final String message, final Exception e) {
         super(message, e);
+        this.type = type;
+    }
+
+    public PlatformRuntimeException(final ExceptionType type, final String message) {
+        super(message);
+        this.type = type;
+    }
+
+    public PlatformRuntimeException(final String message, Exception e) {
+        this(Type.GENERIC, message, e);
+    }
+
+    public PlatformRuntimeException(final String message) {
+        this(Type.GENERIC, message);
+    }
+
+
+    public ExceptionType getType() {
+        return type;
+    }
+
+    public enum Type implements ExceptionType {
+        GENERIC,
+        ROUTING_ENGINE_RS_ENDPOINT_CONFIG,
+        DATA_SOURCE_CONFIG,
+        AUTHENTICATION_FAILURE
     }
 }

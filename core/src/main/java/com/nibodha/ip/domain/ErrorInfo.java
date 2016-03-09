@@ -14,21 +14,31 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security.config;
+package com.nibodha.ip.domain;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.core.annotation.Order;
+import com.nibodha.ip.exceptions.ExceptionType;
 
 /**
- * @author gibugeorge on 26/02/16.
+ * @author gibugeorge on 08/03/16.
  * @version 1.0
  */
+public class ErrorInfo {
 
-@Configuration
-@Order(SecurityProperties.BASIC_AUTH_ORDER)
-@ImportResource("classpath*:META-INF/spring/digest-auth-context.xml")
-public class DigestAuthenticationConfiguration{
+    private final String message;
+    private final ExceptionType type;
 
+
+    public ErrorInfo(final ExceptionType type, final String message) {
+        this.type = type;
+        this.message = message;
+    }
+
+
+    public String getMessage() {
+        return message;
+    }
+
+    public ExceptionType getType() {
+        return type;
+    }
 }

@@ -45,6 +45,10 @@ public class EmbeddedContainerConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformConfiguration.class);
 
     @Bean
+    public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory() {
+        return new JettyEmbeddedServletContainerFactory();
+    }
+    @Bean
     public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory(
             @Value("${server.port:8080}") final String mainPort, @Value("${jetty.config.path:}") final String jettyConfigXmlPath,
             @Value("${platform.jmx.port:1099}") final String jmxPort) {

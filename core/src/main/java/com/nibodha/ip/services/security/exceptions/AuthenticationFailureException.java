@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security.config;
+package com.nibodha.ip.services.security.exceptions;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.core.annotation.Order;
+import com.nibodha.ip.exceptions.PlatformRuntimeException;
 
 /**
- * @author gibugeorge on 26/02/16.
+ * @author gibugeorge on 09/03/16.
  * @version 1.0
  */
+public class AuthenticationFailureException extends PlatformRuntimeException {
 
-@Configuration
-@Order(SecurityProperties.BASIC_AUTH_ORDER)
-@ImportResource("classpath*:META-INF/spring/digest-auth-context.xml")
-public class DigestAuthenticationConfiguration{
-
+    public AuthenticationFailureException(String message) {
+        super(Type.AUTHENTICATION_FAILURE, message);
+    }
 }

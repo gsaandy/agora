@@ -16,7 +16,7 @@
 
 package com.nibodha.ip.services.camel.processor;
 
-import com.nibodha.ip.domain.Error;
+import com.nibodha.ip.domain.ErrorInfo;
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import com.nibodha.ip.services.camel.processor.config.RoutingEngineErrorHandlerTestConfig;
 import com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration;
@@ -24,7 +24,6 @@ import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultExchange;
-import org.apache.camel.model.language.ConstantExpression;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,9 +65,9 @@ public class RoutingEngineErrorHandlerTest {
     @Test
     public void whenExceptionIsThrownTheExceptionIsWrappedInErrorObject() {
         template.send(exchange);
-        final Error error = exchange.getIn().getBody(Error.class);
-        Assert.assertNotNull(error);
-        Assert.assertTrue(error.getException() == PlatformRuntimeException.class);
+        final ErrorInfo errorInfo = exchange.getIn().getBody(ErrorInfo.class);
+        Assert.assertNotNull(errorInfo);
+        Assert.assertTrue(errorInfo.getType() == PlatformRuntimeException.Type.GENERIC);
 
     }
 
@@ -79,6 +78,6 @@ class TestRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:start").id("com.nibodha.ip.test.exceptionhandling").throwException(new PlatformRuntimeException("error")).to("mock:result");
+        from("direct:start").id("com.nibodha.ip.test.exceptionhandling").throwException(new RuntimeCamelException("error")).to("mock:result");
     }
 }

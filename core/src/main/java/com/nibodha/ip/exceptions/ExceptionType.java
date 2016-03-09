@@ -14,31 +14,11 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.domain;
-
-import com.nibodha.ip.exceptions.PlatformRuntimeException;
+package com.nibodha.ip.exceptions;
 
 /**
- * @author gibugeorge on 08/03/16.
+ * @author gibugeorge on 09/03/16.
  * @version 1.0
  */
-public class Error {
-
-    private final Class<? extends Exception> exception;
-
-    private final String exceptionMessage;
-
-
-    public Error(final Class<? extends Exception> exception, final String exceptionMessage) {
-        this.exception = exception;
-        this.exceptionMessage = exceptionMessage;
-    }
-
-    public Class<? extends Exception> getException() {
-        return exception;
-    }
-
-    public String getExceptionMessage() {
-        return exceptionMessage;
-    }
+public interface ExceptionType {
 }
