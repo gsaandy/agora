@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security.config;
+package com.nibodha.ip.services.mvc.config;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import com.nibodha.ip.services.mvc.GlobalExceptionHandler;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.core.annotation.Order;
 
 /**
- * @author gibugeorge on 26/02/16.
+ * @author gibugeorge on 09/03/16.
  * @version 1.0
  */
-
 @Configuration
-@Order(SecurityProperties.BASIC_AUTH_ORDER)
-@ImportResource("classpath*:META-INF/spring/digest-auth-context.xml")
-public class DigestAuthenticationConfiguration{
-
+@ComponentScan(basePackages = "com.nibodha.ip.services.mvc", basePackageClasses = {GlobalExceptionHandler.class})
+public class MvcConfiguration {
 }

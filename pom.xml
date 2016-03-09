@@ -333,11 +333,10 @@
 
     <modules>
         <module>test-support</module>
+        <module>configuration</module>
         <module>core</module>
         <module>launcher</module>
-        <module>configuration</module>
         <module>monitoring-console</module>
-        <module>dist</module>
     </modules>
     <distributionManagement>
         <repository>
