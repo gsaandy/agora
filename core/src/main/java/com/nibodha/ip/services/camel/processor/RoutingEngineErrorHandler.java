@@ -22,6 +22,7 @@ import org.apache.camel.processor.RedeliveryPolicy;
 import org.apache.camel.processor.exceptionpolicy.ExceptionPolicyStrategy;
 import org.apache.camel.spring.spi.TransactionErrorHandler;
 import org.apache.camel.util.CamelLogger;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -32,6 +33,8 @@ import java.util.concurrent.ScheduledExecutorService;
 public class RoutingEngineErrorHandler extends DeadLetterChannel {
 
     private final TransactionErrorHandler transactionErrorHandler;
+
+    public static final String DEAD_LETTER_URI="DEAD_LETTER_URI";
 
     /**
      * @param camelContext
@@ -66,6 +69,7 @@ public class RoutingEngineErrorHandler extends DeadLetterChannel {
      */
     @Override
     public void process(final Exchange exchange) throws Exception {
+
         if (exchange.isTransacted()) {
             this.transactionErrorHandler.process(exchange);
         } else {
