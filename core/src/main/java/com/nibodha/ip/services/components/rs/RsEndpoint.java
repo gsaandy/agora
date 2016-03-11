@@ -46,7 +46,7 @@ public class RsEndpoint extends CxfRsEndpoint {
         try {
             configureConsumer(answer);
         } catch (Exception e) {
-            throw new PlatformRuntimeException(PlatformRuntimeException.Type.ROUTING_ENGINE_RS_ENDPOINT_CONFIG, "Exception configuring RsConsumer", e);
+            throw new PlatformRuntimeException(PlatformRuntimeException.Type.ROUTING_ENGINE_RS_ENDPOINT_CONFIG_FAILURE, "Exception configuring RsConsumer", e);
         }
         return answer;
     }
