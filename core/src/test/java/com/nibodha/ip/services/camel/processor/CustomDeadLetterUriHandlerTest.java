@@ -16,7 +16,6 @@
 
 package com.nibodha.ip.services.camel.processor;
 
-import com.nibodha.ip.domain.ErrorInfo;
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import com.nibodha.ip.services.camel.processor.config.RoutingEngineErrorHandlerTestConfig;
 import com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration;
@@ -35,22 +34,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 /**
- * @author gibugeorge on 08/03/16.
+ * @author gibugeorge on 11/03/16.
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PlatformPlaceHolderConfiguration.class, RoutingEngineErrorHandlerTestConfig.class})
-public class RoutingEngineErrorHandlerTest {
-
+public class CustomDeadLetterUriHandlerTest {
     static {
         System.setProperty("config.location", "classpath:.");
     }
 
-    @Produce(uri = "direct:start")
+    @Produce(uri = "direct:start1")
     protected ProducerTemplate template;
 
-    @EndpointInject(uri = "mock:result")
+    @EndpointInject(uri = "mock:result1")
     protected MockEndpoint resultEndpoint;
+
+
+    @EndpointInject(uri = "mock:deadLetterResult")
+    protected MockEndpoint mockDeadLetterResult;
 
     protected Exchange exchange;
 
@@ -62,24 +64,20 @@ public class RoutingEngineErrorHandlerTest {
         exchange = new DefaultExchange(camelContext);
     }
 
-
     @Test
-    public void whenExceptionIsThrownTheExceptionIsWrappedInErrorObject() {
-        template.send(exchange);
-        final ErrorInfo errorInfo = exchange.getIn().getBody(ErrorInfo.class);
-        Assert.assertNotNull(errorInfo);
-        Assert.assertTrue(errorInfo.getType() == PlatformRuntimeException.Type.GENERIC_FAILURE);
-
+    public void whenCustomUriIsProvideMessageIsRedirectedToThatUri() {
+        this.template.send(exchange);
+        Assert.assertEquals(1, this.mockDeadLetterResult.getExchanges().size());
     }
 
 
 }
 
-class ExceptionThrowingRouteBuilder extends RouteBuilder {
+class DeadLetterUriRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:start").id("com.nibodha.ip.test.exceptionhandling").throwException(new RuntimeCamelException("error")).to("mock:result");
+        from("direct:start1").id("com.nibodha.ip.test.deadletterurihandling").setProperty(RoutingEngineErrorHandler.DEAD_LETTER_URI, new ConstantExpression("direct:deadLetter")).throwException(new PlatformRuntimeException(PlatformRuntimeException.Type.DATA_SOURCE_CONFIG_FAILURE, "error")).to("mock:result1");
+        from("direct:deadLetter").to("mock:deadLetterResult");
     }
 }
-
