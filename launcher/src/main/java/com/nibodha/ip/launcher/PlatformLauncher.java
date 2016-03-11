@@ -34,6 +34,7 @@ import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfigura
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +50,7 @@ import java.util.Properties;
 @EnableAutoConfiguration(exclude = {PropertyPlaceholderAutoConfiguration.class, BatchAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
         DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, ActiveMQAutoConfiguration.class,
         MongoDataAutoConfiguration.class, CacheAutoConfiguration.class, JmsAutoConfiguration.class, DataSourceAutoConfiguration.class,
-        SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class
+        SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class, ThymeleafAutoConfiguration.class
 })
 
 public class PlatformLauncher {
