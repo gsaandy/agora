@@ -60,6 +60,7 @@ public class PlatformMqConfiguration {
         } else {
             activeMQConnectionFactory = new ActiveMQConnectionFactory(platformMqProperties.getBrokerUrl());
         }
+        activeMQConnectionFactory.setTrustAllPackages(true);
         return activeMQConnectionFactory;
     }
 
