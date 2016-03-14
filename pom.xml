@@ -64,7 +64,7 @@
         <hibernate.version>5.1.0.Final</hibernate.version>
         <hibernate-maven-plugin.version>2.2</hibernate-maven-plugin.version>
         <cglib.version>2.1_3</cglib.version>
-        <jetty.version>9.3.6.v20151106</jetty.version>
+        <jetty.version>9.3.7.v20160115</jetty.version>
         <oracle-ojdbc.version>11.2.0.3</oracle-ojdbc.version>
         <activemq.version>5.13.0</activemq.version>
         <joda-time.version>2.9.1</joda-time.version>
@@ -225,6 +225,12 @@
                 <artifactId>jetty-jndi</artifactId>
                 <version>${jetty.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty.http2</groupId>
+                <artifactId>http2-server</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+
             <!-- the ActiveMQ client with connection pooling -->
             <dependency>
                 <groupId>org.apache.activemq</groupId>
