@@ -66,7 +66,7 @@ public class DatasourceConfiguration implements BeanDefinitionRegistryPostProces
                 hikariConfig.setPoolName(dataSourceName);
                 final String jdbcUrl = getProperty("jdbc-url", dataSourceName);
                 if (StringUtils.isEmpty(jdbcUrl)) {
-                    throw new PlatformRuntimeException(PlatformRuntimeException.Type.DATA_SOURCE_CONFIG, "JDBC Url must be configured");
+                    throw new PlatformRuntimeException(PlatformRuntimeException.Type.DATA_SOURCE_CONFIG_FAILURE, "JDBC Url must be configured");
                 }
                 hikariConfig.setJdbcUrl(jdbcUrl);
                 final String userName = getProperty("user-name", dataSourceName) != null ? getProperty("user-name", dataSourceName) : "";

@@ -16,14 +16,28 @@
 
 package com.nibodha.ip.services.components.rs;
 
+import com.nibodha.ip.services.camel.processor.RoutingEngineErrorHandler;
+import org.apache.camel.Exchange;
 import org.apache.camel.component.cxf.jaxrs.CxfRsProducer;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author gibugeorge on 16/01/16.
  * @version 1.0
  */
 public class RsProducer extends CxfRsProducer {
+    private final RsEndpoint endpoint;
+
     public RsProducer(final RsEndpoint endpoint) {
         super(endpoint);
+        this.endpoint = endpoint;
+    }
+
+    public void process(final Exchange exchange) throws Exception {
+        final String deadLetterUri = endpoint.getDeadLetterUri();
+        if (StringUtils.isNotEmpty(deadLetterUri)) {
+            exchange.setProperty(RoutingEngineErrorHandler.DEAD_LETTER_URI, deadLetterUri);
+        }
+        super.process(exchange);
     }
 }

@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
         if (exception instanceof PlatformRuntimeException) {
             errorInfo = new ErrorInfo(((PlatformRuntimeException) exception).getType(), exception.getMessage());
         } else {
-            errorInfo = new ErrorInfo(PlatformRuntimeException.Type.GENERIC, exception.getMessage());
+            errorInfo = new ErrorInfo(PlatformRuntimeException.Type.GENERIC_FAILURE, exception.getMessage());
         }
         LOGGER.error("Exception of type {} occured in mvc layer for request URI {}", errorInfo.getType(), request.getRequestURI(), exception);
         return errorInfo;

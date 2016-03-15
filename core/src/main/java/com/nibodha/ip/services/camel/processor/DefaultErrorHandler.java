@@ -21,8 +21,13 @@ import com.nibodha.ip.exceptions.ExceptionType;
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.camel.ProducerTemplate;
+import org.apache.camel.impl.DefaultProducerTemplate;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.nibodha.ip.services.camel.processor.RoutingEngineErrorHandler.*;
 
 /**
  * @author gibugeorge on 08/03/16.
@@ -37,7 +42,15 @@ public class DefaultErrorHandler implements Processor {
         final Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
         LOGGER.error("Exception in route {}", exchange.getFromRouteId());
         LOGGER.error("Exception is ", exception);
-        ExceptionType type = PlatformRuntimeException.Type.GENERIC;
+        final String deadLetterUri = exchange.getProperty(DEAD_LETTER_URI, String.class);
+        if (StringUtils.isNotEmpty(deadLetterUri)) {
+            exchange.removeProperty(DEAD_LETTER_URI);
+            final ProducerTemplate producerTemplate = new DefaultProducerTemplate(exchange.getContext());
+            producerTemplate.start();
+            producerTemplate.send(deadLetterUri, exchange);
+            return;
+        }
+        ExceptionType type = PlatformRuntimeException.Type.GENERIC_FAILURE;
         if (exception instanceof PlatformRuntimeException) {
             type = ((PlatformRuntimeException) exception).getType();
         }

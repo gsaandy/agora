@@ -23,6 +23,7 @@ import org.apache.camel.component.cxf.jaxrs.CxfRsComponent;
 import org.apache.camel.util.CamelContextHelper;
 import org.apache.camel.util.CastUtils;
 import org.apache.camel.util.ObjectHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxrs.AbstractJAXRSFactoryBean;
 
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class RsComponent extends CxfRsComponent {
     public RsComponent(final CamelContext camelContext) {
         super(camelContext);
     }
+
     @Override
     protected Endpoint createEndpoint(final String uri, final String remaining, final Map<String, Object> parameters) throws Exception {
         RsEndpoint answer;
@@ -65,9 +67,12 @@ public class RsComponent extends CxfRsComponent {
             // endpoint URI does not specify a bean
             answer = new RsEndpoint(remaining, this);
         }
-
+        final String deadLetterUri = (String) parameters.get("deadLetterUri");
+        if (StringUtils.isNotEmpty(deadLetterUri)) {
+            answer.setDeadLetterUri(deadLetterUri);
+        }
         final String resourceClass = getAndRemoveParameter(parameters, "resourceClass", String.class);
-        if (resourceClass != null) {
+        if (StringUtils.isNotEmpty(resourceClass)) {
             Class<?> clazz = getCamelContext().getClassResolver().resolveMandatoryClass(resourceClass);
             answer.addResourceClass(clazz);
         }

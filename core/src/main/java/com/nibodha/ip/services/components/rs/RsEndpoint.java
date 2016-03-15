@@ -33,6 +33,8 @@ import org.apache.camel.spi.UriEndpoint;
 public class RsEndpoint extends CxfRsEndpoint {
 
 
+    private String deadLetterUri;
+
     public RsEndpoint(String endpointUri, Component component) {
         super(endpointUri, component);
         setAddress(endpointUri);
@@ -44,7 +46,7 @@ public class RsEndpoint extends CxfRsEndpoint {
         try {
             configureConsumer(answer);
         } catch (Exception e) {
-            throw new PlatformRuntimeException(PlatformRuntimeException.Type.ROUTING_ENGINE_RS_ENDPOINT_CONFIG, "Exception configuring RsConsumer", e);
+            throw new PlatformRuntimeException(PlatformRuntimeException.Type.ROUTING_ENGINE_RS_ENDPOINT_CONFIG_FAILURE, "Exception configuring RsConsumer", e);
         }
         return answer;
     }
@@ -55,5 +57,13 @@ public class RsEndpoint extends CxfRsEndpoint {
             throw new IllegalArgumentException("The SimpleConsumer Binding Style cannot be used in a camel-cxfrs producer");
         }
         return new RsProducer(this);
+    }
+
+    public void setDeadLetterUri(String deadLetterUri) {
+        this.deadLetterUri = deadLetterUri;
+    }
+
+    public String getDeadLetterUri() {
+        return deadLetterUri;
     }
 }

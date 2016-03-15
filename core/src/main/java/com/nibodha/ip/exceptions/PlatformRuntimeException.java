@@ -37,11 +37,11 @@ public class PlatformRuntimeException extends RuntimeException {
     }
 
     public PlatformRuntimeException(final String message, Exception e) {
-        this(Type.GENERIC, message, e);
+        this(Type.GENERIC_FAILURE, message, e);
     }
 
     public PlatformRuntimeException(final String message) {
-        this(Type.GENERIC, message);
+        this(Type.GENERIC_FAILURE, message);
     }
 
 
@@ -50,9 +50,9 @@ public class PlatformRuntimeException extends RuntimeException {
     }
 
     public enum Type implements ExceptionType {
-        GENERIC,
-        ROUTING_ENGINE_RS_ENDPOINT_CONFIG,
-        DATA_SOURCE_CONFIG,
+        GENERIC_FAILURE,
+        ROUTING_ENGINE_RS_ENDPOINT_CONFIG_FAILURE,
+        DATA_SOURCE_CONFIG_FAILURE,
         AUTHENTICATION_FAILURE
     }
 }
