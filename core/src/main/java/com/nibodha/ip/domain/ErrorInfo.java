@@ -18,11 +18,13 @@ package com.nibodha.ip.domain;
 
 import com.nibodha.ip.exceptions.ExceptionType;
 
+import java.io.Serializable;
+
 /**
  * @author gibugeorge on 08/03/16.
  * @version 1.0
  */
-public class ErrorInfo {
+public class ErrorInfo implements Serializable{
 
     private final String message;
     private final ExceptionType type;
