@@ -23,7 +23,7 @@ package com.nibodha.ip.exceptions;
 
 public class PlatformRuntimeException extends RuntimeException {
 
-    private ExceptionType type;
+    private final ExceptionType type;
 
     public PlatformRuntimeException(final ExceptionType type,
                                     final String message, final Exception e) {
