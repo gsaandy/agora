@@ -17,6 +17,7 @@
 package com.nibodha.ip.services.camel.processor;
 
 import com.nibodha.ip.domain.ErrorInfo;
+import com.nibodha.ip.domain.Message;
 import com.nibodha.ip.exceptions.ExceptionType;
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import org.apache.camel.Exchange;
@@ -27,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.nibodha.ip.services.camel.processor.RoutingEngineErrorHandler.*;
+import static com.nibodha.ip.services.camel.processor.RoutingEngineErrorHandler.DEAD_LETTER_URI;
 
 /**
  * @author gibugeorge on 08/03/16.
@@ -55,6 +56,7 @@ public class DefaultErrorHandler implements Processor {
             type = ((PlatformRuntimeException) exception).getType();
         }
         final ErrorInfo errorInfo = new ErrorInfo(type, exception.getMessage());
-        exchange.getIn().setBody(errorInfo);
+        final Message<Object> message = new Message<Object>(exchange.getIn().getHeader("Endpoint", String.class), errorInfo, exchange.getIn().getHeaders());
+        exchange.getIn().setBody(message);
     }
 }

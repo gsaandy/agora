@@ -42,7 +42,7 @@
                 class="com.nibodha.ip.services.camel.processor.RoutingEngineErrorHandlerBuilder">
         <beans:constructor-arg name="transactionErrorHandlerBuilder" ref="transactionErrorHandlerBuilder"/>
         <beans:property name="deadLetterUri" value="direct://handle/exception"/>
-        <beans:property name="useOriginalMessage" value="true"/>
+        <beans:property name="useOriginalMessage" value="false"/>
     </beans:bean>
 
     <beans:bean id="PROPAGATION_MANDATORY "
