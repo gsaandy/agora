@@ -16,7 +16,8 @@
 
 package com.nibodha.ip.services.camel.processor;
 
-import com.nibodha.ip.domain.ErrorInfo;
+import com.nibodha.ip.domain.*;
+import com.nibodha.ip.domain.Message;
 import com.nibodha.ip.exceptions.PlatformRuntimeException;
 import com.nibodha.ip.services.camel.processor.config.RoutingEngineErrorHandlerTestConfig;
 import com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration;
@@ -66,9 +67,9 @@ public class RoutingEngineErrorHandlerTest {
     @Test
     public void whenExceptionIsThrownTheExceptionIsWrappedInErrorObject() {
         template.send(exchange);
-        final ErrorInfo errorInfo = exchange.getIn().getBody(ErrorInfo.class);
-        Assert.assertNotNull(errorInfo);
-        Assert.assertTrue(errorInfo.getType() == PlatformRuntimeException.Type.GENERIC_FAILURE);
+        final Message message = exchange.getIn().getBody(Message.class);
+        Assert.assertNotNull(message.getErrorInfo());
+        Assert.assertTrue(message.getErrorInfo().getType() == PlatformRuntimeException.Type.GENERIC_FAILURE);
 
     }
 
