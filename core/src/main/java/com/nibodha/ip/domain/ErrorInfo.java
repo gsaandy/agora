@@ -24,11 +24,15 @@ import java.io.Serializable;
  * @author gibugeorge on 08/03/16.
  * @version 1.0
  */
-public class ErrorInfo implements Serializable{
+public class ErrorInfo implements Serializable {
 
-    private final String message;
-    private final ExceptionType type;
+    private String message;
+    private ExceptionType type;
 
+
+    public ErrorInfo() {
+        
+    }
 
     public ErrorInfo(final ExceptionType type, final String message) {
         this.type = type;
@@ -42,5 +46,13 @@ public class ErrorInfo implements Serializable{
 
     public ExceptionType getType() {
         return type;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setType(ExceptionType type) {
+        this.type = type;
     }
 }
