@@ -28,10 +28,11 @@ public class ErrorInfo implements Serializable {
 
     private String message;
     private ExceptionType type;
+    private int statusCode;
 
 
     public ErrorInfo() {
-        
+
     }
 
     public ErrorInfo(final ExceptionType type, final String message) {
@@ -54,5 +55,13 @@ public class ErrorInfo implements Serializable {
 
     public void setType(ExceptionType type) {
         this.type = type;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 }
