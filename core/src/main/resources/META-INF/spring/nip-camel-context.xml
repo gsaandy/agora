@@ -22,7 +22,7 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
-    <camelContext id="com.nibodha.ip" errorHandlerRef="routingEngineErrorHandler" trace="${platform.routingengine.trace-enabled}">
+    <camelContext id="com.nibodha.ip" errorHandlerRef="routingEngineErrorHandler" trace="${platform.routingengine.trace-enabled:false}">
         <route id="com.nibodha.ip.services.errorHandler">
             <from uri="direct://handle/exception"/>
             <process ref="defaultErrorHandler"/>
