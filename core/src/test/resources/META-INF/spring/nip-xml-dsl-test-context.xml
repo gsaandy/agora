@@ -23,7 +23,7 @@
 
 
     <beans:import resource="nip-test-context.xml"/>
-    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.camel.RouteDefinitionsInjector"/>
+    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.re.RouteDefinitionsInjector"/>
 
 
     <routeContext id="com.nibodha.ip.test.context">

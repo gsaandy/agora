@@ -25,7 +25,7 @@
 
     <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
     <cxf:rsServer id="rsServer" address="http://localhost:${AvailablePortsCache.port1}/rsTest"
-                  serviceClass="com.nibodha.ip.services.components.rs.test.TestService"
+                  serviceClass="com.nibodha.ip.services.re.components.rs.test.TestService"
                   loggingFeatureEnabled="true" loggingSizeLimit="200">
 
     </cxf:rsServer>
