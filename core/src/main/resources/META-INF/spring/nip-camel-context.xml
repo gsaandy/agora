@@ -22,15 +22,15 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
-    <camelContext id="com.nibodha.ip" errorHandlerRef="routingEngineErrorHandler">
+    <camelContext id="com.nibodha.ip" errorHandlerRef="routingEngineErrorHandler" trace="${platform.routingengine.trace-enabled:false}">
         <route id="com.nibodha.ip.services.errorHandler">
             <from uri="direct://handle/exception"/>
             <process ref="defaultErrorHandler"/>
         </route>
     </camelContext>
 
-    <beans:bean id="defaultErrorHandler" class="com.nibodha.ip.services.camel.processor.DefaultErrorHandler"/>
-    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.camel.RouteDefinitionsInjector"/>
+    <beans:bean id="defaultErrorHandler" class="com.nibodha.ip.services.re.processor.DefaultErrorHandler"/>
+    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.re.RouteDefinitionsInjector"/>
 
     <beans:bean id="transactionErrorHandlerBuilder" class="org.apache.camel.spring.spi.TransactionErrorHandlerBuilder">
         <beans:property name="useOriginalMessage" value="true"/>
@@ -39,48 +39,48 @@
 
 
     <beans:bean id="routingEngineErrorHandler"
-                class="com.nibodha.ip.services.camel.processor.RoutingEngineErrorHandlerBuilder">
+                class="com.nibodha.ip.services.re.processor.RoutingEngineErrorHandlerBuilder">
         <beans:constructor-arg name="transactionErrorHandlerBuilder" ref="transactionErrorHandlerBuilder"/>
         <beans:property name="deadLetterUri" value="direct://handle/exception"/>
         <beans:property name="useOriginalMessage" value="false"/>
     </beans:bean>
 
     <beans:bean id="PROPAGATION_MANDATORY "
-                class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+                class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_MANDATORY"/>
     </beans:bean>
 
-    <beans:bean id="PROPAGATION_NESTED" class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+    <beans:bean id="PROPAGATION_NESTED" class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_NESTED"/>
     </beans:bean>
 
-    <beans:bean id="PROPAGATION_NEVER" class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+    <beans:bean id="PROPAGATION_NEVER" class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_NEVER"/>
     </beans:bean>
 
     <beans:bean id="PROPAGATION_NOT_SUPPORTED"
-                class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+                class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_NOT_SUPPORTED"/>
     </beans:bean>
 
     <!-- This is the default behavior. -->
     <beans:bean id="PROPAGATION_REQUIRED"
-                class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+                class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
     </beans:bean>
 
     <beans:bean id="PROPAGATION_REQUIRES_NEW"
-                class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+                class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
     </beans:bean>
 
     <beans:bean id="PROPAGATION_SUPPORTS"
-                class="com.nibodha.ip.services.camel.spring.spi.RoutingEngineTransactionPolicy">
+                class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_SUPPORTS"/>
     </beans:bean>

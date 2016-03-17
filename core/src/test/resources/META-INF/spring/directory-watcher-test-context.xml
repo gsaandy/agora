@@ -22,11 +22,11 @@
 
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     <beans:bean id="watcherTestPropertyPlaceHolder"
-                class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
+                class="com.nibodha.ip.services.re.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="*-watcher.properties"/>
     </beans:bean>
 
-    <beans:bean id="configurationDirectoryWatcher" class="com.nibodha.ip.services.camel.spring.ConfigurationDirectoryWatcher"/>
+    <beans:bean id="configurationDirectoryWatcher" class="com.nibodha.ip.services.re.spring.ConfigurationDirectoryWatcher"/>
 
 </beans:beans>

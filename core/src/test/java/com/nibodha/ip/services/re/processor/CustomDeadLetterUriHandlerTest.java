@@ -1,0 +1,83 @@
+/*
+ * Copyright 2016 Nibodha Technologies Pvt. Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.nibodha.ip.services.re.processor;
+
+import com.nibodha.ip.exceptions.PlatformRuntimeException;
+import com.nibodha.ip.services.re.processor.config.RoutingEngineErrorHandlerTestConfig;
+import com.nibodha.ip.services.config.PlatformPlaceHolderConfiguration;
+import org.apache.camel.*;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.impl.DefaultExchange;
+import org.apache.camel.model.language.ConstantExpression;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+/**
+ * @author gibugeorge on 11/03/16.
+ * @version 1.0
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PlatformPlaceHolderConfiguration.class, RoutingEngineErrorHandlerTestConfig.class})
+public class CustomDeadLetterUriHandlerTest {
+    static {
+        System.setProperty("config.location", "classpath:.");
+    }
+
+    @Produce(uri = "direct:start1")
+    protected ProducerTemplate template;
+
+    @EndpointInject(uri = "mock:result1")
+    protected MockEndpoint resultEndpoint;
+
+
+    @EndpointInject(uri = "mock:deadLetterResult")
+    protected MockEndpoint mockDeadLetterResult;
+
+    protected Exchange exchange;
+
+    @Autowired
+    private CamelContext camelContext;
+
+    @Before
+    public void setUp() throws Exception {
+        exchange = new DefaultExchange(camelContext);
+    }
+
+    @Test
+    public void whenCustomUriIsProvideMessageIsRedirectedToThatUri() {
+        this.template.send(exchange);
+        Assert.assertEquals(1, this.mockDeadLetterResult.getExchanges().size());
+    }
+
+
+}
+
+class DeadLetterUriRouteBuilder extends RouteBuilder {
+
+    @Override
+    public void configure() throws Exception {
+        from("direct:start1").id("com.nibodha.ip.test.deadletterurihandling").setProperty(RoutingEngineErrorHandler.DEAD_LETTER_URI, new ConstantExpression("direct:deadLetter")).throwException(new PlatformRuntimeException(PlatformRuntimeException.Type.DATA_SOURCE_CONFIG_FAILURE, "error")).to("mock:result1");
+        from("direct:deadLetter").to("mock:deadLetterResult");
+    }
+}

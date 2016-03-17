@@ -23,14 +23,14 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     <beans:bean id="bridgePropertyPlaceholder"
-                class="com.nibodha.ip.services.camel.spring.spi.PlatformPropertyPlaceholderConfigurer">
+                class="com.nibodha.ip.services.re.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="classpath:test-is.properties"/>
     </beans:bean>
     <context:component-scan base-package="com.nibodha.ip.processors"/>
     <camelContext id="com.nibodha.ip.test"/>
-    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.camel.RouteDefinitionsInjector"/>
-    <beans:bean id="routeBuilder" class="com.nibodha.ip.services.camel.JavaDslRouteBuilder"/>
+    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.re.RouteDefinitionsInjector"/>
+    <beans:bean id="routeBuilder" class="com.nibodha.ip.services.re.JavaDslRouteBuilder"/>
 
     <beans:bean id="objectMapper" class="com.nibodha.ip.services.json.config.JacksonObjectMapperFactoryBean"/>
 
