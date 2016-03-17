@@ -37,35 +37,24 @@ import static com.nibodha.ip.services.re.processor.RoutingEngineErrorHandler.DEA
  * @author gibugeorge on 08/03/16.
  * @version 1.0
  */
-public class DefaultErrorHandler implements Processor {
+public class DefaultErrorHandler extends AbstractErrorHandler<Exception> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultErrorHandler.class);
 
     @Override
-    public void process(final Exchange exchange) throws Exception {
-        final Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
+    protected ErrorInfo handleException(Exception e) {
+        ExceptionType type = PlatformRuntimeException.Type.GENERIC_FAILURE;
+        if (e instanceof PlatformRuntimeException) {
+            type = ((PlatformRuntimeException) e).getType();
+        }
         int responseStatus = 500;
-        if (exception instanceof ClientErrorException) {
-            final Response response = ((ClientErrorException) exception).getResponse();
+        if (e instanceof ClientErrorException) {
+            final Response response = ((ClientErrorException) e).getResponse();
             responseStatus = response.getStatus();
         }
-        exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, responseStatus);
-        LOGGER.error("Exception in route {}", exchange.getFromRouteId());
-        LOGGER.error("Exception is ", exception);
-        final String deadLetterUri = exchange.getProperty(DEAD_LETTER_URI, String.class);
-        if (StringUtils.isNotEmpty(deadLetterUri)) {
-            exchange.removeProperty(DEAD_LETTER_URI);
-            final ProducerTemplate producerTemplate = new DefaultProducerTemplate(exchange.getContext());
-            producerTemplate.start();
-            producerTemplate.send(deadLetterUri, exchange);
-            return;
-        }
-        ExceptionType type = PlatformRuntimeException.Type.GENERIC_FAILURE;
-        if (exception instanceof PlatformRuntimeException) {
-            type = ((PlatformRuntimeException) exception).getType();
-        }
-        final ErrorInfo errorInfo = new ErrorInfo(type, exception.getMessage());
-        final Message<Object> message = new Message<Object>(exchange.getIn().getHeader("Endpoint", String.class), errorInfo, exchange.getIn().getHeaders());
-        exchange.getIn().setBody(message);
+        final ErrorInfo errorInfo = new ErrorInfo(type, e.getMessage());
+        errorInfo.setStatusCode(responseStatus);
+        return errorInfo;
+
     }
 }
