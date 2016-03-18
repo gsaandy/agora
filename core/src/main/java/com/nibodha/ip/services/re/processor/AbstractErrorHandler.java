@@ -16,18 +16,12 @@
 
 package com.nibodha.ip.services.re.processor;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.nibodha.ip.domain.ErrorInfo;
 import com.nibodha.ip.domain.Message;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.ProducerTemplate;
-import org.apache.camel.impl.DefaultProducerTemplate;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.nibodha.ip.services.re.processor.RoutingEngineErrorHandler.DEAD_LETTER_URI;
 
 /**
  * @author gibugeorge on 16/03/16.
@@ -42,22 +36,14 @@ public abstract class AbstractErrorHandler<E extends Exception> implements Proce
         final Exception e = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
         LOGGER.error("Exception in route {}", exchange.getFromRouteId());
         LOGGER.error("Exception is ", e);
-        final ErrorInfo errorInfo = this.handleException((E) e);
+        final ErrorInfo errorInfo = this.handleException((E) e, exchange);
         exchange.removeProperty(Exchange.EXCEPTION_CAUGHT);
-        final String deadLetterUri = exchange.getProperty(DEAD_LETTER_URI, String.class);
-        if (StringUtils.isNotEmpty(deadLetterUri)) {
-            exchange.removeProperty(DEAD_LETTER_URI);
-            final ProducerTemplate producerTemplate = new DefaultProducerTemplate(exchange.getContext());
-            producerTemplate.start();
-            producerTemplate.send(deadLetterUri, exchange);
-            return;
-        }
         if (errorInfo != null) {
             final Message<Object> message = new Message<Object>(exchange.getIn().getHeader("Endpoint", String.class), errorInfo, exchange.getIn().getHeaders());
             exchange.getIn().setBody(message);
         }
     }
 
-    protected abstract ErrorInfo handleException(E e);
+    protected abstract ErrorInfo handleException(E e, Exchange exchange) throws Exception;
 
 }
