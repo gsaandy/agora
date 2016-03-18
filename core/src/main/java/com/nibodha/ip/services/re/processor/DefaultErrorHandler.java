@@ -25,11 +25,15 @@ import org.apache.camel.Processor;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.impl.DefaultProducerTemplate;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.cxf.helpers.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import static com.nibodha.ip.services.re.processor.RoutingEngineErrorHandler.DEAD_LETTER_URI;
 
@@ -42,17 +46,33 @@ public class DefaultErrorHandler extends AbstractErrorHandler<Exception> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultErrorHandler.class);
 
     @Override
-    protected ErrorInfo handleException(Exception e) {
+    protected ErrorInfo handleException(Exception e, Exchange exchange) throws Exception {
+        final String deadLetterUri = exchange.getProperty(DEAD_LETTER_URI, String.class);
+        if (StringUtils.isNotEmpty(deadLetterUri)) {
+            exchange.removeProperty(DEAD_LETTER_URI);
+            final ProducerTemplate producerTemplate = new DefaultProducerTemplate(exchange.getContext());
+            producerTemplate.start();
+            producerTemplate.send(deadLetterUri, exchange);
+            return null;
+        }
+
         ExceptionType type = PlatformRuntimeException.Type.GENERIC_FAILURE;
         if (e instanceof PlatformRuntimeException) {
             type = ((PlatformRuntimeException) e).getType();
         }
         int responseStatus = 500;
+        final ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setType(type);
         if (e instanceof ClientErrorException) {
             final Response response = ((ClientErrorException) e).getResponse();
+            try {
+                errorInfo.setMessage(IOUtils.toString((InputStream) response.getEntity()));
+            } catch (IOException e1) {
+                throw new PlatformRuntimeException("Exception converting entity to string");
+            }
             responseStatus = response.getStatus();
         }
-        final ErrorInfo errorInfo = new ErrorInfo(type, e.getMessage());
+
         errorInfo.setStatusCode(responseStatus);
         return errorInfo;
 
