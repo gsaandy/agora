@@ -74,7 +74,7 @@ public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWat
 
             try {
                 if (kind == ENTRY_MODIFY) {
-                    entryModified();
+                    entryModified(event);
                 }
             } catch (IOException e) {
                 LOGGER.error("Exception while processing watched directory {}", directory, e);

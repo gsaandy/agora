@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.WatchEvent;
 
 /**
  * @author gibugeorge on 28/01/16.
@@ -41,10 +42,8 @@ public class ConfigurationDirectoryWatcher extends AbstractDirectoryWatcher {
         this.platformPropertyPlaceholderConfigurer = platformPropertyPlaceholderConfigurer;
     }
 
-
     @Override
-    public void entryModified() throws IOException {
+    public void entryModified(final WatchEvent event) throws IOException {
         this.platformPropertyPlaceholderConfigurer.refresh();
     }
-
 }
