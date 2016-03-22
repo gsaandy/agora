@@ -67,7 +67,7 @@ public class RoutingEngineErrorHandlerTest {
         template.send(exchange);
         final Message message = exchange.getIn().getBody(Message.class);
         Assert.assertNotNull(message.getErrorInfo());
-        Assert.assertTrue(message.getErrorInfo().getType() == PlatformRuntimeException.Type.GENERIC_FAILURE);
+        Assert.assertTrue(message.getErrorInfo().getType().equals(PlatformRuntimeException.Type.GENERIC_FAILURE.name()));
 
     }
 

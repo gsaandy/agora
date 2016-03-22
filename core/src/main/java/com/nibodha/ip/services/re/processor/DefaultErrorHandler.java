@@ -62,7 +62,7 @@ public class DefaultErrorHandler extends AbstractErrorHandler<Exception> {
         }
         int responseStatus = 500;
         final ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setType(type);
+        errorInfo.setType(type.toString());
         if (e instanceof ClientErrorException) {
             final Response response = ((ClientErrorException) e).getResponse();
             try {

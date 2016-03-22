@@ -48,9 +48,9 @@ public class GlobalExceptionHandler {
 
         ErrorInfo errorInfo;
         if (exception instanceof PlatformRuntimeException) {
-            errorInfo = new ErrorInfo(((PlatformRuntimeException) exception).getType(), exception.getMessage());
+            errorInfo = new ErrorInfo(((PlatformRuntimeException) exception).getType().toString(), exception.getMessage());
         } else {
-            errorInfo = new ErrorInfo(PlatformRuntimeException.Type.GENERIC_FAILURE, exception.getMessage());
+            errorInfo = new ErrorInfo(PlatformRuntimeException.Type.GENERIC_FAILURE.name(), exception.getMessage());
         }
         LOGGER.error("Exception of type {} occured in mvc layer for request URI {}", errorInfo.getType(), request.getRequestURI(), exception);
         return errorInfo;
@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     ErrorInfo authenticationFailureHandler(final HttpServletRequest request, final Exception exception) {
 
-        final ErrorInfo errorInfo = new ErrorInfo(((AuthenticationFailureException) exception).getType(), exception.getMessage());
+        final ErrorInfo errorInfo = new ErrorInfo(((AuthenticationFailureException) exception).getType().toString(), exception.getMessage());
         LOGGER.error("Exception of type {} occured in mvc layer for request URI {}", errorInfo.getType(), request.getRequestURI(), exception);
         return errorInfo;
     }
