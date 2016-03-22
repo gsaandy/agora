@@ -16,6 +16,8 @@
 
 package com.nibodha.ip.services.file;
 
+import com.nibodha.ip.concurrent.PlatformThreadFactory;
+import org.apache.camel.component.cxf.jaxrs.BeanIdAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextAware;
@@ -23,6 +25,9 @@ import org.springframework.context.ApplicationContextAware;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -30,7 +35,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * @author gibugeorge on 28/01/16.
  * @version 1.0
  */
-public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher {
+public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher, BeanIdAware {
 
 
     protected final static Logger LOGGER = LoggerFactory.getLogger(AbstractDirectoryWatcher.class);
@@ -38,6 +43,7 @@ public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWat
 
     private final WatchService directoryWatcher;
     private final URI directory;
+    private ScheduledExecutorService artifactDirMonitorTimer;
 
     public AbstractDirectoryWatcher(final URI directory) throws IOException {
         directoryWatcher = FileSystems.getDefault().newWatchService();
@@ -45,11 +51,12 @@ public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWat
         final Path configDir = Paths.get(directory);
         configDir.register(directoryWatcher, ENTRY_CREATE, ENTRY_MODIFY);
 
+
     }
 
     @Override
     public void start() {
-        new Thread(this).start();
+        scheduleMonitor();
     }
 
     @Override
@@ -57,36 +64,41 @@ public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWat
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Checking for changes in directory {}", directory);
         }
-        while (true) {
-            WatchKey key;
-            try {
-                // wait for a key to be available
-                key = directoryWatcher.take();
-            } catch (InterruptedException ex) {
-                return;
-            }
-            for (final WatchEvent<?> event : key.pollEvents()) {
-                final WatchEvent.Kind<?> kind = event.kind();
-                if (LOGGER.isInfoEnabled()) {
-                    final WatchEvent<Path> ev = (WatchEvent<Path>) event;
-                    final Path fileName = ev.context();
-                    LOGGER.info(kind.name() + " : " + fileName);
-                }
-
-                try {
-                    if (kind == ENTRY_MODIFY) {
-                        entryModified(event);
-                    }
-                } catch (IOException e) {
-                    LOGGER.error("Exception while processing watched directory {}", directory, e);
-                }
-                boolean valid = key.reset();
-                if (!valid) {
-                    break;
-                }
-
-            }
+        WatchKey key;
+        try {
+            // wait for a key to be available
+            key = directoryWatcher.take();
+        } catch (InterruptedException ex) {
+            return;
         }
+        for (final WatchEvent<?> event : key.pollEvents()) {
+            final WatchEvent.Kind<?> kind = event.kind();
+            if (LOGGER.isInfoEnabled()) {
+                final WatchEvent<Path> ev = (WatchEvent<Path>) event;
+                final Path fileName = ev.context();
+                LOGGER.info(kind.name() + " : " + fileName);
+            }
+
+            try {
+                if (kind == ENTRY_MODIFY) {
+                    entryModified(event);
+                }
+            } catch (IOException e) {
+                LOGGER.error("Exception while processing watched directory {}", directory, e);
+            }
+            boolean valid = key.reset();
+            if (!valid) {
+                break;
+            }
+
+        }
+
+
+    }
+
+    private void scheduleMonitor() {
+        artifactDirMonitorTimer = Executors.newSingleThreadScheduledExecutor(new PlatformThreadFactory(getBeanId()));
+        artifactDirMonitorTimer.scheduleAtFixedRate(this, 0, DEFAULT_CHANGES_CHECK_INTERVAL_MS, TimeUnit.MILLISECONDS);
 
     }
 

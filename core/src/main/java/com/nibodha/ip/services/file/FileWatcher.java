@@ -30,6 +30,7 @@ public class FileWatcher extends AbstractDirectoryWatcher {
 
     private final Resource fileTobeWatched;
     private final FileWatcherCallback fileWatcherCallback;
+    private String beanId;
 
     public FileWatcher(final Resource fileTobeWatched, final FileWatcherCallback fileWatcherCallback) throws IOException {
         super(fileTobeWatched.getFile().getParentFile().toURI());
@@ -44,5 +45,15 @@ public class FileWatcher extends AbstractDirectoryWatcher {
         if (fileName.equals(fileTobeWatched.getFile().getName())) {
             this.fileWatcherCallback.execute();
         }
+    }
+
+    @Override
+    public String getBeanId() {
+        return this.beanId != null ? this.beanId : "filewatcher";
+    }
+
+    @Override
+    public void setBeanId(String id) {
+        this.beanId = id;
     }
 }
