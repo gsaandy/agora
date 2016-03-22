@@ -18,7 +18,6 @@ package com.nibodha.ip.launcher;
 
 import com.nibodha.ip.env.PlatformEnvironment;
 import com.nibodha.ip.services.file.AbstractDirectoryWatcher;
-import com.nibodha.ip.services.re.spring.ConfigurationDirectoryWatcher;
 import com.nibodha.ip.services.jdbc.config.DatasourceConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

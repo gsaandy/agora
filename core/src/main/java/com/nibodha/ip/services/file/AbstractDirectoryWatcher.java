@@ -30,7 +30,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * @author gibugeorge on 28/01/16.
  * @version 1.0
  */
-public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher{
+public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher {
 
 
     protected final static Logger LOGGER = LoggerFactory.getLogger(AbstractDirectoryWatcher.class);
@@ -57,33 +57,35 @@ public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWat
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Checking for changes in directory {}", directory);
         }
-        WatchKey key;
-        try {
-            // wait for a key to be available
-            key = directoryWatcher.take();
-        } catch (InterruptedException ex) {
-            return;
-        }
-        for (final WatchEvent<?> event : key.pollEvents()) {
-            final WatchEvent.Kind<?> kind = event.kind();
-            if (LOGGER.isInfoEnabled()) {
-                final WatchEvent<Path> ev = (WatchEvent<Path>) event;
-                final Path fileName = ev.context();
-                LOGGER.info(kind.name() + " : " + fileName);
-            }
-
+        while (true) {
+            WatchKey key;
             try {
-                if (kind == ENTRY_MODIFY) {
-                    entryModified(event);
+                // wait for a key to be available
+                key = directoryWatcher.take();
+            } catch (InterruptedException ex) {
+                return;
+            }
+            for (final WatchEvent<?> event : key.pollEvents()) {
+                final WatchEvent.Kind<?> kind = event.kind();
+                if (LOGGER.isInfoEnabled()) {
+                    final WatchEvent<Path> ev = (WatchEvent<Path>) event;
+                    final Path fileName = ev.context();
+                    LOGGER.info(kind.name() + " : " + fileName);
                 }
-            } catch (IOException e) {
-                LOGGER.error("Exception while processing watched directory {}", directory, e);
-            }
-            boolean valid = key.reset();
-            if (!valid) {
-                break;
-            }
 
+                try {
+                    if (kind == ENTRY_MODIFY) {
+                        entryModified(event);
+                    }
+                } catch (IOException e) {
+                    LOGGER.error("Exception while processing watched directory {}", directory, e);
+                }
+                boolean valid = key.reset();
+                if (!valid) {
+                    break;
+                }
+
+            }
         }
 
     }

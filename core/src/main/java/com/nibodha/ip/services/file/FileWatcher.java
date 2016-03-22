@@ -40,8 +40,8 @@ public class FileWatcher extends AbstractDirectoryWatcher {
     @Override
     public void entryModified(WatchEvent event) throws IOException {
         final WatchEvent<Path> ev = (WatchEvent<Path>) event;
-        final Path fileName = ev.context();
-        if (fileName.toFile().equals(fileTobeWatched.getFile())) {
+        final String fileName = ev.context().toFile().getName();
+        if (fileName.equals(fileTobeWatched.getFile().getName())) {
             this.fileWatcherCallback.execute();
         }
     }
