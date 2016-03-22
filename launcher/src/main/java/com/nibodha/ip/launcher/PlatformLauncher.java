@@ -17,7 +17,7 @@
 package com.nibodha.ip.launcher;
 
 import com.nibodha.ip.env.PlatformEnvironment;
-import com.nibodha.ip.services.re.spring.ConfigurationDirectoryWatcher;
+import com.nibodha.ip.services.file.AbstractDirectoryWatcher;
 import com.nibodha.ip.services.jdbc.config.DatasourceConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Created by gibugeorge on 28/11/15.
@@ -91,8 +93,14 @@ public class PlatformLauncher {
         application.setWebEnvironment(true);
         application.setLogStartupInfo(true);
         final ConfigurableApplicationContext configurableApplicationContext = application.run(args);
-        final ConfigurationDirectoryWatcher configurationDirectoryWatcher = configurableApplicationContext.getBean(ConfigurationDirectoryWatcher.class);
-        configurationDirectoryWatcher.start();
+        final Map<String, AbstractDirectoryWatcher> directoryWatcers = configurableApplicationContext.getBeansOfType(AbstractDirectoryWatcher.class);
+        final Set<String> keySet = directoryWatcers.keySet();
+        for (final String key : keySet) {
+            AbstractDirectoryWatcher abstractDirectoryWatcher = directoryWatcers.get(key);
+            abstractDirectoryWatcher.start();
+        }
+
+
     }
 
 

@@ -16,22 +16,11 @@
 
 package com.nibodha.ip.services.file;
 
-import java.io.IOException;
-import java.nio.file.WatchEvent;
-
 /**
- * @author gibugeorge on 28/01/16.
+ * @author gibugeorge on 21/03/16.
  * @version 1.0
  */
-public interface DirectoryWatcher {
+public interface FileWatcherCallback {
 
-    /**
-     * Starts the directory watcher in new thread
-     */
-    void start();
-
-    /**
-     * This method will be executed new file/folder is modified in the watched directory
-     */
-    void entryModified(WatchEvent event) throws IOException;
+    void execute();
 }
