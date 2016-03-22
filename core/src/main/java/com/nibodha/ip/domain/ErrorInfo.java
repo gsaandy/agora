@@ -27,7 +27,7 @@ import java.io.Serializable;
 public class ErrorInfo implements Serializable {
 
     private String message;
-    private ExceptionType type;
+    private String type;
     private int statusCode;
 
 
@@ -35,7 +35,7 @@ public class ErrorInfo implements Serializable {
 
     }
 
-    public ErrorInfo(final ExceptionType type, final String message) {
+    public ErrorInfo(final String type, final String message) {
         this.type = type;
         this.message = message;
     }
@@ -45,7 +45,7 @@ public class ErrorInfo implements Serializable {
         return message;
     }
 
-    public ExceptionType getType() {
+    public String getType() {
         return type;
     }
 
@@ -53,7 +53,7 @@ public class ErrorInfo implements Serializable {
         this.message = message;
     }
 
-    public void setType(ExceptionType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
