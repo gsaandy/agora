@@ -16,22 +16,28 @@
 
 package com.nibodha.ip.services.audit;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.filter.Filter;
-import ch.qos.logback.core.spi.FilterReply;
+import org.apache.camel.CamelContext;
 
 /**
- * @author gibugeorge on 16/03/16.
+ * @author gibugeorge on 23/03/16.
  * @version 1.0
  */
-public class AuditExcludeFilter extends Filter<ILoggingEvent> {
-    @Override
-    public FilterReply decide(ILoggingEvent event) {
-        if (event.getMessage().startsWith("Outbound Message\n" +
-                "---------------------------") || event.getMessage().startsWith("Inbound Message\n" +
-                "---------------------------")) {
-            return FilterReply.DENY;
-        }
-        return FilterReply.ACCEPT;
+public class AuditContext {
+
+    private final CamelContext camelContext;
+
+    private final String phase;
+
+    public AuditContext(final CamelContext camelContext, final String phase) {
+        this.camelContext = camelContext;
+        this.phase = phase;
+    }
+
+    public CamelContext getCamelContext() {
+        return camelContext;
+    }
+
+    public String getPhase() {
+        return phase;
     }
 }

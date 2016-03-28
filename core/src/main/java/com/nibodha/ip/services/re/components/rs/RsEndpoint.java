@@ -24,8 +24,6 @@ import org.apache.camel.Producer;
 import org.apache.camel.component.cxf.jaxrs.BindingStyle;
 import org.apache.camel.component.cxf.jaxrs.CxfRsEndpoint;
 import org.apache.camel.spi.UriEndpoint;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
 
 /**
  * @author gibugeorge on 16/01/16.
@@ -39,8 +37,6 @@ public class RsEndpoint extends CxfRsEndpoint {
 
     public RsEndpoint(String endpointUri, Component component) {
         super(endpointUri, component);
-        super.getOutInterceptors().add(0, new LoggingOutInterceptor(Integer.MAX_VALUE));
-        super.getInInterceptors().add(0, new LoggingInInterceptor(Integer.MAX_VALUE));
         setAddress(endpointUri);
     }
 

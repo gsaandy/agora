@@ -29,7 +29,7 @@ public class AuditLogEventFilter extends Filter<ILoggingEvent> {
     public FilterReply decide(ILoggingEvent event) {
         if (event.getMessage().startsWith("Outbound Message\n" +
                 "---------------------------") || event.getMessage().startsWith("Inbound Message\n" +
-                "----------------------------")) {
+                "---------------------------")) {
             return FilterReply.ACCEPT;
         }
         return FilterReply.DENY;

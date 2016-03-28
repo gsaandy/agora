@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.audit;
+package com.nibodha.ip.services.audit.processor;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.filter.Filter;
-import ch.qos.logback.core.spi.FilterReply;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * @author gibugeorge on 16/03/16.
+ * @author gibugeorge on 28/03/16.
  * @version 1.0
  */
-public class AuditExcludeFilter extends Filter<ILoggingEvent> {
+public class AuditLogger implements Processor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuditLogger.class);
+
     @Override
-    public FilterReply decide(ILoggingEvent event) {
-        if (event.getMessage().startsWith("Outbound Message\n" +
-                "---------------------------") || event.getMessage().startsWith("Inbound Message\n" +
-                "---------------------------")) {
-            return FilterReply.DENY;
-        }
-        return FilterReply.ACCEPT;
+    public void process(final Exchange exchange) throws Exception {
+        LOGGER.info(exchange.getIn().getBody(String.class));
     }
 }

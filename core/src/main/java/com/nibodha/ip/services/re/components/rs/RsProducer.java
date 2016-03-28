@@ -16,10 +16,19 @@
 
 package com.nibodha.ip.services.re.components.rs;
 
+import com.nibodha.ip.services.audit.AuditContext;
+import com.nibodha.ip.services.cxf.audit.CxfAuditInInterceptor;
+import com.nibodha.ip.services.cxf.audit.CxfAuditOutInterceptor;
 import com.nibodha.ip.services.re.processor.RoutingEngineErrorHandler;
+import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.component.cxf.jaxrs.CxfRsProducer;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.Phase;
+
+import java.util.List;
 
 /**
  * @author gibugeorge on 16/01/16.
@@ -38,6 +47,34 @@ public class RsProducer extends CxfRsProducer {
         if (StringUtils.isNotEmpty(deadLetterUri)) {
             exchange.setProperty(RoutingEngineErrorHandler.DEAD_LETTER_URI, deadLetterUri);
         }
+        addAuditInterceptors(exchange.getContext());
         super.process(exchange);
     }
+
+    private void addAuditInterceptors(final CamelContext camelContext) {
+        final List<Interceptor<? extends Message>> outInterceptors = this.endpoint.getOutInterceptors();
+        if (!isInterceptorAlreadyAdded(outInterceptors, CxfAuditOutInterceptor.class)) {
+            final AuditContext auditContext = new AuditContext(camelContext, Phase.PRE_STREAM);
+            final CxfAuditOutInterceptor auditInterceptor = new CxfAuditOutInterceptor(auditContext);
+            this.endpoint.getOutInterceptors().add(auditInterceptor);
+        }
+        final List<Interceptor<? extends Message>> inInterceptors = this.endpoint.getInInterceptors();
+        if (!isInterceptorAlreadyAdded(inInterceptors, CxfAuditInInterceptor.class)) {
+            final AuditContext auditContext = new AuditContext(camelContext, Phase.RECEIVE);
+            final CxfAuditInInterceptor auditInterceptor = new CxfAuditInInterceptor(auditContext);
+            this.endpoint.getInInterceptors().add(auditInterceptor);
+        }
+    }
+
+
+    private boolean isInterceptorAlreadyAdded(final List<Interceptor<? extends Message>> interceptors, Class<?> type) {
+        for (Interceptor<? extends Message> outInterceptor : interceptors) {
+            if (outInterceptor.getClass().isAssignableFrom(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
