@@ -22,13 +22,20 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <beans:import resource="classpath*:META-INF/spring/*-route-context.xml"/>
-    <camelContext id="com.nibodha.ip" errorHandlerRef="routingEngineErrorHandler" trace="${platform.routingengine.trace-enabled:false}">
+    <camelContext id="com.nibodha.ip" errorHandlerRef="routingEngineErrorHandler"
+                  trace="${platform.routingengine.trace-enabled:false}">
+        <jmxAgent id="routingEngineJmxAgent" createConnector="false" mbeanServerDefaultDomain="com.nibodha.ip"
+                  disabled="false" mbeanObjectDomainName="com.nibodha.ip.re"/>
         <route id="com.nibodha.ip.services.errorHandler">
             <from uri="direct://handle/exception"/>
             <process ref="defaultErrorHandler"/>
         </route>
+        <route id="com.nibodha.ip.services.audit">
+            <from uri="activemq://queue:audit-info-queue"/>
+            <process ref="auditLogger"/>
+        </route>
     </camelContext>
-
+    <beans:bean id="auditLogger" class="com.nibodha.ip.services.audit.processor.AuditLogger"/>
     <beans:bean id="defaultErrorHandler" class="com.nibodha.ip.services.re.processor.DefaultErrorHandler"/>
     <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.re.RouteDefinitionsInjector"/>
 

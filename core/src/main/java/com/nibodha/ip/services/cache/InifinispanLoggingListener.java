@@ -39,20 +39,20 @@ public class InifinispanLoggingListener {
     public void observeAdd(final CacheEntryCreatedEvent<String, String> event) {
         if (event.isPre())
             return;
-        LOGGER.info("Cache entry {} = {} added in cache {}", event.getKey(), event.getValue(), event.getCache());
+        LOGGER.info("Cache entry {} = {} added in cache {}", event.getKey(), event.getValue(), event.getCache().getName());
     }
 
     @CacheEntryModified
     public void observeUpdate(final CacheEntryModifiedEvent<String, String> event) {
         if (event.isPre())
             return;
-        LOGGER.info("Cache entry {} = {} modified in cache %s", event.getKey(), event.getValue(), event.getCache());
+        LOGGER.info("Cache entry {} = {} modified in cache %s", event.getKey(), event.getValue(), event.getCache().getName());
     }
 
     @CacheEntryRemoved
     public void observeRemove(final CacheEntryRemovedEvent<String, String> event) {
         if (event.isPre())
             return;
-        LOGGER.info("Cache entry {} removed in cache {}", event.getKey(), event.getCache());
+        LOGGER.info("Cache entry {} removed in cache {}", event.getKey(), event.getCache().getName());
     }
 }
