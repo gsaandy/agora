@@ -65,14 +65,8 @@ public class DefaultErrorHandler extends AbstractErrorHandler<Exception> {
         errorInfo.setType(type.toString());
         if (e instanceof ClientErrorException) {
             final Response response = ((ClientErrorException) e).getResponse();
-            try {
-                errorInfo.setMessage(IOUtils.toString((InputStream) response.getEntity()));
-            } catch (IOException e1) {
-                throw new PlatformRuntimeException("Exception converting entity to string");
-            }
             responseStatus = response.getStatus();
         }
-
         errorInfo.setStatusCode(responseStatus);
         return errorInfo;
 
