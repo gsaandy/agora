@@ -40,7 +40,6 @@ public class RoutingEngineErrorHandlerBuilder extends DeadLetterChannelBuilder {
     }
 
     /**
-     *
      * @param routeContext
      * @param processor
      * @return
@@ -55,7 +54,7 @@ public class RoutingEngineErrorHandlerBuilder extends DeadLetterChannelBuilder {
                 processor, getLogger(), getOnRedelivery(), getRedeliveryPolicy(), getExceptionPolicyStrategy(),
                 getFailureProcessor(), getDeadLetterUri(), isDeadLetterHandleNewException(), isUseOriginalMessage(),
                 getRetryWhilePolicy(routeContext.getCamelContext()), getExecutorService(routeContext.getCamelContext()),
-                getOnPrepareFailure(), transactionErrorHandler);
+                getOnPrepareFailure(), getOnExceptionOccurred(), transactionErrorHandler);
         // configure error handler before we can use it
         configure(routeContext, answer);
 
@@ -63,7 +62,6 @@ public class RoutingEngineErrorHandlerBuilder extends DeadLetterChannelBuilder {
     }
 
     /**
-     *
      * @return
      */
     public TransactionTemplate getTransactionTemplate() {
@@ -72,6 +70,7 @@ public class RoutingEngineErrorHandlerBuilder extends DeadLetterChannelBuilder {
 
     /**
      * Always returns true as this the error handler always support transaction
+     *
      * @return
      */
     @Override
@@ -81,6 +80,7 @@ public class RoutingEngineErrorHandlerBuilder extends DeadLetterChannelBuilder {
 
     /**
      * Returns the rollback logginh level
+     *
      * @return
      */
     public LoggingLevel getRollbackLoggingLevel() {

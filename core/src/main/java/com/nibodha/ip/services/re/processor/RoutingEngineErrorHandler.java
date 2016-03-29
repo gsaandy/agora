@@ -33,36 +33,24 @@ public class RoutingEngineErrorHandler extends DeadLetterChannel {
 
     private final TransactionErrorHandler transactionErrorHandler;
 
-    public static final String DEAD_LETTER_URI="DEAD_LETTER_URI";
+    public static final String DEAD_LETTER_URI = "DEAD_LETTER_URI";
 
-    /**
-     * @param camelContext
-     * @param output
-     * @param logger
-     * @param redeliveryProcessor
-     * @param redeliveryPolicy
-     * @param exceptionPolicyStrategy
-     * @param deadLetter
-     * @param deadLetterUri
-     * @param deadLetterHandleException
-     * @param useOriginalBodyPolicy
-     * @param retryWhile
-     * @param executorService
-     * @param onPrepare
-     */
     public RoutingEngineErrorHandler(final CamelContext camelContext, final Processor output, final CamelLogger logger,
                                      final Processor redeliveryProcessor, final RedeliveryPolicy redeliveryPolicy,
                                      final ExceptionPolicyStrategy exceptionPolicyStrategy, final Processor deadLetter,
                                      final String deadLetterUri, final boolean deadLetterHandleException,
                                      final boolean useOriginalBodyPolicy, final Predicate retryWhile,
-                                     final ScheduledExecutorService executorService, final Processor onPrepare,
+                                     final ScheduledExecutorService executorService, final Processor onPrepareProcessor,
+                                     final Processor onExceptionOccurredProcessor,
                                      final TransactionErrorHandler transactionErrorHandler) {
-        super(camelContext, output, logger, redeliveryProcessor, redeliveryPolicy, exceptionPolicyStrategy, deadLetter, deadLetterUri, deadLetterHandleException, useOriginalBodyPolicy, retryWhile, executorService, onPrepare);
+        super(camelContext, output, logger, redeliveryProcessor, redeliveryPolicy, exceptionPolicyStrategy, deadLetter,
+                deadLetterUri, deadLetterHandleException, useOriginalBodyPolicy, retryWhile, executorService,
+                onPrepareProcessor, onExceptionOccurredProcessor);
         this.transactionErrorHandler = transactionErrorHandler;
     }
 
+
     /**
-     *
      * @param exchange
      * @throws Exception
      */
@@ -77,7 +65,6 @@ public class RoutingEngineErrorHandler extends DeadLetterChannel {
     }
 
     /**
-     *
      * @param exchange
      * @param callback
      * @return
