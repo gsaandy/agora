@@ -114,8 +114,9 @@ public class CxfAuditInInterceptor extends AbstractAuditInterceptor {
     }
 
     protected void readMessageBody(Message message, InputStream is, AuditInfo auditInfo) {
-        final CachedOutputStream cachedOutputStream = new CachedOutputStream();
+        CachedOutputStream cachedOutputStream = null;
         try {
+            cachedOutputStream = new CachedOutputStream();
             // use the appropriate input stream and restore it later
             InputStream bis = is instanceof DelegatingInputStream
                     ? ((DelegatingInputStream) is).getInputStream() : is;
@@ -142,9 +143,11 @@ public class CxfAuditInInterceptor extends AbstractAuditInterceptor {
             throw new Fault(e);
         } finally {
             try {
-                cachedOutputStream.close();
+                if (cachedOutputStream != null) {
+                    cachedOutputStream.close();
+                }
             } catch (IOException e) {
-
+                LOGGER.error("Exception while closing cachedoutputstream ", e);
             }
 
         }
