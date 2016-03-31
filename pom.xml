@@ -84,6 +84,7 @@
         <developer>
             <id>gibu.george</id>
             <name>Gibu George</name>
+            <email>gibu.george@nibodha.com</email>
         </developer>
     </developers>
     <dependencyManagement>
@@ -369,7 +370,6 @@
         <module>configuration</module>
         <module>core</module>
         <module>launcher</module>
-        <module>monitoring-console</module>
     </modules>
     <distributionManagement>
         <repository>
