@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.nibodha.ip</groupId>
         <artifactId>integration-platform</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
     </parent>
     <groupId>com.nibodha.ip</groupId>
     <artifactId>launcher</artifactId>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.nibodha.ip</groupId>
             <artifactId>core</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <version>1.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
