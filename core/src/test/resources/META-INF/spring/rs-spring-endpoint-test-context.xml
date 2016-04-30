@@ -24,14 +24,14 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <cxf:rsServer id="rsServer" address="http://localhost:9000/rsTest"
-                  serviceClass="com.nibodha.ip.services.re.components.rs.test.TestService"
+                  serviceClass="com.nibodha.agora.services.re.components.rs.test.TestService"
                   loggingFeatureEnabled="true" loggingSizeLimit="200">
 
     </cxf:rsServer>
 
     <cxf:rsClient id="rsClient" address="http://localhost:9002/test"
-                  serviceClass="com.nibodha.ip.services.re.components.rs.test.TestService">
+                  serviceClass="com.nibodha.agora.services.re.components.rs.test.TestService">
 
     </cxf:rsClient>
-    <camelContext id="com.nibodha.ip.test.rs.spring"/>
+    <camelContext id="com.nibodha.agora.test.rs.spring"/>
 </beans:beans>

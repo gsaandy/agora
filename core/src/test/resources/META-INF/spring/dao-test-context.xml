@@ -29,7 +29,7 @@
 
         <beans:property name="dataSource" ref="testDS"/>
         <beans:property name="packagesToScan"
-                        value="com.nibodha.ip.dao"/>
+                        value="com.nibodha.agora.dao"/>
         <beans:property name="persistenceUnitName" value="test"/>
         <beans:property name="jpaVendorAdapter">
             <beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
@@ -49,13 +49,13 @@
     <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <beans:property name="entityManagerFactory" ref="testEntityManagerFactory"/>
     </beans:bean>
-    <beans:bean id="testDao" class="com.nibodha.ip.dao.SampleDao"/>
+    <beans:bean id="testDao" class="com.nibodha.agora.dao.SampleDao"/>
 
 
     <beans:bean id="dataSourceConfiguration"
-                class="com.nibodha.ip.services.jdbc.config.DatasourceConfiguration">
+                class="com.nibodha.agora.services.jdbc.config.DatasourceConfiguration">
         <beans:constructor-arg name="environment" ref="platformEnvironment"/>
     </beans:bean>
-    <beans:bean id="platformEnvironment" class="com.nibodha.ip.env.PlatformEnvironment"/>
+    <beans:bean id="platformEnvironment" class="com.nibodha.agora.env.PlatformEnvironment"/>
 
 </beans:beans>
