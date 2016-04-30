@@ -26,6 +26,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultExchange;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PlatformPlaceHolderConfiguration.class, RoutingEngineErrorHandlerTestConfig.class})
 public class RoutingEngineErrorHandlerTest {
 
-    static {
-        System.setProperty("config.location", "classpath:.");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
 
     @Produce(uri = "direct:start")

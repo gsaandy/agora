@@ -16,6 +16,7 @@
 
 package com.nibodha.agora.services.re.spring.spi;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,8 +33,9 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration({"classpath:META-INF/spring/placeholder-configurer-ignore-resource-test-context.xml"})
 public class PlatformPlaceHolderIgnoreResourceNotFoundTest {
 
-    static {
-        System.setProperty("config.location","classpath:");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
     @Value("${spring.application.name}")
     private String applicationName;

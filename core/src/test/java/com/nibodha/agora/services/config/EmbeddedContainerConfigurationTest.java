@@ -17,6 +17,7 @@
 package com.nibodha.agora.services.config;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PropertyPlaceholderAutoConfiguration.class, EmbeddedContainerConfiguration.class})
 public class EmbeddedContainerConfigurationTest {
 
-    static {
+    @BeforeClass
+    public static void setup() {
         System.setProperty("jetty.config.path","./src/test/resources/jetty-config.xml");
         System.setProperty("server.port","7778");
     }

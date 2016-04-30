@@ -17,6 +17,7 @@
 package com.nibodha.agora.services.re.spring.spi;
 
 import com.nibodha.agora.services.config.PlatformPlaceHolderConfiguration;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,8 +34,9 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = {PlatformPlaceHolderConfiguration.class})
 public class PlatformPropertyPlaceholderConfigurerTest {
 
-    static {
-        System.setProperty("config.location","classpath:");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
     //loaded from yaml
     @Value("${spring.application.name}")
