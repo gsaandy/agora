@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Agora by NibodhaTechnologies</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Agora</h1>
+        <h2></h2>
+        <a href="https://github.com/NibodhaTechnologies/agora" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="agora--nibodhas-integration-platform" class="anchor" href="#agora--nibodhas-integration-platform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Agora :: Nibodha's Integration Platform</h1>
+
+<p>Agora provides a platform to build different backend services.</p>
+
+<h2>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<ul>
+<li>JDK 1.8</li>
+<li>Maven 3.3</li>
+</ul>
+
+<h2>
+<a id="technology-stack" class="anchor" href="#technology-stack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technology Stack</h2>
+
+<ul>
+<li>Spring Framework 4.2.3.RELEASE</li>
+<li>Spring Boot 1.3.0.RELEASE</li>
+<li>Spring Batch 3.0.5.RELEASE</li>
+<li>Apache Camel 2.16.1</li>
+<li>Spring Data 1.11.1.RELEASE</li>
+<li>Infinispan 8.1.2</li>
+<li>Apache Active MQ 5.6</li>
+<li>HikariCP 2.4.3</li>
+</ul>
+
+<h2>
+<a id="architecture" class="anchor" href="#architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Architecture</h2>
+
+<p>Nibodha Integration Platform(NIP) has a layered architecture that consists of</p>
+
+<ul>
+<li>Kernel Layer</li>
+<li>Services layer</li>
+<li>Application Layer </li>
+</ul>
+
+<p><img src="agora-architecture.png" alt=""></p>
+
+<h3>
+<a id="kernel-layer" class="anchor" href="#kernel-layer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kernel Layer</h3>
+
+<p>The agora kernel layer is based on Spring Boot that provides an embedded Jetty Servlet Container into which we can deploy the applications. The kernel layer provides the following features:</p>
+
+<h4>
+<a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h4>
+
+<p>The agora provides support to deploy services external to the bundled application, so the customer/deployer can decide which service is being deployed on which server.</p>
+
+<h4>
+<a id="logging" class="anchor" href="#logging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logging</h4>
+
+<p>A dynamic logging component which is based on logback and supports different APIs like SLF4J, Java Logging etc.</p>
+
+<h4>
+<a id="jmx-server" class="anchor" href="#jmx-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JMX Server</h4>
+
+<p>The agora uses jolokia agent to provide restful access to the MBeans, so that the any mbean client can connect to the server.</p>
+
+<h4>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h4>
+
+<p>The properties files for configuration are monitored and the changes are automatically propagated to the relevent services/applications</p>
+
+<h4>
+<a id="security" class="anchor" href="#security" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Security</h4>
+
+<p>The security framework is based on spring security.</p>
+
+<h3>
+<a id="services-layer" class="anchor" href="#services-layer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Services Layer</h3>
+
+<p>The agora services layer consists of embedded services which interact with the application layer to communicate with the applications built on top of the NIP. The services layer provides:</p>
+
+<h4>
+<a id="transaction-manager" class="anchor" href="#transaction-manager" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Transaction Manager</h4>
+
+<p>TODO: Tool choice for XA transaction manager (JBoss TS/Atomikos/Bitronix)</p>
+
+<h4>
+<a id="messaging" class="anchor" href="#messaging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Messaging</h4>
+
+<p>The messaging service is based on Apache Active MQ which allows the developer to create JMS Message Brokers and clients and deploy them.</p>
+
+<h4>
+<a id="routingintegration-engine" class="anchor" href="#routingintegration-engine" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Routing/Integration engine</h4>
+
+<p>The routing/integration engine based on Apache Camel allows the developer to define routes and implement enterprise integration patterns(EIP) and deploy the routes into the camel context.</p>
+
+<h4>
+<a id="transformation-engine" class="anchor" href="#transformation-engine" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Transformation Engine</h4>
+
+<p>The transformation engine is a custom bean mapping framework.</p>
+
+<h4>
+<a id="auditing" class="anchor" href="#auditing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Auditing</h4>
+
+<p>The auditing service logs the inbound and outbound messages to an audit log file.</p>
+
+<h4>
+<a id="etl-engine" class="anchor" href="#etl-engine" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ETL Engine</h4>
+
+<p>The ETL engine is realized using Spring Batch, and is used extract transform and load from/to different datasources.</p>
+
+<h3>
+<a id="application-layer" class="anchor" href="#application-layer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Application Layer</h3>
+
+<p>TODO: Add Info</p>
+
+<h2>
+<a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Road Map</h2>
+
+<p>TODO: Add Info</p>
+
+<h2>
+<a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Structure</h2>
+
+<p>The integration platform is a multi module maven project with the following modules</p>
+
+<ul>
+<li>core - provides the implementation for the services and kernel layers in the architecture layers.</li>
+<li>launcher - provides services to launch the integration platform</li>
+<li>configuration -  contains the platform configuration files</li>
+</ul>
+
+<h2>
+<a id="platform-configuration-properties-list-and-default-values" class="anchor" href="#platform-configuration-properties-list-and-default-values" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Platform Configuration Properties List and default values</h2>
+
+<h3>
+<a id="mq-configuration" class="anchor" href="#mq-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MQ Configuration</h3>
+
+<pre><code>    platform.mq.broker-url=tcp://localhost:61616
+    platform.mq.data-dir=${user.home}/mq-data
+    platform.mq.enabled=false
+    platform.mq.password=
+    platform.mq.user-name=
+</code></pre>
+
+<h3>
+<a id="datasource-configuration" class="anchor" href="#datasource-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Datasource Configuration</h3>
+
+<pre><code>    platform.jdbc.datasource.enabled=false
+    platform.jdbc.datasource.names=&lt;comma separated ds names&gt; 
+    platform.jdbc.datasource.default.cache-prep-stmts=true
+    platform.jdbc.datasource.default.idle-timeout=30000
+
+    platform.jdbc.datasource.default.max-life-time=30000
+    platform.jdbc.datasource.default.maximum-pool-size=5
+    platform.jdbc.datasource.default.prep-stmt-cache-size=250
+    platform.jdbc.datasource.default.prep-stmt-cache-sql-limit=2048
+    platform.jdbc.datasource.default.use-server-prep-stmts=true
+
+    platform.jdbc.datasource.&lt;dsname&gt;.password=
+    platform.jdbc.datasource.&lt;dsname&gt;.jdbc-url=
+    platform.jdbc.datasource.&lt;dsname&gt;.user-name=
+</code></pre>
+
+<h3>
+<a id="cache-configuration" class="anchor" href="#cache-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cache Configuration</h3>
+
+<pre><code>    platform.cache.enabled=true
+    platform.cache.config=
+</code></pre>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>The Nibodha's Integration Platform Agora is released under version 2.0 of the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a></p>
+
+<h2>
+<a id="faqs" class="anchor" href="#faqs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FAQs</h2>
+
+<h3>
+<a id="1-how-to-set-up-development-environment" class="anchor" href="#1-how-to-set-up-development-environment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. How to set up development environment?</h3>
+
+<pre><code>a. Fork the integration-platform project to the developers gitlab account.
+
+b. Clone the integration platform projects to developer's machine.
+
+c. copy the settings.xml from configuration/etc folder to the maven local repository folder usually &lt;user.home&gt;/.m2
+
+For windows C:\users\&lt;username&gt;\.m2
+For linux/mac ~/.m2
+</code></pre>
+
+<h3>
+<a id="2-how-to-build-and-run-the-platform" class="anchor" href="#2-how-to-build-and-run-the-platform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. How to build and run the platform?</h3>
+
+<p>Execute the following commands in terminal/command prompt</p>
+
+<p>Build the integration-platform</p>
+
+<p><code>mvn clean install</code></p>
+
+<p>Change to launcher directory</p>
+
+<p><code>cd launcher</code></p>
+
+<p>Start the integration platform</p>
+
+<p><code>mvn spring-boot:run</code></p>
+
+<h3>
+<a id="3-how-to-add-datasource" class="anchor" href="#3-how-to-add-datasource" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. How to add datasource?</h3>
+
+<pre><code>Change the property
+
+    platform.jdbc.datasource.enabled=true
+
+Add datasource names
+
+    platform.jdbc.datasource.names=ds1
+
+If more than one datasource needs to be added, add comma separated ds names.
+
+Add jdbc url, user name, password properties for the datasource
+
+     platform.jdbc.datasource.ds1.jdbc-url=jdbc:oracle:thin:@localhost:1521:orcl
+    platform.jdbc.datasource.ds1.user-name=scott
+    platform.jdbc.datasource.ds1.password=tiger
+</code></pre>
+
+<p>The default values are taken for the other properities mentioned, if property need to be specified for a specific datasource replace "default" with datasource name.   </p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/NibodhaTechnologies/agora/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/NibodhaTechnologies/agora/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/NibodhaTechnologies/agora"></a> is maintained by <a href="https://github.com/NibodhaTechnologies">NibodhaTechnologies</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
