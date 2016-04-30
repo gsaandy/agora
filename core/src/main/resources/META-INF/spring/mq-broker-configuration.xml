@@ -22,7 +22,7 @@
   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
     <beans:bean id="propertyPlaceholderConfigurer"
-                class="com.nibodha.ip.services.re.spring.spi.PlatformPropertyPlaceholderConfigurer">
+                class="com.nibodha.agora.services.re.spring.spi.PlatformPropertyPlaceholderConfigurer">
         <beans:property name="configFileLocation" value="${config.location}"/>
         <beans:property name="fileNames" value="classpath:application.properties,*.yaml,*.properties"/>
     </beans:bean>
@@ -62,7 +62,7 @@
         </destinationPolicy>
 
         <managementContext>
-            <managementContext useMBeanServer="true" createConnector="false" jmxDomainName="com.nibodha.ip"/>
+            <managementContext useMBeanServer="true" createConnector="false" jmxDomainName="com.nibodha.agora"/>
         </managementContext>
 
 
