@@ -19,6 +19,7 @@ package com.nibodha.agora.services.config;
 import com.nibodha.agora.services.cache.config.CacheConfiguration;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PropertyPlaceholderAutoConfiguration.class, CacheConfiguration.class})
 public class ExternalizedCacheConfigurationTest {
 
-    static {
-        System.setProperty("config.location","classpath:");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
     @Autowired
     private ApplicationContext applicationContext;

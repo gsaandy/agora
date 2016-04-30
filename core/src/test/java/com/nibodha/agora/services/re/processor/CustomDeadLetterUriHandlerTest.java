@@ -26,6 +26,7 @@ import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.model.language.ConstantExpression;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PlatformPlaceHolderConfiguration.class, RoutingEngineErrorHandlerTestConfig.class})
 public class CustomDeadLetterUriHandlerTest {
-    static {
-        System.setProperty("config.location", "classpath:.");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
 
     @Produce(uri = "direct:start1")

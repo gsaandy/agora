@@ -17,6 +17,7 @@
 package com.nibodha.agora.services.re;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath:META-INF/spring/nip-xml-dsl-test-context.xml"})
 public class XmlDslRouteDefinitionsInjectorTest {
 
-    static {
-        System.setProperty("config.location","classpath:.");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
-
     @Autowired
     private RouteDefinitionsInjector routeDefinitionsInjector;
 

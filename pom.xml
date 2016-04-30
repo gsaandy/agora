@@ -461,6 +461,10 @@
                                 <outputFormat>HTML</outputFormat>
                             </outputFormats>
                             <timestampedReports>false</timestampedReports>
+                            <excludedClasses>
+                                com.nibodha.agora.dao.*,com.nibodha.agora.services.re.processor.CustomDeadLetterUriHandlerTest,com.nibodha.agora.services.re.processor.RoutingEngineErrorHandlerTest,com.nibodha.agora.services.re.spring.spi.PlatformPlaceHolderIgnoreResourceNotFoundTest,com.nibodha.agora.services.re.spring.spi.PlatformPropertyPlaceholderConfigurerTest,com.nibodha.agora.services.jdbc.config.DataSourceConfigurationTest
+                            </excludedClasses>
+                            <verbose>false</verbose>
                         </configuration>
                         <executions>
                             <execution>

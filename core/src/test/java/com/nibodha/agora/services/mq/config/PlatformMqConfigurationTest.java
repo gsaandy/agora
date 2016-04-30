@@ -19,6 +19,7 @@ package com.nibodha.agora.services.mq.config;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.apache.activemq.xbean.BrokerFactoryBean;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.sql.SQLException;
 
 /**
  * @author gibugeorge on 01/03/16.
@@ -39,9 +42,11 @@ public class PlatformMqConfigurationTest {
     private ApplicationContext applicationContext;
 
 
-    static {
-        System.setProperty("config.location","classpath:");
+    @BeforeClass
+    public static void setup() {
+        System.setProperty("config.location", "classpath:");
     }
+
     @Test
     public void testMqConfiguration(){
         Assert.assertNotNull(applicationContext.getBean(PooledConnectionFactory.class));
