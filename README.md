@@ -1,5 +1,5 @@
-# Nibodha Integration Platform (NIP)#
-NIP provides a platform to build different integration services.
+# Agora :: Nibodha's Integration Platform#
+Agora provides a platform to build different integration services.
 
 
 ## Prerequisites ##
@@ -26,20 +26,20 @@ NIP provides a platform to build different integration services.
 * Services layer
 * Application Layer 
 
-![](integration-platform-architecture.png)
+![](agora-architecture.png)
 
 ### Kernel Layer ###
 
-The NIP kernel layer is based on Spring Boot that provides an embedded Jetty Servlet Container into which we can deploy the applications. The kernel layer provides the following features:
+The agora kernel layer is based on Spring Boot that provides an embedded Jetty Servlet Container into which we can deploy the applications. The kernel layer provides the following features:
 
 #### Deployment ####
-The NIP provides support to deploy services external to the bundled application, so the customer/deployer can decide which service is being deployed on which server.
+The agora provides support to deploy services external to the bundled application, so the customer/deployer can decide which service is being deployed on which server.
 
 #### Logging ####
 A dynamic logging component which is based on logback and supports different APIs like SLF4J, Java Logging etc.
 
 #### JMX Server ####
-The NIP uses jolokia agent to provide restful access to the MBeans, so that the any mbean client can connect to the server.
+The agora uses jolokia agent to provide restful access to the MBeans, so that the any mbean client can connect to the server.
 
 #### Configuration ####
 The properties files for configuration are monitored and the changes are automatically propagated to the relevent services/applications
@@ -49,7 +49,7 @@ The security framework is based on spring security.
 
 ### Services Layer ###
 
-The NIP services layer consists of embedded services which interact with the application layer to communicate with the applications built on top of the NIP. The services layer provides:
+The agora services layer consists of embedded services which interact with the application layer to communicate with the applications built on top of the NIP. The services layer provides:
 
 #### Transaction Manager ####
 
@@ -103,7 +103,7 @@ The integration platform is a multi module maven project with the following modu
     
 ### Datasource Configuration ###
     
-	     platform.jdbc.datasource.enabled=false
+	    platform.jdbc.datasource.enabled=false
         platform.jdbc.datasource.names=<comma separated ds names> 
         platform.jdbc.datasource.default.cache-prep-stmts=true
         platform.jdbc.datasource.default.idle-timeout=30000
@@ -128,7 +128,7 @@ The integration platform is a multi module maven project with the following modu
 
 ## License ##
 
-The Nibodha Integration Platform is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0)
+The Nibodha's Integration Platform Agora is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## FAQs ##
 

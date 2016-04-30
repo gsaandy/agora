@@ -23,12 +23,12 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.3.3.RELEASE</version>
     </parent>
-    <groupId>com.nibodha.ip</groupId>
-    <artifactId>integration-platform</artifactId>
+    <groupId>com.nibodha</groupId>
+    <artifactId>agora</artifactId>
     <version>1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Integration Platform</name>
+    <name>Agora::Integration Platform</name>
     <organization>
         <name>Nibodha Technologies Pvt. Ltd.</name>
         <url>http://www.nibodha.com/</url>
