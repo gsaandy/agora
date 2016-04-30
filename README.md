@@ -1,5 +1,5 @@
 # Agora :: Nibodha's Integration Platform#
-Agora provides a platform to build different integration services.
+Agora provides a platform to build different backend services.
 
 
 ## Prerequisites ##
@@ -159,22 +159,8 @@ The Nibodha's Integration Platform Agora is released under version 2.0 of the [A
    
    `mvn spring-boot:run`
    
-### 3. How to start the monitoring console? ###
-
-	If the integration platform is not built, build the integration platform using maven.
 	
-	Change to monitoring console directory.
-
-	`cd launcher`
-	
-	Start the monitoring cosole
-	
-	`mvn spring-boot:run`
-	
-	Once the monitoring console is up and running, open bowser and got to 
-	http://localhost:8081, enter admin/admin to login.
-	
-### 4. How to add datasource? ###
+### 3. How to add datasource? ###
 	
 	Change the property
 	 
