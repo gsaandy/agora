@@ -22,10 +22,10 @@
 
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     <beans:bean id="dataSourceConfiguration"
-                class="com.nibodha.ip.services.jdbc.config.DatasourceConfiguration">
+                class="com.nibodha.agora.services.jdbc.config.DatasourceConfiguration">
         <beans:constructor-arg name="environment" ref="platformEnvironment"/>
     </beans:bean>
-    <beans:bean id="platformEnvironment" class="com.nibodha.ip.env.PlatformEnvironment"/>
+    <beans:bean id="platformEnvironment" class="com.nibodha.agora.env.PlatformEnvironment"/>
 
 
 </beans:beans>

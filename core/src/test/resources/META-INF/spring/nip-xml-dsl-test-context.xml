@@ -23,11 +23,11 @@
 
 
     <beans:import resource="nip-test-context.xml"/>
-    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.ip.services.re.RouteDefinitionsInjector"/>
+    <beans:bean id="routeDefinitionsInjector" class="com.nibodha.agora.services.re.RouteDefinitionsInjector"/>
 
 
-    <routeContext id="com.nibodha.ip.test.context">
-        <route id="com.nibodha.ip.test.context.route">
+    <routeContext id="com.nibodha.agora.test.context">
+        <route id="com.nibodha.agora.test.context.route">
             <from uri="direct://test1"/>
             <to uri="direct://mock:result1"/>
         </route>
@@ -42,7 +42,7 @@
             <to uri="direct://mock:result3"/>
         </route>
         <!-- Duplicate route id-->
-        <route id="com.nibodha.ip.test.context.route">
+        <route id="com.nibodha.agora.test.context.route">
             <from uri="direct://test4"/>
             <to uri="direct://mock:result4"/>
         </route>

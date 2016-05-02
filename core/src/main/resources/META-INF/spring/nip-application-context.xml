@@ -21,15 +21,15 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.nibodha.ip.services.camel"/>
-    <context:component-scan base-package="com.nibodha.ip.services.re"/>
-    <context:component-scan base-package="com.nibodha.ip.processors"/>
-    <context:component-scan base-package="com.nibodha.ip.services.cache"/>
+    <context:component-scan base-package="com.nibodha.agora.services.camel"/>
+    <context:component-scan base-package="com.nibodha.agora.services.re"/>
+    <context:component-scan base-package="com.nibodha.agora.processors"/>
+    <context:component-scan base-package="com.nibodha.agora.services.cache"/>
 
     <beans:import resource="classpath*:META-INF/spring/batch/config/*.xml"/>
     <beans:import resource="classpath*:META-INF/spring/batch/jobs/*.xml"/>
 
     <beans:import resource="classpath*:META-INF/spring/*-web-context.xml"/>
-    <beans:bean id="objectMapper" class="com.nibodha.ip.services.json.config.JacksonObjectMapperFactoryBean"/>
+    <beans:bean id="objectMapper" class="com.nibodha.agora.services.json.config.JacksonObjectMapperFactoryBean"/>
 
 </beans:beans>

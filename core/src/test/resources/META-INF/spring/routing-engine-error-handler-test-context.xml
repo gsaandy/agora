@@ -21,6 +21,6 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <beans:bean id="testRouteBuilder" class="com.nibodha.ip.services.re.processor.ExceptionThrowingRouteBuilder"/>
-    <beans:bean id="deadLetterUriRouteBuilder" class="com.nibodha.ip.services.re.processor.DeadLetterUriRouteBuilder"/>
+    <beans:bean id="testRouteBuilder" class="com.nibodha.agora.services.re.processor.ExceptionThrowingRouteBuilder"/>
+    <beans:bean id="deadLetterUriRouteBuilder" class="com.nibodha.agora.services.re.processor.DeadLetterUriRouteBuilder"/>
 </beans:beans>
