@@ -17,21 +17,24 @@
 package com.nibodha.ip.services.security.config;
 
 import com.nibodha.ip.services.security.config.oauth2.OAuth2AuthorizationServerConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import com.nibodha.ip.services.security.config.oauth2.OAuth2ResourceServerConfiguration;
+import com.nibodha.ip.services.security.config.oauth2.OAuth2WebSecurityConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 
 /**
- * @author gibugeorge on 26/02/16.
+ * @author anoop.kjohn on 03/05/16.
  * @version 1.0
  */
-
 @Configuration
-@Order(SecurityProperties.BASIC_AUTH_ORDER)
-@ConditionalOnMissingBean(value = OAuth2SecurityConfiguration.class)
-@ImportResource("classpath*:META-INF/spring/digest-auth-context.xml")
-public class DigestAuthenticationConfiguration {
-
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@ConditionalOnProperty(prefix = "platform.security", name = "oauth2.support", havingValue = "true", matchIfMissing = false)
+@Import({OAuth2WebSecurityConfiguration.class,
+        OAuth2AuthorizationServerConfiguration.class,
+        OAuth2ResourceServerConfiguration.class,
+        })
+public class OAuth2SecurityConfiguration {
 }

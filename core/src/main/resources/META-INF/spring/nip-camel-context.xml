@@ -52,7 +52,7 @@
         <beans:property name="useOriginalMessage" value="false"/>
     </beans:bean>
 
-    <beans:bean id="PROPAGATION_MANDATORY "
+    <beans:bean id="PROPAGATION_MANDATORY"
                 class="com.nibodha.ip.services.re.spring.spi.RoutingEngineTransactionPolicy">
         <beans:property name="transactionManager" ref="jmsTransactionManager"/>
         <beans:property name="propagationBehaviorName" value="PROPAGATION_MANDATORY"/>

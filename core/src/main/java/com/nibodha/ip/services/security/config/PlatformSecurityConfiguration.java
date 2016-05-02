@@ -32,7 +32,8 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  */
 @Configuration
 @ConditionalOnProperty(prefix = "platform.security", name = "enabled", havingValue = "true", matchIfMissing = true)
-@Import(DigestAuthenticationConfiguration.class)
+@Import({OAuth2SecurityConfiguration.class,
+        DigestAuthenticationConfiguration.class})
 public class PlatformSecurityConfiguration {
 
     private static final String DEFAULT_FILTER_NAME = AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME;
