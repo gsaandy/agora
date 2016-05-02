@@ -131,7 +131,7 @@ public class CxfAuditOutInterceptor extends AbstractAuditInterceptor {
                 os.lockOutputStream();
                 os.resetOut(null, false);
             } catch (Exception ex) {
-                //ignore
+                LOGGER.error("Exception locking stream or resetting out", ex);
             }
             message.setContent(OutputStream.class,
                     origStream);

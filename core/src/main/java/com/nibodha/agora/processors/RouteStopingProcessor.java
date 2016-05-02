@@ -42,7 +42,7 @@ public class RouteStopingProcessor implements Processor {
                     LOGGER.info("Stopping route " + routeId);
                     exchange.getContext().stopRoute(routeId);
                 } catch (Exception e) {
-                    // ignore
+                    LOGGER.error("Error stopping route", e);
                 }
             }
         }.start();
