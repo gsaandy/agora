@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security.config.oauth2;
+package com.nibodha.agora.services.security.config.oauth2;
 
-import com.nibodha.ip.services.security.config.OAuth2SecurityConfiguration;
 import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

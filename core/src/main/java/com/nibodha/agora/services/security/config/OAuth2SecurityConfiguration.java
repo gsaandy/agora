@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security.config;
+package com.nibodha.agora.services.security.config;
 
-import com.nibodha.ip.services.security.config.oauth2.OAuth2AuthorizationServerConfiguration;
-import com.nibodha.ip.services.security.config.oauth2.OAuth2ResourceServerConfiguration;
-import com.nibodha.ip.services.security.config.oauth2.OAuth2WebSecurityConfiguration;
+import com.nibodha.agora.services.security.config.oauth2.OAuth2AuthorizationServerConfiguration;
+import com.nibodha.agora.services.security.config.oauth2.OAuth2ResourceServerConfiguration;
+import com.nibodha.agora.services.security.config.oauth2.OAuth2WebSecurityConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +35,6 @@ import org.springframework.core.annotation.Order;
 @Import({OAuth2WebSecurityConfiguration.class,
         OAuth2AuthorizationServerConfiguration.class,
         OAuth2ResourceServerConfiguration.class,
-        })
+})
 public class OAuth2SecurityConfiguration {
 }

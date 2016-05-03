@@ -16,7 +16,7 @@
 
 package com.nibodha.agora.services.security.config;
 
-import com.nibodha.ip.services.security.config.oauth2.OAuth2AuthorizationServerConfiguration;
+import com.nibodha.agora.services.security.config.oauth2.OAuth2AuthorizationServerConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;

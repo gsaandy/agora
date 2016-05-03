@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibodha.ip.services.security.config.oauth2;
+package com.nibodha.agora.services.security.config.oauth2;
 
 import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Qualifier;
