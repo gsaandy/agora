@@ -30,7 +30,7 @@ public class ErrorInfo implements Serializable {
 
 
     public ErrorInfo() {
-
+        //Default constructor
     }
 
     public ErrorInfo(final String type, final String message) {
