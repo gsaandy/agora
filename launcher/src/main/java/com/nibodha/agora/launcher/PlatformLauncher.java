@@ -81,10 +81,10 @@ public class PlatformLauncher {
         application.setWebEnvironment(true);
         application.setLogStartupInfo(true);
         final ConfigurableApplicationContext configurableApplicationContext = application.run(args);
-        final Map<String, AbstractDirectoryWatcher> directoryWatcers = configurableApplicationContext.getBeansOfType(AbstractDirectoryWatcher.class);
-        final Set<String> keySet = directoryWatcers.keySet();
+        final Map<String, AbstractDirectoryWatcher> directoryWatchers = configurableApplicationContext.getBeansOfType(AbstractDirectoryWatcher.class);
+        final Set<String> keySet = directoryWatchers.keySet();
         for (final String key : keySet) {
-            AbstractDirectoryWatcher abstractDirectoryWatcher = directoryWatcers.get(key);
+            AbstractDirectoryWatcher abstractDirectoryWatcher = directoryWatchers.get(key);
             abstractDirectoryWatcher.start();
         }
 
