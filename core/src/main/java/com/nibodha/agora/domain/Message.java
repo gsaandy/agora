@@ -29,6 +29,9 @@ public class Message<P> {
     private P payload;
     private ErrorInfo errorInfo;
 
+    public Message() {
+    }
+
     public Message(final String endpoint, final P payload) {
         this(endpoint, payload, null);
     }
