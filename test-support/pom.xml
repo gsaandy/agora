@@ -20,13 +20,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.nibodha.ip</groupId>
-        <artifactId>integration-platform</artifactId>
+        <groupId>com.nibodha</groupId>
+        <artifactId>agora</artifactId>
         <version>1.3-SNAPSHOT</version>
     </parent>
-    <groupId>com.nibodha.ip</groupId>
+    <groupId>com.nibodha.agora</groupId>
     <artifactId>test-support</artifactId>
-    <name>Integration Platform::Test Support</name>
+    <name>Agora::Test Support</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
