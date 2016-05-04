@@ -22,6 +22,7 @@ import com.nibodha.agora.domain.AuditInfo;
  * @author gibugeorge on 22/03/16.
  * @version 1.0
  */
+@FunctionalInterface
 public interface AuditInterceptor {
 
     void audit(AuditInfo auditInfo);

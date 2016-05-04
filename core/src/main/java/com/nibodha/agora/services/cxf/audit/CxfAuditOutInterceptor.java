@@ -45,7 +45,7 @@ public class CxfAuditOutInterceptor extends AbstractAuditInterceptor {
     }
 
     @Override
-    public void handleMessage(Message message) throws Fault {
+    public void handleMessage(Message message){
         final OutputStream os = message.getContent(OutputStream.class);
         boolean hasLogged = message.containsKey(AUDIT_SETUP);
         if (!hasLogged) {
@@ -60,7 +60,7 @@ public class CxfAuditOutInterceptor extends AbstractAuditInterceptor {
         audit(auditInfo);
     }
 
-    private AuditInfo getAuditInfo(final Message message) {
+    private static AuditInfo getAuditInfo(final Message message) {
         String id = (String) message.getExchange().get(AuditInfo.ID_KEY);
         if (id == null) {
             id = UUID.randomUUID().toString();

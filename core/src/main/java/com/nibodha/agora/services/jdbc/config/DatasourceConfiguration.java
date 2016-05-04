@@ -111,12 +111,12 @@ public class DatasourceConfiguration implements BeanDefinitionRegistryPostProces
     }
 
     @Override
-    public void postProcessBeanFactory(final ConfigurableListableBeanFactory beanFactory) throws BeansException {
-
+    public void postProcessBeanFactory(final ConfigurableListableBeanFactory beanFactory){
+        //Do nothing
     }
 
     @Override
-    public void postProcessBeanDefinitionRegistry(final BeanDefinitionRegistry registry) throws BeansException {
+    public void postProcessBeanDefinitionRegistry(final BeanDefinitionRegistry registry){
         dataSourceConfiguration(registry);
     }
 }

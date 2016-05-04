@@ -37,7 +37,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public abstract class AbstractDirectoryWatcher implements Runnable, DirectoryWatcher, BeanIdAware {
 
 
-    protected final static Logger LOGGER = LoggerFactory.getLogger(AbstractDirectoryWatcher.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractDirectoryWatcher.class);
     protected static final long DEFAULT_CHANGES_CHECK_INTERVAL_MS = 1000;
 
     private final WatchService directoryWatcher;
