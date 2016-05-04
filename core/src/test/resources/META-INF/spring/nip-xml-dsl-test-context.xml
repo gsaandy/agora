@@ -21,8 +21,13 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+    <beans:bean id="bridgePropertyPlaceholder"
+                class="com.nibodha.agora.services.re.spring.spi.PlatformPropertyPlaceholderConfigurer">
+        <beans:property name="configFileLocation" value="${config.location}"/>
+        <beans:property name="fileNames" value="classpath:test-is.properties"/>
+    </beans:bean>
 
-    <beans:import resource="nip-test-context.xml"/>
+    <camelContext id="com.nibodha.agora.test"/>
     <beans:bean id="routeDefinitionsInjector" class="com.nibodha.agora.services.re.RouteDefinitionsInjector"/>
 
 
