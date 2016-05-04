@@ -459,6 +459,7 @@
                             <outputFormats>
                                 <outputFormat>XML</outputFormat>
                                 <outputFormat>HTML</outputFormat>
+                                <outputFormat>CSV</outputFormat>
                             </outputFormats>
                             <timestampedReports>false</timestampedReports>
                             <excludedClasses>
