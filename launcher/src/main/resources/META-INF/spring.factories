@@ -3,7 +3,7 @@ com.nibodha.agora.services.config.PlatformPlaceHolderConfiguration,\
 com.nibodha.agora.services.config.PlatformConfiguration,\
 com.nibodha.agora.services.config.EmbeddedContainerConfiguration,\
 com.nibodha.agora.services.re.config.RoutingEngineConfiguration,\
-com.nibodha.agora.services.mq.config.PlatformMqConfiguration,\
+com.nibodha.agora.services.mq.config.MqConfiguration,\
 com.nibodha.agora.services.cache.config.CacheConfiguration,\
 com.nibodha.agora.services.cxf.config.CxfServeletConfiguration,\
 com.nibodha.agora.services.security.config.PlatformSecurityConfiguration,\
