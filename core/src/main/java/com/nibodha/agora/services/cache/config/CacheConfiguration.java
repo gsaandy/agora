@@ -49,7 +49,7 @@ public class CacheConfiguration {
 
     public static final String DEFAULT_PLATFORM_CACHE_NAME = "platformCache";
 
-    private static Logger LOGGER = LoggerFactory.getLogger(CacheConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CacheConfiguration.class);
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -85,7 +85,7 @@ public class CacheConfiguration {
         return new DefaultCacheManager(getDefaultCacheConfiguration(), true);
     }
 
-    private GlobalConfiguration getDefaultCacheConfiguration() {
+    private static GlobalConfiguration getDefaultCacheConfiguration() {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Configuring default p[latform cache");
         }

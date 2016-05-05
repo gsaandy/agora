@@ -30,6 +30,7 @@ public class Message<P> {
     private ErrorInfo errorInfo;
 
     public Message() {
+        //Default constructor
     }
 
     public Message(final String endpoint, final P payload) {

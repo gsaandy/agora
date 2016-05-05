@@ -55,7 +55,7 @@ public class JsonToBeanConverter implements Processor {
         return result;
     }
 
-    private void logInfo(final String message) {
+    private static void logInfo(final String message) {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(message);
         }
