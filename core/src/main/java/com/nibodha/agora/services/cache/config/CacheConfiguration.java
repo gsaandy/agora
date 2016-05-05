@@ -18,7 +18,7 @@ package com.nibodha.agora.services.cache.config;
 
 import com.nibodha.agora.services.cache.CacheProperties;
 import com.nibodha.agora.services.cache.InifinispanLoggingListener;
-import com.nibodha.agora.services.mq.config.PlatformMqConfiguration;
+import com.nibodha.agora.services.mq.config.MqConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.infinispan.Cache;
 import org.infinispan.configuration.global.GlobalConfiguration;
@@ -44,7 +44,7 @@ import java.util.Set;
  */
 @Configuration
 @ConditionalOnProperty(prefix = "platform.cache", value = "enabled", havingValue = "true", matchIfMissing = true)
-@AutoConfigureAfter(PlatformMqConfiguration.class)
+@AutoConfigureAfter(MqConfiguration.class)
 public class CacheConfiguration {
 
     public static final String DEFAULT_PLATFORM_CACHE_NAME = "platformCache";

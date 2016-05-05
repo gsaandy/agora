@@ -16,7 +16,7 @@
 
 package com.nibodha.agora.services.re.config;
 
-import com.nibodha.agora.services.mq.config.PlatformMqConfiguration;
+import com.nibodha.agora.services.mq.config.MqConfiguration;
 import com.nibodha.agora.services.re.RoutingEngineProperties;
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.activemq.pool.PooledConnectionFactory;
@@ -38,7 +38,7 @@ import javax.inject.Inject;
 @Configuration
 @ImportResource("classpath:META-INF/spring/nip-camel-context.xml")
 @ConditionalOnProperty(prefix = "platform.routingengine", value = "enabled", havingValue = "true", matchIfMissing = true)
-@AutoConfigureAfter(PlatformMqConfiguration.class)
+@AutoConfigureAfter(MqConfiguration.class)
 @EnableConfigurationProperties(RoutingEngineProperties.class)
 public class RoutingEngineConfiguration {
 

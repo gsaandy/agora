@@ -16,10 +16,9 @@
 
 package com.nibodha.agora.services.mq.config;
 
-import com.nibodha.agora.services.mq.PlatformMqProperties;
+import com.nibodha.agora.services.mq.MqProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
 
 /**
  * @author gibugeorge on 01/03/16.
@@ -29,10 +28,11 @@ import org.springframework.core.io.FileSystemResource;
 public class PlatformMqTestPropertiesConfiguration {
 
     @Bean
-    public PlatformMqProperties platformMqProperties() {
-        final PlatformMqProperties platformMqProperties = new PlatformMqProperties();
-        platformMqProperties.setEnabled(true);
-        platformMqProperties.setDataDir(new FileSystemResource(System.getProperty("java.io.tmpdir")));
-        return platformMqProperties;
+    public MqProperties mqProperties() {
+        final MqProperties mqProperties = new MqProperties();
+        mqProperties.setEnabled(true);
+        mqProperties.setDataDir(System.getProperty("java.io.tmpdir"));
+        return mqProperties;
+
     }
 }
