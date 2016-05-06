@@ -35,8 +35,8 @@ import java.sql.SQLException;
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PlatformMqTestPropertiesConfiguration.class, PlatformMqConfiguration.class})
-public class PlatformMqConfigurationTest {
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PlatformMqTestPropertiesConfiguration.class, MqConfiguration.class})
+public class MqConfigurationTest {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -48,11 +48,11 @@ public class PlatformMqConfigurationTest {
     }
 
     @Test
-    public void testMqConfiguration(){
+    public void testMqConfiguration() {
         Assert.assertNotNull(applicationContext.getBean(PooledConnectionFactory.class));
         final BrokerFactoryBean brokerFactoryBean = applicationContext.getBean(BrokerFactoryBean.class);
-        Assert.assertEquals("mqBroker",brokerFactoryBean.getBroker().getBrokerName());
-        Assert.assertEquals("vm://mqBroker",brokerFactoryBean.getBroker().getVmConnectorURI().toString());
+        Assert.assertEquals("mqBroker", brokerFactoryBean.getBroker().getBrokerName());
+        Assert.assertEquals("vm://mqBroker", brokerFactoryBean.getBroker().getVmConnectorURI().toString());
 
     }
 }

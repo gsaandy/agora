@@ -22,7 +22,7 @@ public class PlatformThreadFactoryTest {
 
             }
         });
-        Assert.assertEquals("prefix-1-thread-1", thread.getName());
+        Assert.assertTrue(thread.getName().startsWith("prefix"));
 
     }
 }
