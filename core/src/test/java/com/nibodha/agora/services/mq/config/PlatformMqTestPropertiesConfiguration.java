@@ -32,6 +32,9 @@ public class PlatformMqTestPropertiesConfiguration {
         final MqProperties mqProperties = new MqProperties();
         mqProperties.setEnabled(true);
         mqProperties.setDataDir(System.getProperty("java.io.tmpdir"));
+        mqProperties.setQueueNames("queue1,queue2");
+        mqProperties.setTopicNames("topic1,topic2");
+        mqProperties.setDeadLetterQueueName("test-dlq");
         return mqProperties;
 
     }
