@@ -165,7 +165,7 @@ public class MqConfiguration {
 
     private ManagementContext getManagementContext() {
         final ManagementContext managementContext = new ManagementContext();
-        managementContext.setJmxDomainName("com.nibodha.ip");
+        managementContext.setJmxDomainName("com.nibodha.agora");
         managementContext.setUseMBeanServer(true);
         managementContext.setCreateConnector(false);
         return managementContext;
