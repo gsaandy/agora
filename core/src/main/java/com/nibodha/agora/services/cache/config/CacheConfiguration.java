@@ -93,7 +93,7 @@ public class CacheConfiguration {
                 .defaultClusteredBuilder()
                 .nonClusteredDefault()
                 .globalJmxStatistics()
-                .cacheManagerName("Platform Cache Manager").jmxDomain("com.nibodha.ip.cache")
+                .cacheManagerName("Platform Cache Manager").jmxDomain("com.nibodha.agora.cache")
                 .enable()
                 .build();
 

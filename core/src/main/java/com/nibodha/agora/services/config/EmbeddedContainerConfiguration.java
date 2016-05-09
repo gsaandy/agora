@@ -98,7 +98,7 @@ public class EmbeddedContainerConfiguration {
                 }
             }
             try {
-                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi"), "com.nibodha.ip.jmx:name=rmiconnectorserver");
+                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi"), "com.nibodha.agora.jmx:name=rmiconnectorserver");
                 server.addBean(connectorServer);
             } catch (Exception e) {
                 LOGGER.error("Exception configuring the mbean connector server", e);
@@ -106,7 +106,7 @@ public class EmbeddedContainerConfiguration {
 
             // Expose Jetty managed beans to the JMX platform server provided by Spring
             final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
-            mbContainer.setDomain("com.nibodha.ip");
+            mbContainer.setDomain("com.nibodha.agora");
             server.addBean(mbContainer);
 
 
