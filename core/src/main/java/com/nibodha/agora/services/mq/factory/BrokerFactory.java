@@ -17,7 +17,6 @@ import org.springframework.context.ApplicationContext;
  */
 public class BrokerFactory extends BrokerFactoryBean {
 
-    private ApplicationContext applicationContext;
     private final XBeanBrokerService broker;
 
     public BrokerFactory(final XBeanBrokerService brokerService) {
@@ -50,6 +49,7 @@ public class BrokerFactory extends BrokerFactoryBean {
     public void afterPropertiesSet() throws Exception {
         if (isSystemExitOnShutdown()) {
             broker.addShutdownHook(new Runnable() {
+                @Override
                 public void run() {
                     System.exit(getSystemExitOnShutdownExitCode());
                 }
@@ -61,10 +61,6 @@ public class BrokerFactory extends BrokerFactoryBean {
     }
 
     @Override
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
-
     public BrokerService getBroker() {
         return broker;
     }
