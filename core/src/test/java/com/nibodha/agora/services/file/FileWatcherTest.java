@@ -6,8 +6,6 @@ package com.nibodha.agora.services.file;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -21,7 +19,6 @@ import java.util.Properties;
 public class FileWatcherTest {
 
     private final Resource resource = new ClassPathResource("file-watch-test.properties");
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileWatcherTest.class);
 
     @Test
     public void testFileWatcher() throws Exception {
