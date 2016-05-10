@@ -5,7 +5,6 @@
 package com.nibodha.agora.services.mq;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.Resource;
 
 /**
  * @author gibugeorge on 10/02/16.
