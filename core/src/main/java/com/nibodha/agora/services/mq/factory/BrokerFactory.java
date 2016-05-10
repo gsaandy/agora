@@ -7,8 +7,6 @@ package com.nibodha.agora.services.mq.factory;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.xbean.BrokerFactoryBean;
 import org.apache.activemq.xbean.XBeanBrokerService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
 
 
 /**
