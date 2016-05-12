@@ -89,6 +89,27 @@ public class OAuth2SecurityConfigurationTest {
     }
 
     @Test
+    public void authorisationFailsForInvalidPassword() throws Exception {
+        this.mockMvc.perform(post("/oauth/token?grant_type=password&username=user&password=test1").principal(token).
+                header("Authorization", "Basic dGVzdDp0ZXN0"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void authorisationFailsForInvalidUser() throws Exception {
+        this.mockMvc.perform(post("/oauth/token?grant_type=password&username=user1&password=test").principal(token).
+                header("Authorization", "Basic dGVzdDp0ZXN0"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void authorisationFailsWhenPasswordIsMissing() throws Exception {
+        this.mockMvc.perform(post("/oauth/token?grant_type=password&username=user&password1=test").principal(token).
+                header("Authorization", "Basic dGVzdDp0ZXN0"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void returnsOAuth2TokenForClientCredentialsGrantType() throws Exception {
         this.mockMvc.perform(post("/oauth/token?grant_type=client_credentials&client_id=test").principal(token).
                 header("Authorization", "Basic dGVzdDp0ZXN0"))

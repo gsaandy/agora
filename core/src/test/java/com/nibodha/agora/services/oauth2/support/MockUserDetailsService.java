@@ -33,6 +33,10 @@ public class MockUserDetailsService implements UserDetailsService {
         final Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
+        if(!"user".equals(userName)){
+            return null;
+        }
+
         return new User(userName, "test", authorities);
     }
 }
