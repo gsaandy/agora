@@ -46,6 +46,7 @@ public class RoutingEngineConfiguration {
     private RoutingEngineProperties routingEngineProperties;
 
     @Bean(name = "activemq")
+    @ConditionalOnProperty(prefix = "platform.mq", value = "enabled", havingValue = "true", matchIfMissing = false)
     public ActiveMQComponent activeMQComponent(final PooledConnectionFactory pooledConnectionFactory) {
         final ActiveMQComponent activeMQComponent = new ActiveMQComponent();
         activeMQComponent.setConnectionFactory(pooledConnectionFactory);
