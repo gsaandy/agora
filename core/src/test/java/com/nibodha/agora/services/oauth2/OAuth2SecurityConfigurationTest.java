@@ -52,6 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         classes = {OAuth2TestSecurityConfiguration.class})
 @WebAppConfiguration
 public class OAuth2SecurityConfigurationTest {
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     private final User user = new User("test", "test", authorities);
@@ -65,7 +66,6 @@ public class OAuth2SecurityConfigurationTest {
     private ResourceServerTokenServices tokenServices;
 
     private MockMvc mockMvc;
-
 
     @Before
     public void setup() {
@@ -83,9 +83,10 @@ public class OAuth2SecurityConfigurationTest {
 
     @Test
     public void returnsOAuth2TokenForPasswordGrantType() throws Exception {
-        this.mockMvc.perform(post("/oauth/token?grant_type=password&username=user&password=test").principal(token).
+        final MvcResult result = this.mockMvc.perform(post("/oauth/token?grant_type=password&username=user&password=test").principal(token).
                 header("Authorization", "Basic dGVzdDp0ZXN0"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andReturn();
+        verifyAccessToken(result);
     }
 
     @Test
@@ -111,11 +112,11 @@ public class OAuth2SecurityConfigurationTest {
 
     @Test
     public void returnsOAuth2TokenForClientCredentialsGrantType() throws Exception {
-        this.mockMvc.perform(post("/oauth/token?grant_type=client_credentials&client_id=test").principal(token).
+        final MvcResult result = this.mockMvc.perform(post("/oauth/token?grant_type=client_credentials&client_id=test").principal(token).
                 header("Authorization", "Basic dGVzdDp0ZXN0"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andReturn();
+        verifyAccessToken(result);
     }
-
 
     @Test
     public void authorisationFailsForInvalidClientId() throws Exception {
@@ -138,7 +139,6 @@ public class OAuth2SecurityConfigurationTest {
                 .andExpect(status().isUnauthorized());
     }
 
-
     @Test
     public void controllerFailsForInvalidAccessToken() throws Exception {
         this.mockMvc.perform(get(("/test?access_token=111")))
@@ -151,14 +151,21 @@ public class OAuth2SecurityConfigurationTest {
                 .header("Authorization", "Basic dGDzdDp0ZXN0"))
                 .andReturn();
 
+        final AccessToken token = verifyAccessToken(result);
+
+        this.mockMvc.perform(get(("/test?access_token=" + token.getAccessToken())))
+                .andExpect(status().isOk()).andExpect(content().string("success"));
+    }
+
+    private AccessToken verifyAccessToken(final MvcResult result) throws Exception {
         assertNotNull(result);
         assertNotNull(result.getResponse());
         final String value = result.getResponse().getContentAsString();
         assertNotNull(value);
 
         final AccessToken token = objectMapper.readValue(value, AccessToken.class);
-
-        this.mockMvc.perform(get(("/test?access_token=" + token.getAccessToken())))
-                .andExpect(status().isOk()).andExpect(content().string("success"));
+        assertNotNull(token);
+        assertNotNull(token.getAccessToken());
+        return token;
     }
 }
