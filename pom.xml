@@ -79,6 +79,7 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
         <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
+        <spark.version>1.6.1</spark.version>
     </properties>
     <developers>
         <developer>
@@ -360,6 +361,11 @@
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.11</artifactId>
+                <version>${spark.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
