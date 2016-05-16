@@ -1,4 +1,4 @@
-# Agora :: Nibodha's Integration Platform#
+# Agora :: Nibodha's Integration Platform#[https://travis-ci.org/NibodhaTechnologies/agora.svg?branch=develop]
 Agora provides a platform to build different backend services.
 
 
